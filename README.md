@@ -1,2 +1,2 @@
-# sim-project
-SIM - Simple Image Manipulation
+# SIM-project
+## SIM - Simple Image Manipulation
