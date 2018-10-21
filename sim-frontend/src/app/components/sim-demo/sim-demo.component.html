@@ -1,2 +1,21 @@
-<button (click)="createStage()">Create Stage</button>
-<div id="{{ containerId }}"></div>
+<div id="{{ containerId }}" class="sim-interactive-area"></div>
+
+<div class="sim-region">
+  <input type="number" [(ngModel)]='STAGE_WIDTH' placeholder="width">
+  <input type="number" [(ngModel)]='STAGE_HEIGHT' placeholder="height">
+  <button (click)="changeStageSize(STAGE_WIDTH, STAGE_HEIGHT)">Change Stage Size</button>
+  <br>
+  <button (click)="addLayer()">Add Layer</button>
+  <ul>
+    <li *ngFor="let layer of getLayers(); let i = index" style="list-style-type: none;">
+      <span (click)="currLayer = layer" class="sim-layer-item" [ngClass]="{'sim-selected-layer-item': layer == currLayer}">
+        {{ layer.name() }}
+      </span>
+      <span (click)="layer.destroy()" class="sim-layer-item">X</span>
+    </li>
+  </ul>
+</div>
+
+<div class="sim-region">
+  <button (click)="addCircle()">Add Circle</button>
+</div>

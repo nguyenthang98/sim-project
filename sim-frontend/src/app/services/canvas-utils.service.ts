@@ -8,39 +8,38 @@ export class CanvasUtilsService {
   constructor() {
   }
 
-  createStage(containerId): Konva.Stage {
+  createStage(containerId, { width, height}: {width?:number, height?:number} = {}): Konva.Stage {
     const _stage = new Konva.Stage({
       container: containerId,
-      width: 500,
-      height: 500
+      width: width,
+      height: height,
     });
 
-    const _layer = new Konva.Layer();
-    const _circle = new Konva.Circle({
-      x: _stage.getWidth() / 2,
-      y: _stage.getHeight() / 2,
-      radius: 70,
-      fill: 'yellow',
-      stroke: 'red',
-      strokeWidth: 4,
-      draggable: true
-    })
-
-    _stage.on("click tap", function(e) {
-      if(e.target == _stage) {
-        _stage.find("Transformer").destroy();
-        return;
-      }
-      _stage.find("Transformer").destroy();
-      const _tr = new Konva.Transformer();
-      _layer.add(_tr);
-      _tr.attachTo(e.target);
-      _layer.draw();
+    _stage.on("wheel", function(event) {
+      console.log("on stage mouse wheel", event);
     });
-
-    _layer.add(_circle);
-    _stage.add(_layer);
 
     return _stage;
+  }
+
+  createCircle(
+    {x, y, radius, fill, stroke, strokeWidth}:
+    {x?: number, y?: number, radius?: number, fill?: string, stroke?: string, strokeWidth?: number}
+    ) : Konva.Circle {
+    return new Konva.Circle({
+      x: x || 0,
+      y: y || 0,
+      radius: radius || 0,
+      fill: fill || 'red',
+      stroke: stroke || 'black',
+      strokeWidth: strokeWidth || 2,
+      draggable: true
+    });
+  }
+
+  createLayer(stage): Konva.Layer {
+    const _layer = new Konva.Layer();
+    stage.add(_layer);
+    return _layer;
   }
 }
