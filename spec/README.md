@@ -1,1 +1,0 @@
-# SIM specification
