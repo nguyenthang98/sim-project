@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sim-frontend": {
+    "sim_client": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sim-frontend",
+            "outputPath": "dist/sim_client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sim-frontend:build"
+            "browserTarget": "sim_client:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sim-frontend:build:production"
+              "browserTarget": "sim_client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sim-frontend:build"
+            "browserTarget": "sim_client:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "sim-frontend-e2e": {
+    "sim_client-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "sim-frontend:serve"
+            "devServerTarget": "sim_client:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sim-frontend:serve:production"
+              "devServerTarget": "sim_client:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "sim-frontend"
+  "defaultProject": "sim_client"
 }

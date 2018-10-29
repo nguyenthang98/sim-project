@@ -1,0 +1,20 @@
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define('image', {
+        idImage: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: '',
+            unique: 'imagename-username'
+        },
+        path: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: ''
+        }
+    });
+};

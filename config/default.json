@@ -1,0 +1,16 @@
+{
+    "application": {
+        "port": 3000,
+        "jwtSecretKey": "secretKey"
+    },
+    "database": {
+        "dbName": "sim_project",
+        "password": "@Abc123456",
+        "user": "sim",
+        "port": 3306,
+        "logging": false,
+        "dialect": "mysql",
+        "host": "localhost"
+    },
+    "dataPath": "../sim-data"
+}
