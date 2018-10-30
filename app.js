@@ -21,6 +21,8 @@ app.use(
 );
 
 app.use('/auth', authApiRouter);
+
+app.use(require('./sim_server/controllers/authentication').authenticate());
 app.use('/image', imageApiRouter);
 
 server.listen(port, () => {

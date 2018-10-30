@@ -65,3 +65,36 @@ module.exports.login = (req, res) => {
         }
     });
 };
+
+module.exports.authenticate = () => {
+    return (req, res, next) => {
+        let token =
+            req.body.token || req.query.token || req.headers.authorization;
+        if (token) {
+            jwt.verify(token, configApp.jwtSecretKey, (err, decoded) => {
+                if (err) {
+                    return res.send(
+                        jsonResponse(401, 'Failed to authenticate')
+                    );
+                } else {
+                    User.findOne({
+                        where: {
+                            username: decoded.username
+                        }
+                    }).then(user => {
+                        if (user) {
+                            req.decoded = user.toJSON();
+                            next();
+                        } else {
+                            return res.send(
+                                jsonResponse(401, 'Failed to authenticate')
+                            );
+                        }
+                    });
+                }
+            });
+        } else {
+            return res.send(jsonResponse(401, 'No token provided'));
+        }
+    };
+};
