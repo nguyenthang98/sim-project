@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const server = require('http').Server(app);
-const authApiRouter = require('./sim_server/routes/authentication.route');
+const authApiRouter = require('./sim_server/routes/authentication.router');
+const imageApiRouter = require('./sim_server/routes/image.router');
 
 const port = 3000;
 
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use('/auth', authApiRouter);
+app.use('/image', imageApiRouter);
 
 server.listen(port, () => {
     console.log('Listening on port ' + port);

@@ -8,8 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: '',
-            unique: 'imagename-username'
+            defaultValue: ''
         },
         path: {
             type: DataTypes.STRING,

@@ -2,6 +2,9 @@ const Sequelize = require('sequelize');
 const config = require('config').database;
 
 const sequelize = new Sequelize(config.dbName, config.user, config.password, {
+    define: {
+        freezeTableName: true
+    },
     logging: config.logging,
     dialect: config.dialect,
     port: config.port
@@ -28,14 +31,14 @@ models.forEach(model => {
 (m => {
     m.User.hasMany(m.Image, {
         foreignKey: {
-            name: 'username',
+            name: 'idUser',
             allowNull: false
         },
         onDelete: 'CASCADE'
     });
     m.Image.belongsTo(m.User, {
         foreignKey: {
-            name: 'username',
+            name: 'idUser',
             allowNull: false
         }
     });
