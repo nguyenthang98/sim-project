@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "ng": "ng",
-    "build-frontend": "cd ./sim-frontend && ng build && cd ..",
+    "build-client": "cd ./sim_client && ng build && cd ..",
+	"serve-client": "cd ./sim_client && ng s --open",
     "start": "node bin/www"
   },
   "repository": {

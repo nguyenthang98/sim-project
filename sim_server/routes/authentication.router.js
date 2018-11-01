@@ -8,7 +8,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    ctrlAuth.login(req, res);
+   ctrlAuth.login(req, res);
 });
 
 module.exports = router;
