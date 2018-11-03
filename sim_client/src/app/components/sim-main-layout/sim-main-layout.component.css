@@ -1,0 +1,28 @@
+/* for dev */
+div[class^="sim-"] {
+  border: 1px solid black;
+}
+
+.sim-left-container {
+  height: 100%;
+  width: 350px;
+  background-color: red;
+  float: left;
+  padding: 0px 5px;
+}
+
+.sim-work-area-container {
+  height: 100%;
+  width: calc(100% - 350px);
+  background-color: yellow;
+  float: right;
+}
+
+.sim-top-panel {
+  height: 56px;
+  background-color: grey;
+}
+.sim-work-area {
+  height: calc(100% - 56px);
+  background-color: white;
+}

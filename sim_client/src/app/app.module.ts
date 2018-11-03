@@ -2,20 +2,22 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { AppComponent } from "./app.component";
-import { AppRoutingModule, RoutingComponents } from "./app-routing.module";
+import { AppComponent, SimComponents } from "./app.component";
+import { AppRoutingModule, RoutingComponents } from "./modules/app-routing/app-routing.module";
+import { AppMaterialModule} from './modules/app-material/app-material.module';
 import { SimApiService } from "./services/sim-api.service";
 import { HttpClientModule } from "@angular/common/http";
 import { CanvasUtilsService } from "./services/canvas-utils.service";
 
 @NgModule({
-	declarations: [AppComponent, RoutingComponents],
+	declarations: [AppComponent, RoutingComponents, SimComponents ],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
 		FormsModule,
-		ReactiveFormsModule
+    ReactiveFormsModule,
+    AppMaterialModule
 	],
 	providers: [SimApiService, CanvasUtilsService],
 	bootstrap: [AppComponent]

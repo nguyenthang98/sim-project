@@ -1,3 +1,16 @@
-<p>
-  sim-main-layout works!
-</p>
+<div style="height: 100vh">
+  <div class="sim-left-container">
+    <app-control-panel [app-config]="appConfig"></app-control-panel>
+  </div>
+  <div class="sim-work-area-container">
+    <div class="sim-top-panel"></div>
+    <div class="sim-work-area">
+      brightness: {{ appConfig.adjustments.brightness }}
+      <br>
+      greyScale: {{ appConfig.adjustments.greyScale }}
+      <br>
+      currLayer: {{ (appConfig.layers.currentLayer || {}).name() }}
+      checked: {{ (appConfig.layers.currentLayer || {}).showLayer }}
+    </div>
+  </div>
+</div>
