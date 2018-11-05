@@ -1,0 +1,35 @@
+<!--Shape list-->
+<div *ngIf="appConfig.layers.currentLayer && appConfig.layers.currentLayer.getChildren().length && showObjectList"
+  style="position: absolute; top: 56px; background: grey; min-width: 20em; max-height: 20em; border-radius: 5px; overflow-y: auto;">
+  <mat-list>
+    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getChildren().reverse()"
+      (click)="appConfig.currentFocusedObject = object">
+      <button mat-button style="width: 100%;">{{ object.getClassName() }} {{ object.name() }}</button>
+      <button mat-icon-button
+        (click)="object.remove(); appConfig.currentFocusedObject = null;">&times;</button>
+    </mat-list-item>
+  </mat-list>
+</div>
+<button mat-icon-button (click)="showObjectList = !showObjectList">
+  <mat-icon>list</mat-icon>
+</button>
+
+<!--Shape z-index -->
+<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveUp()">
+  <mat-icon>&uarr;</mat-icon>
+</button>
+<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveDown()">
+  <mat-icon>&darr;</mat-icon>
+</button>
+
+<!--Shape rotation-->
+
+<!--Shape opacity-->
+
+<!--Shape align-->
+
+<!--Shape flip-->
+
+<!--Clone shape-->
+
+<!--Remove shape-->

@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 
 import { AppControlPanelComponent } from "./components/sim-app-components/app-control-panel/app-control-panel.component";
+import { AppTopPanelComponent } from './components/sim-app-components/app-top-panel/app-top-panel.component';
 
 @Component({
 	selector: "app-root",
@@ -12,5 +13,6 @@ export class AppComponent {
 }
 
 export const SimComponents = [
-	AppControlPanelComponent
+	AppControlPanelComponent,
+	AppTopPanelComponent
 ]

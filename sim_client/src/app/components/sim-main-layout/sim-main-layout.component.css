@@ -9,6 +9,7 @@ div[class^="sim-"] {
   background-color: red;
   float: left;
   padding: 0px 5px;
+  overflow-y: auto;
 }
 
 .sim-work-area-container {
@@ -20,7 +21,8 @@ div[class^="sim-"] {
 
 .sim-top-panel {
   height: 56px;
-  background-color: grey;
+  background-color: pink;
+  padding: 8px 0px;
 }
 .sim-work-area {
   height: calc(100% - 56px);

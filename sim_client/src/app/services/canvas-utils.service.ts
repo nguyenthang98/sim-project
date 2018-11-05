@@ -8,6 +8,11 @@ export class CanvasUtilsService {
   constructor() {
   }
 
+  isShape(object) {
+    if(!object) return false;
+    return object instanceof Konva.Shape;
+  }
+
   createStage(containerId, { width, height}: {width?:number, height?:number} = {}): Konva.Stage {
     const _stage = new Konva.Stage({
       container: containerId,

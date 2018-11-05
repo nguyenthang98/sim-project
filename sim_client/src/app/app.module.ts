@@ -8,16 +8,18 @@ import { AppMaterialModule} from './modules/app-material/app-material.module';
 import { SimApiService } from "./services/sim-api.service";
 import { HttpClientModule } from "@angular/common/http";
 import { CanvasUtilsService } from "./services/canvas-utils.service";
+import { ColorPickerModule } from "ngx-color-picker";
 
 @NgModule({
-	declarations: [AppComponent, RoutingComponents, SimComponents ],
+	declarations: [AppComponent, RoutingComponents, SimComponents],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
 		FormsModule,
     ReactiveFormsModule,
-    AppMaterialModule
+		AppMaterialModule,
+		ColorPickerModule
 	],
 	providers: [SimApiService, CanvasUtilsService],
 	bootstrap: [AppComponent]

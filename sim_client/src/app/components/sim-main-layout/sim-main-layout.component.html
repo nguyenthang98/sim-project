@@ -3,14 +3,30 @@
     <app-control-panel [app-config]="appConfig"></app-control-panel>
   </div>
   <div class="sim-work-area-container">
-    <div class="sim-top-panel"></div>
+    <div class="sim-top-panel">
+      <app-top-panel [app-config]="appConfig"></app-top-panel>
+    </div>
     <div class="sim-work-area">
+      Main config: width: {{ appConfig.mainConfig.width }}, height: {{ appConfig.mainConfig.height }}
+      bgColor: {{ appConfig.mainConfig.backgroundColor }}
+      <br>
       brightness: {{ appConfig.adjustments.brightness }}
       <br>
       greyScale: {{ appConfig.adjustments.greyScale }}
       <br>
       currLayer: {{ (appConfig.layers.currentLayer || {}).name() }}
-      checked: {{ (appConfig.layers.currentLayer || {}).showLayer }}
+      checked: {{ (appConfig.layers.currentLayer || {}).visible() }}
+      <br>
+      <div *ngIf="appConfig.currentFocusedObject">
+        CurrFocused Object:
+        <br>
+        width: {{ appConfig.currentFocusedObject.width() * appConfig.currentFocusedObject.scaleX() }},
+        height: {{ appConfig.currentFocusedObject.height() * appConfig.currentFocusedObject.scaleY() }}
+        <br>
+        x: {{ appConfig.currentFocusedObject.x() }}, y: {{ appConfig.currentFocusedObject.y() }}
+        <br>
+        fill: {{ appConfig.currentFocusedObject.fill() }}
+      </div>
     </div>
   </div>
 </div>
