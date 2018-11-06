@@ -57,33 +57,33 @@
       <div style="display: flex;">
         <mat-form-field style="flex: 1; max-width: 50%;">
           <input matInput type="number" placeholder="X"
-            [ngModel]="appConfig.currentFocusedObject.x()" (ngModelChange)="appConfig.currentFocusedObject.x($event)">
+            [ngModel]="appConfig.currentFocusedObject.x()" (ngModelChange)="appConfig.currentFocusedObject.x($event); appConfig.currentFocusedObject.getLayer().draw();">
         </mat-form-field>
         <mat-form-field style="flex: 1">
           <input matInput type="number" placeholder="Y"
-            [ngModel]="appConfig.currentFocusedObject.y()" (ngModelChange)="appConfig.currentFocusedObject.y($event)">
+            [ngModel]="appConfig.currentFocusedObject.y()" (ngModelChange)="appConfig.currentFocusedObject.y($event); appConfig.currentFocusedObject.getLayer().draw();">
         </mat-form-field>
       </div>
       <div style="display: flex;">
         <mat-form-field style="flex: 1; max-width: 50%;">
           <input matInput type="number" placeholder="Width"
             [ngModel]="appConfig.currentFocusedObject.width() * appConfig.currentFocusedObject.scaleX()"
-            (ngModelChange)="appConfig.currentFocusedObject.width($event); appConfig.currentFocusedObject.scaleX(1);">
+            (ngModelChange)="appConfig.currentFocusedObject.width($event); appConfig.currentFocusedObject.scaleX(1); appConfig.currentFocusedObject.getLayer().draw();">
         </mat-form-field>
         <mat-form-field style="flex: 1">
           <input matInput type="number" placeholder="Height"
             [ngModel]="appConfig.currentFocusedObject.height() * appConfig.currentFocusedObject.scaleY()"
-            (ngModelChange)="appConfig.currentFocusedObject.height($event); appConfig.currentFocusedObject.scaleY(1);">
+            (ngModelChange)="appConfig.currentFocusedObject.height($event); appConfig.currentFocusedObject.scaleY(1); appConfig.currentFocusedObject.getLayer().draw();">
         </mat-form-field>
       </div>
       <div style="display: flex;">
         <mat-form-field style="flex: 1; max-width: 50%;">
           <input matInput type="number" placeholder="ScaleX"
-            [ngModel]="appConfig.currentFocusedObject.scaleX()" (ngModelChange)="appConfig.currentFocusedObject.scaleX($event)">
+            [ngModel]="appConfig.currentFocusedObject.scaleX()" (ngModelChange)="appConfig.currentFocusedObject.scaleX($event); appConfig.currentFocusedObject.getLayer().draw();">
         </mat-form-field>
         <mat-form-field style="flex: 1">
           <input matInput type="number" placeholder="ScaleY"
-            [ngModel]="appConfig.currentFocusedObject.scaleY()" (ngModelChange)="appConfig.currentFocusedObject.scaleY($event)">
+            [ngModel]="appConfig.currentFocusedObject.scaleY()" (ngModelChange)="appConfig.currentFocusedObject.scaleY($event); appConfig.currentFocusedObject.getLayer().draw();">
         </mat-form-field>
       </div>
       <div>
@@ -91,7 +91,7 @@
         <input matInput style="width: 100%; min-height: 25px; border: 0.5px solid darkgray; border-radius: 8px;"
           [style.background]="appConfig.currentFocusedObject.fill()" [cpWidth]="'300px'" [cpFallbackColor]="'#fff'"
           [cpPresetColors]="['#fff', '#ccc', '#888', '#000']" [cpAddColorButton]="true" [cpOutputFormat]="'rgba'"
-          [colorPicker]="appConfig.currentFocusedObject.fill()" (colorPickerChange)="appConfig.currentFocusedObject.fill($event)">
+          [colorPicker]="appConfig.currentFocusedObject.fill()" (colorPickerChange)="appConfig.currentFocusedObject.fill($event); appConfig.currentFocusedObject.getLayer().draw();">
       </div>
     </div>
   </mat-expansion-panel>

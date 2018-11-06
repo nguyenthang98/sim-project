@@ -6,7 +6,8 @@
     <div class="sim-top-panel">
       <app-top-panel [app-config]="appConfig"></app-top-panel>
     </div>
-    <div class="sim-work-area">
+    <div class="sim-work-area" id="{{ getContainerId() }}">
+      <!--
       Main config: width: {{ appConfig.mainConfig.width }}, height: {{ appConfig.mainConfig.height }}
       bgColor: {{ appConfig.mainConfig.backgroundColor }}
       <br>
@@ -27,6 +28,7 @@
         <br>
         fill: {{ appConfig.currentFocusedObject.fill() }}
       </div>
+      -->
     </div>
   </div>
 </div>

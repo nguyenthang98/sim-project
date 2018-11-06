@@ -26,5 +26,5 @@ div[class^="sim-"] {
 }
 .sim-work-area {
   height: calc(100% - 56px);
-  background-color: white;
+  background-color: lightgray;
 }

@@ -1,12 +1,12 @@
 <!--Shape list-->
 <div *ngIf="appConfig.layers.currentLayer && appConfig.layers.currentLayer.getChildren().length && showObjectList"
-  style="position: absolute; top: 56px; background: grey; min-width: 20em; max-height: 20em; border-radius: 5px; overflow-y: auto;">
+  style="position: absolute; top: 56px; background: grey; min-width: 20em; max-height: 20em; border-radius: 5px; overflow-y: auto; z-index: 1;">
   <mat-list>
     <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getChildren().reverse()"
       (click)="appConfig.currentFocusedObject = object">
       <button mat-button style="width: 100%;">{{ object.getClassName() }} {{ object.name() }}</button>
       <button mat-icon-button
-        (click)="object.remove(); appConfig.currentFocusedObject = null;">&times;</button>
+        (click)="object.remove(); object.getLayer().draw(); appConfig.currentFocusedObject = null;">&times;</button>
     </mat-list-item>
   </mat-list>
 </div>
@@ -15,10 +15,10 @@
 </button>
 
 <!--Shape z-index -->
-<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveUp()">
+<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveUp(); appConfig.currentFocusedObject.getLayer().draw();">
   <mat-icon>&uarr;</mat-icon>
 </button>
-<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveDown()">
+<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveDown(); appConfig.currentFocusedObject.getLayer().draw();">
   <mat-icon>&darr;</mat-icon>
 </button>
 
