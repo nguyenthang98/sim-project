@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "build-client": "cd ./sim_client && ng build && cd ..",
-	"serve-client": "cd ./sim_client && ng s --open",
+    "serve-client": "cd ./sim_client && ng s --open",
     "start": "node bin/www"
   },
   "repository": {
