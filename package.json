@@ -7,7 +7,12 @@
     "ng": "ng",
     "build-client": "cd ./sim_client && ng build && cd ..",
     "serve-client": "cd ./sim_client && ng s --open",
-    "start": "node bin/www"
+    "start": "node bin/www",
+    "postinstall": "cd ./sim_client && ng build --aot --prod && cd .."
+  },
+  "engines": {
+    "node": "~8.11.1",
+    "npm": "~5.6.0"
   },
   "repository": {
     "type": "git",
@@ -28,6 +33,11 @@
     "jsonwebtoken": "^8.3.0",
     "md5": "^2.2.1",
     "mysql2": "^1.6.1",
-    "sequelize": "^4.41.0"
+    "sequelize": "^4.41.0",
+    "typescript": "~2.9.2"
+  }, 
+  "devDependencies": {
+    "@angular/cli": "~6.2.3",
+    "@angular/compiler-cli": "^6.1.0"
   }
 }
