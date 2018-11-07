@@ -5,10 +5,11 @@
   "main": "app.js",
   "scripts": {
     "ng": "ng",
+    "npm": "npm",
     "build-client": "cd ./sim_client && ng build && cd ..",
     "serve-client": "cd ./sim_client && ng s --open",
     "start": "node bin/www",
-    "postinstall": "cd ./sim_client && ng build --aot --prod && cd .."
+    "postinstall": "cd ./sim_client && npm i && ng build --aot --prod && cd .."
   },
   "engines": {
     "node": "~8.11.1",
