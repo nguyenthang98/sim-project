@@ -9,7 +9,7 @@
     "build-client": "cd ./sim_client && ng build && cd ..",
     "serve-client": "cd ./sim_client && ng s --open",
     "start": "node bin/www",
-    "postinstall": "cd ./sim_client && npm i && ng build --aot --prod && cd .."
+    "postinstall": "cd ./sim_client && npm i && ng build && cd .."
   },
   "engines": {
     "node": "~8.11.1",
@@ -39,6 +39,7 @@
   }, 
   "devDependencies": {
     "@angular/cli": "~6.2.3",
-    "@angular/compiler-cli": "^6.1.0"
+    "@angular/compiler-cli": "^6.1.0",
+    "@angular-devkit/build-angular": "~0.8.0"
   }
 }
