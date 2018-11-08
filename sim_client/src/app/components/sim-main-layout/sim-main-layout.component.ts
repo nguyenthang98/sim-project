@@ -11,8 +11,8 @@ export class SimMainLayoutComponent {
   appConfig: AppConfig; 
   private containerId: string = "sim-work-area" + Date.now();
 
-  constructor(private canvasUtils: CanvasUtilsService) { 
-    this.appConfig = new AppConfig(canvasUtils);
+  constructor() { 
+    this.appConfig = new AppConfig();
   }
 
   ngAfterViewInit() {

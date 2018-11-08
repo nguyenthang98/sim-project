@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {AppConfig } from "../../../models/app-config.model";
 import { MatTableDataSource } from '@angular/material/table';
 import { CanvasUtilsService } from 'src/app/services/canvas-utils.service';
@@ -8,12 +8,15 @@ import { CanvasUtilsService } from 'src/app/services/canvas-utils.service';
   templateUrl: './app-control-panel.component.html',
   styleUrls: ['./app-control-panel.component.css']
 })
-export class AppControlPanelComponent implements OnInit {
+export class AppControlPanelComponent{
   @Input("app-config") appConfig: AppConfig;
 
-  constructor(private canvasUtils: CanvasUtilsService) { }
+  private SCREEN_WIDTH: number;
+  private SCREEN_HEIGHT: number;
 
-  ngOnInit() {
+  constructor(private canvasUtils: CanvasUtilsService) { 
+    this.SCREEN_HEIGHT = window.screen.height;
+    this.SCREEN_WIDTH = window.screen.width;
   }
 
   getLayerDataSource() {
@@ -32,5 +35,22 @@ export class AppControlPanelComponent implements OnInit {
 
   isShape(object) {
     return this.canvasUtils.isShape(object);
+  }
+
+  getCpPosition(ele: any) {
+    if(ele.nextSibling) {
+      const inputClientRect = ele.getBoundingClientRect();
+      // 369px is color picker popup height
+      if (inputClientRect.y + inputClientRect.height + 369 >= this.SCREEN_HEIGHT) {
+        console.log("top");
+        return "top";
+      } else {
+        console.log("right");
+        return "right";
+      }
+    } else {
+      console.log("right");
+      return "right";
+    }
   }
 }

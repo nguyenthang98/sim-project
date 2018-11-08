@@ -1,6 +1,13 @@
 <!--Shape list-->
 <div *ngIf="appConfig.layers.currentLayer && appConfig.layers.currentLayer.getChildren().length && showObjectList"
-  style="position: absolute; top: 56px; background: grey; min-width: 20em; max-height: 20em; border-radius: 5px; overflow-y: auto; z-index: 1;">
+  style="position: absolute;
+         background-color: white; 
+         top: 56px; 
+         min-width: 20em; 
+         max-height: 20em; 
+         border-radius: 0px 0px 5px 0px; 
+         overflow-y: auto; 
+         z-index: 1;" class="mat-elevation-z6">
   <mat-list>
     <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getChildren().reverse()"
       (click)="appConfig.currentFocusedObject = object">

@@ -1,12 +1,11 @@
 /* for dev */
 div[class^="sim-"] {
-  border: 1px solid black;
 }
 
 .sim-left-container {
   height: 100%;
   width: 350px;
-  background-color: red;
+  background-color: transparent;
   float: left;
   padding: 0px 5px;
   overflow-y: auto;
@@ -15,16 +14,17 @@ div[class^="sim-"] {
 .sim-work-area-container {
   height: 100%;
   width: calc(100% - 350px);
-  background-color: yellow;
+  background-color: white;
   float: right;
 }
 
 .sim-top-panel {
   height: 56px;
-  background-color: pink;
+  background-color: transparent;
   padding: 8px 0px;
 }
+
 .sim-work-area {
   height: calc(100% - 56px);
-  background-color: lightgray;
+  background-color: #eee;
 }

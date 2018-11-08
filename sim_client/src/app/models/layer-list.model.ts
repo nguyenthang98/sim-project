@@ -5,24 +5,16 @@ export class LayerList {
   backgroundLayer: SimLayer;
   currentLayer: SimLayer;
   
-  constructor(config ?:any) {
+  constructor() {
     // background layer
     const backgroundProps = {
-      name: "Background",
-      fill: config.backgroundColor
+      name: "Background"
     }
     const bgLayer = new SimLayer(backgroundProps);
+    const workingLayer = new SimLayer({name: "Working layer"});
 
-    // test layer
-    const layer1 = new SimLayer({
-      name: "Layer 1",
-    });
-    const layer2 = new SimLayer({
-      name: "Layer 2"
-    });
-
-    this.layerList = [layer1, layer2];
-    this.currentLayer = bgLayer;
+    this.layerList = [workingLayer];
+    this.currentLayer = workingLayer;
     this.backgroundLayer = bgLayer;
   }
 
@@ -30,8 +22,8 @@ export class LayerList {
     const newLayer = new SimLayer({
       name: layerName
     });
-
     this.layerList.unshift(newLayer);
+    return newLayer;
   }
 
   removeLayer(layer) {
