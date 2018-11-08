@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AppConfig } from 'src/app/models/app-config.model';
+import { _MatTreeNodeMixinBase } from '@angular/material';
 
 @Component({
   selector: 'app-top-panel',
@@ -11,7 +12,11 @@ export class AppTopPanelComponent {
 
   constructor() { }
 
-  ngOnInit() {
+  removeObject(object) {
+    console.log("removing object", object);
+    const _tempLayer = object.getLayer();
+    object.remove();
+    _tempLayer.batchDraw();
+    this.appConfig.currentFocusedObject = null;
   }
-
 }

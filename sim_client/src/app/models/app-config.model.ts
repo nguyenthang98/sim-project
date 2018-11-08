@@ -1,7 +1,6 @@
 import { ColorAdjustments } from './color-adjustments.model';
 import { LayerList } from './layer-list.model';
 import { Stage } from 'konva';
-import { CanvasUtilsService } from '../services/canvas-utils.service';
 
 export class AppConfig {
   mainConfig: {
@@ -27,21 +26,66 @@ export class AppConfig {
   }
 
   initStage(containerId) {
-    const _stage = new Stage({
+    this.stage = new Stage({
       container: containerId,
       width: this.mainConfig.width,
-      height: this.mainConfig.height
+      height: this.mainConfig.height,
+      draggable: true
     });
 
-    _stage.on("wheel", function(event) {
+    console.log(this.stage);
+
+    // set stage scale to fit window
+    const _stageContainer = this.stage.container();
+    const _containerBoundingClient = _stageContainer.getBoundingClientRect();
+    const _diffScaleX = (_containerBoundingClient.width  / this.mainConfig.width);
+    const _diffScaleY = (_containerBoundingClient.height  / this.mainConfig.height);
+    console.log(_diffScaleX);
+    console.log(_diffScaleY);
+    const _newScale = Math.min(_diffScaleX, _diffScaleY) * 0.8;
+    this.stage.scaleX(_newScale);
+    this.stage.scaleY(_newScale);
+    this.stage.x((_containerBoundingClient.width - this.mainConfig.width * _newScale) / 2);
+    this.stage.y((_containerBoundingClient.height - this.mainConfig.height * _newScale) / 2);
+
+    this.stage.on("wheel", function(event) {
       console.log("on stage mouse wheel", event);
     });
 
-    this.stage = _stage;
     // add all existed layer
     this.stage.add(this.layers.backgroundLayer);
+    this.layers.backgroundLayer.initBackground(this.mainConfig);
+
     this.layers.layerList.forEach(l => {
       this.stage.add(l);
     });
+  }
+
+  changeStageScale(event) {
+    const _newScale = event / 100;
+    const _containerBoundingClient = this.stage.container().getBoundingClientRect();
+    this.stage.scaleX(event / 100);
+    this.stage.scaleY(event / 100);
+    this.stage.x((_containerBoundingClient.width - this.mainConfig.width * _newScale) / 2);
+    this.stage.y((_containerBoundingClient.height - this.mainConfig.height * _newScale) / 2);
+
+    this.stage.batchDraw();
+  }
+
+  updateMainConfig(event) {
+    console.log(event);
+    this.stage.width(this.mainConfig.width);
+    this.stage.height(this.mainConfig.height);
+    this.layers.backgroundLayer.updateBackground(this.mainConfig);
+  }
+
+  saveStageAsImage(imageName) {
+    let dataUri = this.stage.toDataURL({});
+    let link = document.createElement("a");
+    link.download = imageName + ".png";
+    link.href = dataUri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }

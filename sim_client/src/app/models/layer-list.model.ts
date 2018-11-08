@@ -1,8 +1,9 @@
 import { SimLayer } from "./sim-layer.model";
+import { SimBgLayer } from "./sim-bg-layer.model";
 
 export class LayerList {
   layerList: SimLayer[];
-  backgroundLayer: SimLayer;
+  backgroundLayer: SimBgLayer;
   currentLayer: SimLayer;
   
   constructor() {
@@ -10,7 +11,7 @@ export class LayerList {
     const backgroundProps = {
       name: "Background"
     }
-    const bgLayer = new SimLayer(backgroundProps);
+    const bgLayer = new SimBgLayer(backgroundProps);
     const workingLayer = new SimLayer({name: "Working layer"});
 
     this.layerList = [workingLayer];
@@ -23,6 +24,7 @@ export class LayerList {
       name: layerName
     });
     this.layerList.unshift(newLayer);
+    this.backgroundLayer.getStage().add(newLayer);
     return newLayer;
   }
 
@@ -35,8 +37,11 @@ export class LayerList {
       }
       this.layerList.splice(layerIdx, 1);
     }
+
+    layer.remove();
   }
 
+  /* Layer positions management */
   isTopLayer(layer) {
     return this.layerList.findIndex(l => l == layer) == 0;
   }

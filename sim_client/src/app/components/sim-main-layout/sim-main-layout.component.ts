@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppConfig } from 'src/app/models/app-config.model';
-import { CanvasUtilsService } from 'src/app/services/canvas-utils.service';
 
 @Component({
   selector: 'app-sim-main-layout',
@@ -16,11 +15,12 @@ export class SimMainLayoutComponent {
   }
 
   ngAfterViewInit() {
-    this.appConfig.initStage(this.getContainerId())
+    setTimeout(() => {
+      this.appConfig.initStage(this.getContainerId());
+    })
   }
 
   getContainerId(): string {
     return this.containerId;
   }
-
 }

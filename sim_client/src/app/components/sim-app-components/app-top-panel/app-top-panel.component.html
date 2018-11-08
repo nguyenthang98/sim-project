@@ -12,8 +12,9 @@
     <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getChildren().reverse()"
       (click)="appConfig.currentFocusedObject = object">
       <button mat-button style="width: 100%;">{{ object.getClassName() }} {{ object.name() }}</button>
-      <button mat-icon-button
-        (click)="object.remove(); object.getLayer().draw(); appConfig.currentFocusedObject = null;">&times;</button>
+      <button mat-icon-button (click)="removeObject(object)">
+        <mat-icon>&times;</mat-icon>
+      </button>
     </mat-list-item>
   </mat-list>
 </div>
@@ -40,3 +41,12 @@
 <!--Clone shape-->
 
 <!--Remove shape-->
+
+<!--save as image-->
+<mat-form-field>
+  <input matInput type="text" placeholder="Save As Image" #imageName>
+  <button mat-button *ngIf="imageName.value" matSuffix mat-icon-button aria-label="Clear" (click)="imageName.value=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<button mat-button (click)="appConfig.saveStageAsImage(imageName.value)">Save</button>

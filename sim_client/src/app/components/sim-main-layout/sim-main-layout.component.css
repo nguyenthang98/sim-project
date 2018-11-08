@@ -1,7 +1,3 @@
-/* for dev */
-div[class^="sim-"] {
-}
-
 .sim-left-container {
   height: 100%;
   width: 350px;
@@ -26,5 +22,13 @@ div[class^="sim-"] {
 
 .sim-work-area {
   height: calc(100% - 56px);
-  background-color: #eee;
+  background-color: #ddd;
+}
+
+.sim-floating-panel {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.54);
+  border-radius: 1.75em;
+  bottom: 1em;
+  right: 2em;
 }

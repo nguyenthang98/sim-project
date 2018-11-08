@@ -6,10 +6,12 @@
     </mat-expansion-panel-header>
     <div style="display: flex;">
       <mat-form-field style="flex: 1; max-width: 50%;">
-        <input matInput type="number" placeholder="Width" [(ngModel)]="appConfig.mainConfig.width">
+        <input matInput type="number" placeholder="Width"
+          [(ngModel)]="appConfig.mainConfig.width" (ngModelChange)="appConfig.updateMainConfig($event)">
       </mat-form-field>
       <mat-form-field style="flex: 1">
-        <input matInput type="number" placeholder="Height" [(ngModel)]="appConfig.mainConfig.height">
+        <input matInput type="number" placeholder="Height"
+          [(ngModel)]="appConfig.mainConfig.height" (ngModelChange)="appConfig.updateMainConfig($event)">
       </mat-form-field>
     </div>
     <div>
@@ -22,7 +24,8 @@
         [cpPresetColors]="['#fff', '#ccc', '#888', '#000']"
         [cpAddColorButton]="true"
         [cpOutputFormat]="'rgba'"
-        [(colorPicker)]="appConfig.mainConfig.backgroundColor">
+        [(colorPicker)]="appConfig.mainConfig.backgroundColor"
+        (colorPickerChange)="appConfig.mainConfig.updateMainConfig($event)">
     </div>
   </mat-expansion-panel>
 
@@ -183,7 +186,7 @@
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
-          <!-- Name Column -->
+          <!-- Move layer Up Column -->
           <ng-container matColumnDef="moveup">
             <th mat-header-cell *matHeaderCellDef>Move up</th>
             <td mat-cell *matCellDef="let element">
@@ -194,7 +197,7 @@
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
-          <!-- Name Column -->
+          <!-- Move Layer Down Column -->
           <ng-container matColumnDef="movedown">
             <th mat-header-cell *matHeaderCellDef>Move down</th>
             <td mat-cell *matCellDef="let element">
