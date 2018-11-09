@@ -23,6 +23,7 @@
   "homepage": "https://github.com/nguyenthang98/sim-project#readme",
   "dependencies": {
     "@angular/compiler": "^6.1.0",
+    "@angular/core": "^6.1.0",
     "body-parser": "^1.18.3",
     "config": "^2.0.1",
     "cors": "^2.8.4",
