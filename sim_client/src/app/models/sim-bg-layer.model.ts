@@ -1,5 +1,5 @@
 import { SimLayer } from "./sim-layer.model";
-import { Rect } from "konva";
+import { Rect, Shape } from "konva";
 
 export class SimBgLayer extends SimLayer {
   bgRect: Rect;
@@ -23,5 +23,9 @@ export class SimBgLayer extends SimLayer {
       this.bgRect.fill(config.backgroundColor);
       this.batchDraw();
     }
+  }
+
+  getShapes() {
+    return this.getChildren(c => c instanceof Shape && c != this.bgRect);
   }
 }

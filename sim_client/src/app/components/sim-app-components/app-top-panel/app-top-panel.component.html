@@ -9,7 +9,7 @@
          overflow-y: auto; 
          z-index: 1;" class="mat-elevation-z6">
   <mat-list>
-    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getChildren().reverse()"
+    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes().reverse()"
       (click)="appConfig.currentFocusedObject = object">
       <button mat-button style="width: 100%;">{{ object.getClassName() }} {{ object.name() }}</button>
       <button mat-icon-button (click)="removeObject(object)">
@@ -19,15 +19,15 @@
   </mat-list>
 </div>
 <button mat-icon-button (click)="showObjectList = !showObjectList">
-  <mat-icon>list</mat-icon>
+  <mat-icon>layers</mat-icon>
 </button>
 
 <!--Shape z-index -->
-<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveUp(); appConfig.currentFocusedObject.getLayer().draw();">
-  <mat-icon>&uarr;</mat-icon>
+<button mat-icon-button [disabled]="shouldDisableMoveUpObj()" (click)="appConfig.currentFocusedObject.moveUp(); appConfig.currentFocusedObject.getLayer().draw();">
+  <mat-icon>expand_less</mat-icon>
 </button>
-<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.moveDown(); appConfig.currentFocusedObject.getLayer().draw();">
-  <mat-icon>&darr;</mat-icon>
+<button mat-icon-button [disabled]="shouldDisableMoveDownObj()" (click)="appConfig.currentFocusedObject.moveDown(); appConfig.currentFocusedObject.getLayer().draw();">
+  <mat-icon>expand_more</mat-icon>
 </button>
 
 <!--Shape rotation-->

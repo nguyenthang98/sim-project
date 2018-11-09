@@ -1,6 +1,7 @@
 import { ColorAdjustments } from './color-adjustments.model';
 import { LayerList } from './layer-list.model';
 import { Stage } from 'konva';
+import { registerStageOnClick, removeAllTransformer } from "../utils.js"; 
 
 export class AppConfig {
   mainConfig: {
@@ -40,8 +41,6 @@ export class AppConfig {
     const _containerBoundingClient = _stageContainer.getBoundingClientRect();
     const _diffScaleX = (_containerBoundingClient.width  / this.mainConfig.width);
     const _diffScaleY = (_containerBoundingClient.height  / this.mainConfig.height);
-    console.log(_diffScaleX);
-    console.log(_diffScaleY);
     const _newScale = Math.min(_diffScaleX, _diffScaleY) * 0.8;
     this.stage.scaleX(_newScale);
     this.stage.scaleY(_newScale);
@@ -59,6 +58,9 @@ export class AppConfig {
     this.layers.layerList.forEach(l => {
       this.stage.add(l);
     });
+
+    // register event
+    registerStageOnClick(this);
   }
 
   changeStageScale(event) {
@@ -73,19 +75,33 @@ export class AppConfig {
   }
 
   updateMainConfig(event) {
-    console.log(event);
     this.stage.width(this.mainConfig.width);
     this.stage.height(this.mainConfig.height);
     this.layers.backgroundLayer.updateBackground(this.mainConfig);
   }
 
   saveStageAsImage(imageName) {
-    let dataUri = this.stage.toDataURL({});
+    removeAllTransformer(this.stage);
+    const _lastScale = this.stage.scale();
+    this.stage.scale({x: 1, y: 1});
+    this.stage.batchDraw();
+
+    let dataUri = this.stage.toDataURL({
+      x: this.stage.x(),
+      y: this.stage.y(),
+      width: this.mainConfig.width,
+      height: this.mainConfig.height
+    });
+
     let link = document.createElement("a");
     link.download = imageName + ".png";
     link.href = dataUri;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+
+    this.stage.scale(_lastScale);
+    this.stage.batchDraw();
   }
 }

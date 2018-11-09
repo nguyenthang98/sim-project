@@ -1,6 +1,6 @@
 import { SimLayer } from "./sim-layer.model";
 import { SimBgLayer } from "./sim-bg-layer.model";
-
+import { removeAllTransformer } from "../utils";
 export class LayerList {
   layerList: SimLayer[];
   backgroundLayer: SimBgLayer;
@@ -34,6 +34,7 @@ export class LayerList {
     if (layerIdx >= 0) {
       if (layer == this.currentLayer) {
         this.currentLayer = this.backgroundLayer;
+        removeAllTransformer(this.currentLayer.getStage());
       }
       this.layerList.splice(layerIdx, 1);
     }

@@ -30,7 +30,7 @@ export class AppControlPanelComponent{
   removeLayer(layer) {
     console.log("removing layer!", layer);
     this.appConfig.layers.removeLayer(layer);
-    console.log(this.appConfig);
+    this.appConfig.currentFocusedObject = null;
   }
 
   isShape(object) {
@@ -52,5 +52,9 @@ export class AppControlPanelComponent{
       console.log("right");
       return "right";
     }
+  }
+
+  onChangeCurrentLayer(newLayer) {
+    this.appConfig.currentFocusedObject = null;
   }
 }

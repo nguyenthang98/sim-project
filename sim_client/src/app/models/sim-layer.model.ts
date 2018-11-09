@@ -1,4 +1,4 @@
-import { Layer, Circle, Rect } from "konva";
+import { Layer, Circle, Rect, Shape } from "konva";
 
 export class SimLayer extends Layer {
   addObject(className) {
@@ -35,5 +35,9 @@ export class SimLayer extends Layer {
         return null;
       }
     }
+  }
+
+  getShapes() {
+    return this.getChildren(c => c instanceof Shape);
   }
 }
