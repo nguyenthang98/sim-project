@@ -10,6 +10,7 @@ import { removeAllTransformer } from '../../../utils';
 })
 export class AppTopPanelComponent {
   @Input("app-config") appConfig: AppConfig;
+  showObjectList: boolean;
 
   constructor() { }
 
