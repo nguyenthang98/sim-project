@@ -2,6 +2,40 @@ import { Component, Input } from '@angular/core';
 import {AppConfig } from "../../../models/app-config.model";
 import { MatTableDataSource } from '@angular/material/table';
 import { CanvasUtilsService } from 'src/app/services/canvas-utils.service';
+import { Filters } from "konva";
+
+const filterFuncMap = {
+  "Blur": {
+    valueName: "blurRadius",
+    min: 0,
+    max: 40,
+    step: 0.5
+  },
+  "Brighten": {
+    valueName: "brightness",
+    min: -1,
+    max: 1,
+    step: 0.01
+  },
+  "Contrast": {
+    valueName: "contrast",
+    min: -100,
+    max: 100,
+    step: 1
+  },
+  "Enhance": {
+    valueName: "enhance",
+    min: -1,
+    max: 1,
+    step: 0.01
+  },
+  "Pixelate": {
+    valueName: "pixelSize",
+    min: 1,
+    max: 20,
+    step: 0.5
+  } 
+}
 
 @Component({
   selector: 'app-control-panel',
@@ -56,5 +90,10 @@ export class AppControlPanelComponent{
 
   onChangeCurrentLayer(newLayer) {
     this.appConfig.currentFocusedObject = null;
+  }
+
+  getFilterConfig(func) {
+    const filterName = Object.keys(Filters).find(k => Filters[k] == func);
+    return filterFuncMap[filterName];
   }
 }

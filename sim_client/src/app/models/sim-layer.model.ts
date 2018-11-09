@@ -1,7 +1,9 @@
 import { Layer, Circle, Rect, Shape } from "konva";
+import { Filters } from "konva";
 
 export class SimLayer extends Layer {
   addObject(className) {
+    const filters = [Filters.Blur, Filters.Brighten, Filters.Pixelate, Filters.Contrast, Filters.Enhance];
     const hash = "#" + Math.random().toString(36).substr(2, 8);
     switch(className) {
       case 'Circle': {
@@ -13,6 +15,7 @@ export class SimLayer extends Layer {
           name: hash,
           draggable: true
         });
+        newCircle.filters(filters);
         this.add(newCircle);
         this.batchDraw();
         return newCircle;
@@ -26,6 +29,8 @@ export class SimLayer extends Layer {
           height: 100,
           fill: '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
         });
+        newRect.filters(filters);
+        console.log("filters for rect", newRect.filters());
         this.add(newRect);
         this.batchDraw();
         return newRect;

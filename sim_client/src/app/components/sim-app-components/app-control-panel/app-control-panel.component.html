@@ -32,13 +32,33 @@
   <!--Filters-->
   <mat-expansion-panel class="mat-elevation-z3">
     <mat-expansion-panel-header>
-      <mat-panel-title>Adjustments</mat-panel-title>
+      <mat-panel-title>Filters</mat-panel-title>
     </mat-expansion-panel-header>
+    <div *ngIf="appConfig.currentFocusedObject">
+      <div *ngFor="let filter of appConfig.currentFocusedObject.filters()">
+        <div style="display: flex; flex-direction: row;" *ngIf="getFilterConfig(filter)">
+          <span style="flex: 2; padding: 1em 0px; font-weight: 500">{{ getFilterConfig(filter).valueName }}</span>
+          <span style="flex: 4;">
+            <mat-slider style="width: 100%;" 
+              [min]="getFilterConfig(filter).min"
+              [max]="getFilterConfig(filter).max"
+              [step]="getFilterConfig(filter).step"
+              (ngModelChange)="appConfig.currentFocusedObject.cache();
+                               appConfig.currentFocusedObject[getFilterConfig(filter).valueName]($event);
+                               appConfig.currentFocusedObject.getLayer().batchDraw();"
+              [ngModel]="appConfig.currentFocusedObject[getFilterConfig(filter).valueName]()">
+            </mat-slider>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--
     <div style="max-height: 400px; overflow: auto;" *ngFor="let key of getAdjustmentsList()">
       {{ key }}
       <mat-slider style="width: 100%" [min]="0" [max]="100" [thumbLabel]="true" [(ngModel)]="appConfig.adjustments[key]">
       </mat-slider>
     </div>
+    -->
   </mat-expansion-panel>
 
   <!--Shapes-->

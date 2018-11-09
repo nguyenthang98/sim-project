@@ -34,6 +34,7 @@ export class AppConfig {
       draggable: true
     });
 
+    // for dev
     console.log(this.stage);
 
     // set stage scale to fit window
@@ -47,6 +48,7 @@ export class AppConfig {
     this.stage.x((_containerBoundingClient.width - this.mainConfig.width * _newScale) / 2);
     this.stage.y((_containerBoundingClient.height - this.mainConfig.height * _newScale) / 2);
 
+    // mouse wheel handler
     this.stage.on("wheel", function(event) {
       console.log("on stage mouse wheel", event);
     });
