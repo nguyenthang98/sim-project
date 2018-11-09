@@ -14,27 +14,31 @@ const httpOptions = {
 		localStorage.getItem("token") || sessionStorage.getItem("token")
 	})
 };
-const baseURL = "http://localhost:3000";
+const basePath = "/api";
+const baseURL = "http://localhost:3000" + basePath;
 
 @Injectable({
 	providedIn: "root"
 })
 export class SimApiService {
-	constructor(private httpClient: HttpClient) {}
+	baseURL: string;
+	constructor(private httpClient: HttpClient) {
+		this.baseURL = location.origin + basePath;
+	}
 
 	getTestApi(): Observable<any> {
-		return this.httpClient.get(`${baseURL}/test`, httpOptions).pipe(
+		return this.httpClient.get(`${this.baseURL}/test`, httpOptions).pipe(
 			map(this.extractData),
 			catchError(this.handleError)
 		);
 	}
 
 	simLogin(payload: any): Observable<any> {
-		return this.httpClient.post(`${baseURL}/auth/login`, payload);
+		return this.httpClient.post(`${this.baseURL}/auth/login`, payload);
 	}
 
 	simRegister(payload: any): Observable<any> {
-		return this.httpClient.post(baseURL + "/auth/register", payload);
+		return this.httpClient.post(this.baseURL + "/auth/register", payload);
 	}
 
 	private handleError(error: HttpErrorResponse) {

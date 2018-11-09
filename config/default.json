@@ -4,13 +4,13 @@
         "jwtSecretKey": "secretKey"
     },
     "database": {
-        "dbName": "sim_project",
-        "password": "@Abc123456",
+        "dbName": "sim",
+        "password": "@simpassword",
         "user": "sim",
         "port": 3306,
         "logging": false,
         "dialect": "mysql",
-        "host": "localhost"
+        "host": "den1.mysql5.gear.host"
     },
     "dataPath": "../sim-data"
 }

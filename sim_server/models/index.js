@@ -7,7 +7,8 @@ const sequelize = new Sequelize(config.dbName, config.user, config.password, {
     },
     logging: config.logging,
     dialect: config.dialect,
-    port: config.port
+    port: config.port,
+    host: config.host
 });
 
 const Op = Sequelize.Op;

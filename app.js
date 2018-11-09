@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
 
-// const authApiRouter = require('./sim_server/routes/authentication.router');
-// const imageApiRouter = require('./sim_server/routes/image.router');
+const authApiRouter = require('./sim_server/routes/authentication.router');
+const imageApiRouter = require('./sim_server/routes/image.router');
 
 // Cross Origin Error
 app.use(cors());
@@ -19,8 +19,8 @@ app.use(
     express.static(path.join(__dirname, 'sim_client/dist/sim_client'))
 );
 
-// app.use('/auth', authApiRouter);
-// app.use(require('./sim_server/controllers/authentication').authenticate());
-// app.use('/image', imageApiRouter);
+app.use('/api/auth', authApiRouter);
+app.use(require('./sim_server/controllers/authentication').authenticate());
+app.use('/api/image', imageApiRouter);
 
 module.exports = app;
