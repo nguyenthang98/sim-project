@@ -15,12 +15,12 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'sim_client/dist/sim_client')));
 app.use(
-    '/',
+    '/**',
     express.static(path.join(__dirname, 'sim_client/dist/sim_client'))
 );
 
+const authFunc = require('./sim_server/controllers/authentication').authenticate;
 app.use('/api/auth', authApiRouter);
-app.use(require('./sim_server/controllers/authentication').authenticate());
-app.use('/api/image', imageApiRouter);
+app.use('/api/image', authFunc(), imageApiRouter);
 
 module.exports = app;
