@@ -52,13 +52,13 @@
         </div>
       </div>
     </div>
-    <!--
+    
     <div style="max-height: 400px; overflow: auto;" *ngFor="let key of getAdjustmentsList()">
       {{ key }}
       <mat-slider style="width: 100%" [min]="0" [max]="100" [thumbLabel]="true" [(ngModel)]="appConfig.adjustments[key]">
       </mat-slider>
     </div>
-    -->
+   
   </mat-expansion-panel>
 
   <!--Shapes-->
@@ -71,8 +71,13 @@
       Add New
       <br>
       <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Rect')">Rectangle</button>
+      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Eclipse')">Eclipse</button>
       <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Circle')">Circle</button>
-      <button mat-button>More</button>
+      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Wedge')">Wedge</button>
+      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Star')">Star</button>
+      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('RegularPolygon')">RegularPolygon</button>
+      <!-- <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Line')">Line</button> -->
+      <!-- <button mat-button>More</button> -->
     </div>
     <!--Shape properties controls-->
     <div *ngIf="isShape(appConfig.currentFocusedObject)">
