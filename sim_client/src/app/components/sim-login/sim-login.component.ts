@@ -3,6 +3,8 @@ import { SimApiService } from "../../services/sim-api.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { passValidator } from "../../directives/pass-validator/pass-validator.directive";
+import { MatSnackBar } from "@angular/material";
 
 const jwtHelper = new JwtHelperService();
 
@@ -15,13 +17,15 @@ export class SimLoginComponent implements OnInit {
 	currentSession: number;
 	rememberAuth: boolean;
 	checkValidPass: boolean;
-	isLogin: boolean;
-	isRegister: string;
 
 	loginForm: FormGroup;
 	registerForm: FormGroup;
 
-	constructor(private simApiService: SimApiService, private router: Router) {}
+	constructor(
+		private simApiService: SimApiService,
+		private router: Router,
+		private snackBar: MatSnackBar
+	) {}
 
 	ngOnInit() {
 		this.initAuthInfo();
@@ -34,8 +38,6 @@ export class SimLoginComponent implements OnInit {
 	}
 
 	initAuthInfo(): void {
-		this.isLogin = true;
-		this.isRegister = "ok";
 		this.checkValidPass = true;
 		this.loginForm = new FormGroup({
 			username: new FormControl("", [Validators.required]),
@@ -44,12 +46,12 @@ export class SimLoginComponent implements OnInit {
 
 		this.registerForm = new FormGroup({
 			username: new FormControl("", [Validators.required]),
-			password: new FormControl("", [
-				Validators.required,
-				Validators.minLength(6)
-			]),
+			password: new FormControl("", [Validators.required]),
 			email: new FormControl("", [Validators.required, Validators.email]),
-			passwordConfirm: new FormControl("", [Validators.required])
+			confirmPassword: new FormControl("", [
+				Validators.required,
+				passValidator("password")
+			])
 		});
 	}
 
@@ -61,9 +63,8 @@ export class SimLoginComponent implements OnInit {
 	onLoginButtonClicked(): void {
 		this.simApiService.simLogin(this.loginForm.value).subscribe(res => {
 			if (res.code !== 200) {
-				this.isLogin = false;
+				this.openSnackBar("Username or Password is incorrect", "Close");
 			} else {
-				this.isLogin = true;
 				if (this.rememberAuth) {
 					localStorage.setItem("token", res.content);
 				} else {
@@ -76,20 +77,15 @@ export class SimLoginComponent implements OnInit {
 	}
 
 	onRegisterButtonClicked(): void {
-		this.checkValidPass = this.confirmPassword(
-			this.registerForm.value.password,
-			this.registerForm.value.passwordConfirm
-		);
 		if (this.checkValidPass) {
 			this.simApiService.simRegister(this.registerForm.value).subscribe(res => {
 				if (res.code !== 200) {
 					if (res.content === "USER_EXISTED") {
-						this.isRegister = "user";
+						this.openSnackBar("User existed", "Close");
 					} else if (res.content === "EMAIL_EXISTED") {
-						this.isRegister = "email";
+						this.openSnackBar("Email existed", "Close");
 					}
 				} else {
-					this.isRegister = "ok";
 					sessionStorage.setItem("token", res.content);
 					this.router.navigate(["/"]);
 				}
@@ -97,9 +93,20 @@ export class SimLoginComponent implements OnInit {
 		}
 	}
 
-	confirmPassword(password: string, passwordConfirm: string): boolean {
-		let check = true;
-		if (password !== passwordConfirm) check = false;
-		return check;
+	getErrorMessage(form: string, field: string) {
+		return this[form].get(field).hasError("required")
+			? "You must enter a value"
+			: this[form].get(field).hasError("email")
+			? "Not a valid email"
+			: this[form].get(field).hasError("passValidator")
+			? "Password does not match"
+			: "";
+	}
+
+	openSnackBar(message: string, action: string) {
+		this.snackBar.open(message, action, {
+			duration: 5000,
+			horizontalPosition: "end"
+		});
 	}
 }

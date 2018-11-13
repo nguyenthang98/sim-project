@@ -1,119 +1,177 @@
-<div class="contain">
-	<div class="row">
-		<div class="col-md-6">
-			
-			<img class="logo-wrapper" src="../../../assets/logo.png">
-			
-		</div>
-		<div class="col-md-6 black">
-			<div class="panel panel-login">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-6">
-							<a [ngClass]="{'active': !currentSession || currentSession == 1}" (click)="changeCurrentSession(1)" id="login-form-link">Login</a>
-						</div>
-						<div class="col-xs-6">
-							<a [ngClass]="{'active': currentSession == 2}" (click)="changeCurrentSession(2)" id="register-form-link">Register</a>
-						</div>
+<mat-grid-list cols="3" style="height: 100vh;" rowHeight="fit">
+	<mat-grid-tile [colspan]="2" style="background-color: rgba(0,0,0,.87)">
+		<img class="logo-wrapper" src="../../../assets/images/logo_white.png">
+	</mat-grid-tile>
+	<mat-grid-tile [colspan]="1">
+		<mat-tab-group dynamicHeight>
+			<mat-tab label="Login">
+				<form [formGroup]="loginForm">
+					<div style="margin: 15px 0 0 0;" class="field-container">
+						<mat-form-field>
+							<input matInput placeholder="Enter your username" formControlName="username" required>
+							<mat-error *ngIf="loginForm.get('username').invalid">{{getErrorMessage('loginForm', 'username')}}</mat-error>
+						</mat-form-field>
 					</div>
-					<hr>
-				</div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-lg-12">
-							<form id="login-form" *ngIf="!currentSession || currentSession == 1" [formGroup]="loginForm" style="display: block;">
-								<label class="alert alert-danger" style="padding: 5px;" *ngIf="!isLogin">Username or Password is incorrect</label>
-								<div class="form-group" [ngClass]="{'has-error': loginForm.get('username').touched && loginForm.get('username').invalid}">
-									<input type="text" name="username" tabindex="1" class="form-control" formControlName="username" placeholder="Username">
-									<label class="control-label" *ngIf="loginForm.get('username').touched && loginForm.get('username').invalid">
-										Username is required!	
-									</label>
-								</div>
-								<div class="form-group" [ngClass]="{'has-error': loginForm.get('password').touched && loginForm.get('password').invalid}">
-									<input type="password" name="password" tabindex="2" class="form-control" formControlName='password' placeholder="Password">
-									<label class="control-label" *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid">
-										Password is required!	
-									</label>
-								</div>
-								<div class="form-group text-center">
-									<input type="checkbox" tabindex="3" class="" name="remember" [checked]="rememberAuth" (change)='rememberAuth = !rememberAuth'>
-									<label for="remember"> Remember Me</label>
-								</div>
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-6 col-sm-offset-3">
-											<input type="submit" name="login-submit" tabindex="4" [disabled]="!loginForm.valid" class="form-control btn btn-login" value="Log In" (click)="onLoginButtonClicked()">
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="text-center">
-												<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</form>
-							<form id="register-form" *ngIf="currentSession == 2" role="form" style="display: block;" [formGroup]="registerForm">
-								<div class="form-group" [ngClass]="{'has-error': registerForm.get('username').touched && registerForm.get('username').invalid}">
-									<label class="alert alert-danger" style="padding: 5px;" *ngIf="isRegister === 'user'">Username is existed</label>
-									<label class="alert alert-danger" style="padding: 5px;" *ngIf="isRegister === 'email'">Email is existed</label>
-									<input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" formControlName="username">
-									<label class="control-label" *ngIf="registerForm.get('username').touched && registerForm.get('username').invalid">
-										Username is required!	
-									</label>
-								</div>
-								<div class="form-group" [ngClass]="{'has-error': registerForm.get('email').touched && registerForm.get('email').invalid}">
-									<input type="email" name="email" tabindex="1" class="form-control" formControlName="email" placeholder="Email Address">
-									<div *ngIf="registerForm.get('email').touched && registerForm.get('email').invalid">
-										<label class="control-label" *ngIf="registerForm.get('email').errors.required">
-											Email is required!	
-										</label>
-										<label class="control-label" *ngIf="registerForm.get('email').errors.email">
-											Email is not true!	
-										</label>
-									</div>
-								</div>
-								<div class="form-group" [ngClass]="{'has-error': registerForm.get('password').touched && registerForm.get('password').invalid}">
-									<input type="password" name="password" tabindex="2" class="form-control" formControlName="password" placeholder="Password">
-									<div *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid">
-										<label class="control-label" *ngIf="registerForm.get('password').errors.required">
-											Password is required!	
-										</label>
-										<label class="control-label" *ngIf="registerForm.get('password').errors.minlength">
-											Password must be at least 6 characters!	
-										</label>
-									</div>
-								</div>
-								<div class="form-group" [ngClass]="{'has-error': (registerForm.get('passwordConfirm').touched && registerForm.get('passwordConfirm').invalid) || !checkValidPass}">
-									<input type="password" name="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" formControlName="passwordConfirm" (click)="checkValidPass = true">
-									<label class="control-label" *ngIf="registerForm.get('passwordConfirm').touched && registerForm.get('passwordConfirm').invalid">
-										Password Confirm is required!	
-									</label>
+					<div class="field-container">
+						<mat-form-field>
+							<input matInput type="password" placeholder="Enter your password" formControlName="password" required>
+							<mat-error *ngIf="loginForm.get('password').invalid">{{getErrorMessage('loginForm', 'password')}}</mat-error>
+						</mat-form-field>
+					</div>
+				</form>
+				<section class="login-section">
+					<mat-checkbox [checked]="rememberAuth" (change)='rememberAuth = !rememberAuth'>Remember login</mat-checkbox>
+				</section>
+				<button [disabled]="!loginForm.valid" (click)="onLoginButtonClicked()" mat-flat-button color="primary">Login</button>
+			</mat-tab>
+			<mat-tab label="Register">
+				<form [formGroup]="registerForm">
+					<div style="margin: 15px 0 0 0;" class="field-container">
+						<mat-form-field>
+							<input matInput placeholder="Enter your username" formControlName="username" required>
+							<mat-error *ngIf="registerForm.get('username').invalid">{{getErrorMessage('registerForm', 'username')}}</mat-error>
+						</mat-form-field>
+					</div>
+					<div class="field-container">
+						<mat-form-field>
+							<input matInput placeholder="Enter your email" formControlName="email" required>
+							<mat-error *ngIf="registerForm.get('email').invalid">{{getErrorMessage('registerForm', 'email')}}</mat-error>
+						</mat-form-field>
+					</div>
+					<div class="field-container">
+						<mat-form-field>
+							<input matInput type="password" placeholder="Enter your password" formControlName="password" required>
+							<mat-error *ngIf="registerForm.get('password').invalid">{{getErrorMessage('registerForm', 'password')}}</mat-error>
+						</mat-form-field>
+					</div>
+					<div class="field-container">
+						<mat-form-field>
+							<input matInput type="password" placeholder="Confirm your password" formControlName="confirmPassword" required>
+							<mat-error *ngIf="registerForm.get('confirmPassword').invalid">{{getErrorMessage('registerForm', 'confirmPassword')}}</mat-error>
+						</mat-form-field>
+					</div>
+				</form>
+				<button style="margin: 10px 0 0 0;" (click)="onRegisterButtonClicked()" [disabled]="!registerForm.valid" mat-flat-button color="primary">Register Now</button>
+			</mat-tab>
+		</mat-tab-group>
+	</mat-grid-tile>
+</mat-grid-list>
+<!-- <div class="contain"> -->
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col-md-6"> -->
 
-									<label class="control-label" *ngIf="registerForm.get('passwordConfirm').touched && !checkValidPass">
-										Password Confirm is incorrect!	
-									</label>
-								</div>
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-6 col-sm-offset-3">
-											<input type="submit" name="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" [disabled]="!registerForm.valid" (click)="onRegisterButtonClicked()">
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-	</div>
-	<div class="line-bottom">
-		<div class="line-bottom-right"></div>
-		<div class="line-bottom-left"></div>
-	</div>
-</div>
+<!-- 			<img class="logo-wrapper" src="../../../assets/logo.png"> -->
+
+<!-- 		</div> -->
+<!-- 		<div class="col-md-6 black"> -->
+<!-- 			<div class="panel panel-login"> -->
+<!-- 				<div class="panel-heading"> -->
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-xs-6"> -->
+<!-- 							<a [ngClass]="{'active': !currentSession || currentSession == 1}" (click)="changeCurrentSession(1)" id="login-form-link">Login</a> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-xs-6"> -->
+<!-- 							<a [ngClass]="{'active': currentSession == 2}" (click)="changeCurrentSession(2)" id="register-form-link">Register</a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<hr> -->
+<!-- 				</div> -->
+<!-- 				<div class="panel-body"> -->
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-lg-12"> -->
+<!-- 							<form id="login-form" *ngIf="!currentSession || currentSession == 1" [formGroup]="loginForm" style="display: block;"> -->
+<!-- 								<label class="alert alert-danger" style="padding: 5px;" *ngIf="!isLogin">Username or Password is incorrect</label> -->
+<!-- 								<div class="form-group" [ngClass]="{'has-error': loginForm.get('username').touched && loginForm.get('username').invalid}"> -->
+<!-- 									<input type="text" name="username" tabindex="1" class="form-control" formControlName="username" placeholder="Username"> -->
+<!-- 									<label class="control-label" *ngIf="loginForm.get('username').touched && loginForm.get('username').invalid"> -->
+<!-- 										Username is required! -->	
+<!-- 									</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group" [ngClass]="{'has-error': loginForm.get('password').touched && loginForm.get('password').invalid}"> -->
+<!-- 									<input type="password" name="password" tabindex="2" class="form-control" formControlName='password' placeholder="Password"> -->
+<!-- 									<label class="control-label" *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid"> -->
+<!-- 										Password is required! -->	
+<!-- 									</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group text-center"> -->
+<!-- 									<input type="checkbox" tabindex="3" class="" name="remember" [checked]="rememberAuth" (change)='rememberAuth = !rememberAuth'> -->
+<!-- 									<label for="remember"> Remember Me</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-sm-6 col-sm-offset-3"> -->
+<!-- 											<input type="submit" name="login-submit" tabindex="4" [disabled]="!loginForm.valid" class="form-control btn btn-login" value="Log In" (click)="onLoginButtonClicked()"> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-lg-12"> -->
+<!-- 											<div class="text-center"> -->
+<!-- 												<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</form> -->
+<!-- 							<form id="register-form" *ngIf="currentSession == 2" role="form" style="display: block;" [formGroup]="registerForm"> -->
+<!-- 								<div class="form-group" [ngClass]="{'has-error': registerForm.get('username').touched && registerForm.get('username').invalid}"> -->
+<!-- 									<label class="alert alert-danger" style="padding: 5px;" *ngIf="isRegister === 'user'">Username is existed</label> -->
+<!-- 									<label class="alert alert-danger" style="padding: 5px;" *ngIf="isRegister === 'email'">Email is existed</label> -->
+<!-- 									<input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" formControlName="username"> -->
+<!-- 									<label class="control-label" *ngIf="registerForm.get('username').touched && registerForm.get('username').invalid"> -->
+<!-- 										Username is required! -->	
+<!-- 									</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group" [ngClass]="{'has-error': registerForm.get('email').touched && registerForm.get('email').invalid}"> -->
+<!-- 									<input type="email" name="email" tabindex="1" class="form-control" formControlName="email" placeholder="Email Address"> -->
+<!-- 									<div *ngIf="registerForm.get('email').touched && registerForm.get('email').invalid"> -->
+<!-- 										<label class="control-label" *ngIf="registerForm.get('email').errors.required"> -->
+<!-- 											Email is required! -->	
+<!-- 										</label> -->
+<!-- 										<label class="control-label" *ngIf="registerForm.get('email').errors.email"> -->
+<!-- 											Email is not true! -->	
+<!-- 										</label> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group" [ngClass]="{'has-error': registerForm.get('password').touched && registerForm.get('password').invalid}"> -->
+<!-- 									<input type="password" name="password" tabindex="2" class="form-control" formControlName="password" placeholder="Password"> -->
+<!-- 									<div *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"> -->
+<!-- 										<label class="control-label" *ngIf="registerForm.get('password').errors.required"> -->
+<!-- 											Password is required! -->	
+<!-- 										</label> -->
+<!-- 										<label class="control-label" *ngIf="registerForm.get('password').errors.minlength"> -->
+<!-- 											Password must be at least 6 characters! -->	
+<!-- 										</label> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group" [ngClass]="{'has-error': (registerForm.get('passwordConfirm').touched && registerForm.get('passwordConfirm').invalid) || !checkValidPass}"> -->
+<!-- 									<input type="password" name="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" formControlName="passwordConfirm" (click)="checkValidPass = true"> -->
+<!-- 									<label class="control-label" *ngIf="registerForm.get('passwordConfirm').touched && registerForm.get('passwordConfirm').invalid"> -->
+<!-- 										Password Confirm is required! -->	
+<!-- 									</label> -->
+
+<!-- 									<label class="control-label" *ngIf="registerForm.get('passwordConfirm').touched && !checkValidPass"> -->
+<!-- 										Password Confirm is incorrect! -->	
+<!-- 									</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-sm-6 col-sm-offset-3"> -->
+<!-- 											<input type="submit" name="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" [disabled]="!registerForm.valid" (click)="onRegisterButtonClicked()"> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</form> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+
+<!-- 	</div> -->
+<!-- 	<div class="line-bottom"> -->
+<!-- 		<div class="line-bottom-right"></div> -->
+<!-- 		<div class="line-bottom-left"></div> -->
+<!-- 	</div> -->
+<!-- </div> -->

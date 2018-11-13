@@ -26,7 +26,6 @@ module.exports.register = (req, res) => {
                         let token = jwt.sign(req.body, configApp.jwtSecretKey, {
                             expiresIn: expiresValue
                         });
-                        console.log(req.body.username + ': REGISTER SUCCESS');
                         res.send(
                             jsonResponse(
                                 errorCodes.SUCCESS,
@@ -36,7 +35,6 @@ module.exports.register = (req, res) => {
                         );
                     });
                 } else {
-                    console.log(req.body.username + ': REGISTER FAILED');
                     res.send(
                         jsonResponse(
                             errorCodes.ERROR_USER_EXISTED,
@@ -47,7 +45,6 @@ module.exports.register = (req, res) => {
                 }
             });
         } else {
-            console.log(req.body.username + ': REGISTER FAILED');
             res.send(
                 jsonResponse(
                     errorCodes.ERROR_USER_EXISTED,
@@ -67,7 +64,6 @@ module.exports.login = (req, res) => {
         }
     }).then(user => {
         if (!user) {
-            console.log(req.body.username + ': LOGIN SUCCESS');
             res.send(
                 jsonResponse(
                     errorCodes.ERROR_USER_NOT_EXISTS,
@@ -77,7 +73,6 @@ module.exports.login = (req, res) => {
             );
         } else {
             if (user.password !== req.body.password) {
-                console.log(req.body.username + ': LOGIN SUCCESS');
                 res.send(
                     jsonResponse(
                         errorCodes.ERROR_WRONG_PASSWORD,
@@ -92,7 +87,6 @@ module.exports.login = (req, res) => {
                     email: user.email
                 };
 
-                console.log(req.body.username + ': LOGIN SUCCESS');
                 let token = jwt.sign(resUser, configApp.jwtSecretKey, {
                     expiresIn: expiresValue
                 });
@@ -112,7 +106,6 @@ module.exports.authenticate = () => {
             jwt.verify(token, configApp.jwtSecretKey, (err, decoded) => {
                 if (err) {
                     console.log(err);
-                    console.log(req.body.username + ': AUTHENTICATE FAILED');
                     return res.send(
                         jsonResponse(
                             errorCodes.ERROR_WRONG_PASSWORD,
@@ -129,9 +122,6 @@ module.exports.authenticate = () => {
                             req.decoded = user.toJSON();
                             next();
                         } else {
-                            console.log(
-                                req.body.username + ': AUTHENTICATE FAILED'
-                            );
                             return res.send(
                                 jsonResponse(
                                     errorCodes.ERROR_WRONG_PASSWORD,
