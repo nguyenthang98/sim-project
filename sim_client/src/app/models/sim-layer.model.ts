@@ -1,19 +1,11 @@
-import { Layer, Circle, Rect, Shape,Ellipse,Stage,Wedge,Line,Star,RegularPolygon,Image } from "konva";
+import { Layer, Circle, Rect, Shape, Ellipse, Wedge, Star, RegularPolygon, Image } from "konva";
 import { Filters } from "konva";
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
 
 export class SimLayer extends Layer {
   addObject(className) {
-    const filters = [Filters.Blur, Filters.Brighten, Filters.Pixelate, Filters.Contrast, Filters.Enhance];
     const hash = "#" + Math.random().toString(36).substr(2, 8);
-    // var width = window.innerWidth;
-    // var height = window.innerHeight;
-    
-    // var stage = new Stage({
-    //   container: '.konvajs-content',
-    //   width: width,
-    //   height: height
-    // });
+    const filters = [Filters.Blur, Filters.Brighten, Filters.Contrast, Filters.Enhance];
+
     switch(className) {
       case 'Circle': {
         console.log("adding circle to layer ", this.name());
@@ -140,19 +132,23 @@ export class SimLayer extends Layer {
     }
   }
 
-  // addImage(_url){
-  //   const uploader: FileUploader = new FileUploader({ url: _url, itemAlias: 'photo'});
-  //   uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-  //   uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-  //        console.log('ImageUpload:uploaded:', item, status, response);
-  //        alert('File uploaded successfully');
-  //    };
-    
-  //    const image = new Image({
-  //     x: 50,
-  //     y: 50,  
-  //   });
-  // }
+  addImage(src) {
+    const filters = [Filters.Blur, Filters.Brighten, Filters.Contrast, Filters.Enhance];
+    console.log("adding image into current layer");  
+    const imageEle = document.createElement('img'); 
+    imageEle.onload = () => {
+      const konvaImage = new Image({
+        image: imageEle,
+        draggable: true
+      });
+      konvaImage.filters(filters);
+
+      this.add(konvaImage);
+      this.batchDraw();
+    }
+    imageEle.src = src;
+  }
+
   getShapes() {
     return this.getChildren(c => c instanceof Shape);
   }

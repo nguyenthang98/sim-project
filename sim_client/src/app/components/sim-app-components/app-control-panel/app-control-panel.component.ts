@@ -7,30 +7,35 @@ import { Filters } from "konva";
 const filterFuncMap = {
   "Blur": {
     valueName: "blurRadius",
+    inputType: "slider",
     min: 0,
     max: 40,
     step: 0.5
   },
   "Brighten": {
     valueName: "brightness",
+    inputType: "slider",
     min: -1,
     max: 1,
     step: 0.01
   },
   "Contrast": {
     valueName: "contrast",
+    inputType: "slider",
     min: -100,
     max: 100,
     step: 1
   },
   "Enhance": {
     valueName: "enhance",
+    inputType: "slider",
     min: -1,
     max: 1,
     step: 0.01
   },
   "Pixelate": {
     valueName: "pixelSize",
+    inputType: "slider",
     min: 1,
     max: 20,
     step: 0.5
@@ -47,10 +52,12 @@ export class AppControlPanelComponent{
 
   private SCREEN_WIDTH: number;
   private SCREEN_HEIGHT: number;
+  private fileToURL: any;
 
   constructor(private canvasUtils: CanvasUtilsService) { 
     this.SCREEN_HEIGHT = window.screen.height;
     this.SCREEN_WIDTH = window.screen.width;
+    this.fileToURL = window.URL.createObjectURL;
   }
 
   getLayerDataSource() {
@@ -95,5 +102,19 @@ export class AppControlPanelComponent{
   getFilterConfig(func) {
     const filterName = Object.keys(Filters).find(k => Filters[k] == func);
     return filterFuncMap[filterName];
+  }
+
+  loadImage() {
+    const inputEle = document.createElement("input");
+    inputEle.type = "file";
+
+    inputEle.addEventListener('change', () => {
+      const file = inputEle.files[0];
+      if(!file) return;
+      if(!this.appConfig.layers.currentLayer) return;
+      this.appConfig.layers.currentLayer.addImage(this.fileToURL(file)); 
+    })
+
+    inputEle.click();
   }
 }

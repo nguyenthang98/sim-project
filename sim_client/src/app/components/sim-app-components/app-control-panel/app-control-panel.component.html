@@ -40,6 +40,8 @@
           <span style="flex: 2; padding: 1em 0px; font-weight: 500">{{ getFilterConfig(filter).valueName }}</span>
           <span style="flex: 4;">
             <mat-slider style="width: 100%;" 
+              *ngIf="getFilterConfig(filter).inputType == 'slider'"
+              [thumbLabel]="true"
               [min]="getFilterConfig(filter).min"
               [max]="getFilterConfig(filter).max"
               [step]="getFilterConfig(filter).step"
@@ -52,13 +54,6 @@
         </div>
       </div>
     </div>
-    
-    <div style="max-height: 400px; overflow: auto;" *ngFor="let key of getAdjustmentsList()">
-      {{ key }}
-      <mat-slider style="width: 100%" [min]="0" [max]="100" [thumbLabel]="true" [(ngModel)]="appConfig.adjustments[key]">
-      </mat-slider>
-    </div>
-   
   </mat-expansion-panel>
 
   <!--Shapes-->
@@ -134,7 +129,7 @@
       <mat-panel-title>Images</mat-panel-title>
     </mat-expansion-panel-header>
     <!--Image control buttons-->
-
+    <button mat-button (click)="loadImage()">Add Image</button>
     <!--Image properties controls-->
 
   </mat-expansion-panel>

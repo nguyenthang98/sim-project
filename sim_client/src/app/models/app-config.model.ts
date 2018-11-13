@@ -49,8 +49,14 @@ export class AppConfig {
     this.stage.y((_containerBoundingClient.height - this.mainConfig.height * _newScale) / 2);
 
     // mouse wheel handler
-    this.stage.on("wheel", function(event) {
+    this.stage.on("wheel", (event) => {
       console.log("on stage mouse wheel", event);
+      if(event.evt.ctrlKey) {
+        event.evt.preventDefault();
+        const _additionScale = Math.sign(event.evt.deltaY) * -0.05;
+        const _lastScale = this.stage.scaleX();
+        this.changeStageScale(_lastScale + _additionScale);
+      }
     });
 
     // add all existed layer
@@ -66,10 +72,10 @@ export class AppConfig {
   }
 
   changeStageScale(event) {
-    const _newScale = event / 100;
+    const _newScale = event;
     const _containerBoundingClient = this.stage.container().getBoundingClientRect();
-    this.stage.scaleX(event / 100);
-    this.stage.scaleY(event / 100);
+    this.stage.scaleX(event);
+    this.stage.scaleY(event);
     this.stage.x((_containerBoundingClient.width - this.mainConfig.width * _newScale) / 2);
     this.stage.y((_containerBoundingClient.height - this.mainConfig.height * _newScale) / 2);
 
