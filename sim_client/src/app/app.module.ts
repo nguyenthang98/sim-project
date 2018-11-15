@@ -4,10 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent, SimComponents } from "./app.component";
-import {
-	AppRoutingModule,
-	RoutingComponents
-} from "./modules/app-routing/app-routing.module";
+import { AppRoutingModule, RoutingComponents } from "./modules/app-routing/app-routing.module";
 import { AppMaterialModule } from "./modules/app-material/app-material.module";
 import { SimApiService } from "./services/sim-api.service";
 import { HttpClientModule } from "@angular/common/http";

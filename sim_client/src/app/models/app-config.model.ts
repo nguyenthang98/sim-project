@@ -50,7 +50,6 @@ export class AppConfig {
 
     // mouse wheel handler
     this.stage.on("wheel", (event) => {
-      console.log("on stage mouse wheel", event);
       if(event.evt.ctrlKey) {
         event.evt.preventDefault();
         const _additionScale = Math.sign(event.evt.deltaY) * -0.05;

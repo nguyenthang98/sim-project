@@ -1,0 +1,110 @@
+<!--Geometric-->
+<div>
+  <h5>Geometric</h5>
+  <div style="display: flex;">
+    <mat-form-field style="flex: 1; max-width: 50%;">
+      <input matInput type="number" placeholder="X" [ngModel]="shape.x()" (ngModelChange)="shape.x($event); shape.getLayer().draw();">
+    </mat-form-field>
+    <mat-form-field style="flex: 1">
+      <input matInput type="number" placeholder="Y" [ngModel]="shape.y()" (ngModelChange)="shape.y($event); shape.getLayer().draw();">
+    </mat-form-field>
+  </div>
+  <div style="display: flex;">
+    <mat-form-field style="flex: 1; max-width: 50%;">
+      <input matInput type="number" placeholder="Width" [ngModel]="shape.width() * shape.scaleX()"
+        (ngModelChange)="shape.scaleX(1); shape.width($event); shape.getLayer().draw();">
+    </mat-form-field>
+    <mat-form-field style="flex: 1">
+      <input matInput type="number" placeholder="Height" [ngModel]="shape.height() * shape.scaleY()"
+        (ngModelChange)="shape.scaleY(1); shape.height($event); shape.getLayer().draw();">
+    </mat-form-field>
+  </div>
+  <div *ngIf="shape.getGeometricKeys().length">
+    <div *ngFor="let key of shape.getGeometricKeys();">
+      <mat-form-field style="width: 100%;">
+        <input matInput type="number" placeholder="{{ key }}"
+               [ngModel]="shape[key]()" (ngModelChange)="shape[key]($event); shape.getLayer().draw()">
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<!--Color management and border-->
+<h5>Fill & Stroke</h5>
+<div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+  <span style="flex: 2;">Enable Fill</span>
+  <span style="flex: 4">
+    <mat-slide-toggle
+      [ngModel]="shape.fillEnabled()"
+      (ngModelChange)="shape.fillEnabled($event); shape.getLayer().batchDraw();">
+    </mat-slide-toggle> 
+  </span>
+</div>
+<div *ngIf="shape.fillEnabled()" style=" margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+  <span style="flex: 2;">Fill Color</span>
+  <span style="flex: 4">
+    <input matInput style="width: 100%; min-height: 25px; border: 0.5px solid darkgray; border-radius: 8px;"
+      [style.background]="shape.fill()"
+      [cpPosition]="'top'" [cpPositionOffset]="'100%'" [cpPositionRelativeToArrow]="true"
+      [cpWidth]="'300px'" [cpFallbackColor]="'#fff'" [cpPresetColors]="['#fff', '#ccc', '#888', '#000']"
+      [cpAddColorButton]="true" [cpOutputFormat]="'rgba'" 
+      [colorPicker]="shape.fill()" (colorPickerChange)="shape.fill($event); shape.getLayer().draw();">
+  </span>
+</div>
+
+<div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+  <span style="flex: 2;">Enable Stroke</span>
+  <span style="flex: 4">
+    <mat-slide-toggle
+      [ngModel]="shape.strokeEnabled()"
+      (ngModelChange)="shape.strokeEnabled($event); shape.getLayer().batchDraw();">
+    </mat-slide-toggle> 
+  </span>
+</div>
+
+<div *ngIf="shape.strokeEnabled()">
+  <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+    <span style="flex: 2;">Stroke</span>
+    <span style="flex: 4">
+      <input matInput style="width: 100%; min-height: 25px; border: 0.5px solid darkgray; border-radius: 8px;"
+        [cpPosition]="'top'" [cpPositionOffset]="'100%'" [cpPositionRelativeToArrow]="true"
+        [style.background]="shape.stroke()"
+        [cpWidth]="'300px'" [cpFallbackColor]="'#fff'" [cpPresetColors]="['#fff', '#ccc', '#888', '#000']" [cpAddColorButton]="true"
+        [cpOutputFormat]="'rgba'" [colorPicker]="shape.stroke()" (colorPickerChange)="shape.stroke($event); shape.getLayer().draw();">
+    </span>
+  </div>
+
+  <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+    <span style="flex: 2;">Stroke Width</span>
+    <span style="flex: 4">
+        <mat-slider style="width: 100%;"
+          [thumbLabel]="true"
+          [min]="1" [max]="100" [step]="0.01" 
+          (ngModelChange)="shape.strokeWidth($event);
+                           shape.clearCache();
+                           shape.getLayer().batchDraw();"
+          [ngModel]="shape.strokeWidth()">
+        </mat-slider>
+    </span>
+  </div>
+</div>
+
+<!--Filters-->
+<!--Filters only for image-->
+<div *ngIf="isImage(shape)">
+  <h5>Filters</h5>
+  <div *ngFor="let filter of shape.filters()">
+    <div style="display: flex; flex-direction: row;" *ngIf="getFilterConfig(filter)">
+      <span style="flex: 2; padding: 1em 0px; ">{{ getFilterConfig(filter).label }}</span>
+      <span style="flex: 4;">
+        <mat-slider style="width: 100%;" *ngIf="getFilterConfig(filter).inputType == 'slider'" 
+          [thumbLabel]="true"
+          [min]="getFilterConfig(filter).min" [max]="getFilterConfig(filter).max" [step]="getFilterConfig(filter).step" 
+          (ngModelChange)="shape.cache();
+                          shape[getFilterConfig(filter).valueName]($event);
+                          shape.getLayer().batchDraw();"
+          [ngModel]="shape[getFilterConfig(filter).valueName]()">
+        </mat-slider>
+      </span>
+    </div>
+</div>

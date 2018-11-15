@@ -7,24 +7,32 @@ function registerStageOnClick (appConfig) {
       appConfig.currentFocusedObject = null;
       appConfig.stage.batchDraw();
     } else {
-      if (event.target instanceof Shape) {
-        const _newTransformer = new Transformer();
-        const _targetLayer = event.target.getLayer();
-
-        removeAllTransformer(appConfig.stage);
-        appConfig.layers.currentLayer = _targetLayer;
-        _targetLayer.add(_newTransformer);
-        _newTransformer.attachTo(event.target);
-        appConfig.currentFocusedObject = event.target;
-
-        appConfig.stage.batchDraw();
-      }
+      setCurrentFocusedObject(appConfig, event.target);
     }
   })
+}
+
+function setCurrentFocusedObject(appConfig, object) {
+  if(object instanceof Shape) {
+    const _newTransformer = new Transformer();
+    const _newLayer = object.getLayer();
+
+    removeAllTransformer(appConfig.stage);
+    appConfig.layers.currentLayer = _newLayer;
+    _newLayer.add(_newTransformer);
+    _newTransformer.attachTo(object);
+    appConfig.currentFocusedObject = object;
+
+  } else {
+    removeAllTransformer(appConfig.stage);
+    appConfig.currentFocusedObject = null;
+
+  }
+  appConfig.stage.batchDraw();
 }
 
 function removeAllTransformer (stage) {
   stage.find("Transformer").each(tr => { tr.destroy(); })
 }
 
-export { registerStageOnClick, removeAllTransformer };
+export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject };
