@@ -23,8 +23,8 @@ const baseURL = "http://localhost:3000" + basePath;
 export class SimApiService {
 	baseURL: string;
 	constructor(private httpClient: HttpClient) {
-		this.baseURL = location.origin + basePath;
-		// this.baseURL = baseURL;
+		// this.baseURL = location.origin + basePath;
+		this.baseURL = baseURL;
 	}
 
 	getTestApi(): Observable<any> {

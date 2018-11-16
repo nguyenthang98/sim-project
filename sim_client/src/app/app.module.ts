@@ -11,13 +11,15 @@ import { HttpClientModule } from "@angular/common/http";
 import { CanvasUtilsService } from "./services/canvas-utils.service";
 import { ColorPickerModule } from "ngx-color-picker";
 import { PassValidatorDirective } from "./directives/pass-validator/pass-validator.directive";
+import { SimUserCollectionComponent } from './components/sim-user-collection/sim-user-collection.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		RoutingComponents,
 		SimComponents,
-		PassValidatorDirective
+		PassValidatorDirective,
+		SimUserCollectionComponent
 	],
 	imports: [
 		BrowserModule,

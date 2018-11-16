@@ -5,10 +5,16 @@ import { SimLoginComponent } from "../../components/sim-login/sim-login.componen
 import { SimPageNotFoundComponent } from "../../components/sim-page-not-found/sim-page-not-found.component";
 import { SimAuthGuard } from "../../sim-auth.guard";
 import { SimMainLayoutComponent } from "../../components/sim-main-layout/sim-main-layout.component";
+import { SimUserCollectionComponent } from "../../components/sim-user-collection/sim-user-collection.component";
 
 const routes: Routes = [
 	{ path: "", component: SimMainLayoutComponent, canActivate: [SimAuthGuard] },
 	{ path: "login", component: SimLoginComponent },
+	{
+		path: "user-collection",
+		component: SimUserCollectionComponent,
+		canActivate: [SimAuthGuard]
+	},
 	{ path: "**", component: SimPageNotFoundComponent }
 ];
 
