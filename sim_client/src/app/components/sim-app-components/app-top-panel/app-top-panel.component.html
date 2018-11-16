@@ -169,17 +169,7 @@
 	</button>
 </div>
 
-<!--save as image-->
-<div style="float: right;">
-	<mat-form-field>
-		<input matInput type="text" placeholder="Save As Image" #imageName>
-		<button mat-button *ngIf="imageName.value" matSuffix mat-icon-button aria-label="Clear" (click)="imageName.value=''">
-			<mat-icon>close</mat-icon>
-		</button>
-	</mat-form-field>
-	<button mat-button (click)="appConfig.saveStageAsImage(imageName.value)">Save</button>
-</div>
-
+<!-- account icon -->
 <button style="margin: 0.5em; float: right;" mat-icon-button [matMenuTriggerFor]="menu">
 	<mat-icon>account_circle</mat-icon>
 </button>
@@ -193,3 +183,14 @@
 		<span>Log out</span>
 	</button>
 </mat-menu>
+
+<!--save as image-->
+<div style="float: right;">
+	<mat-form-field>
+		<input matInput type="text" placeholder="Save As Image" #imageName>
+		<button mat-button *ngIf="imageName.value" matSuffix mat-icon-button aria-label="Clear" (click)="imageName.value=''">
+			<mat-icon>close</mat-icon>
+		</button>
+	</mat-form-field>
+	<button mat-button (click)="appConfig.saveStageAsImage(imageName.value)">Save</button>
+</div>
