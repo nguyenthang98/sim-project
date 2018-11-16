@@ -13,7 +13,7 @@ function registerStageOnClick (appConfig) {
 }
 
 function setCurrentFocusedObject(appConfig, object) {
-  if(object instanceof Shape) {
+  if(object instanceof Shape && appConfig.stage.find('.' + object.name()).length) {
     const _newTransformer = new Transformer();
     const _newLayer = object.getLayer();
 
@@ -26,7 +26,6 @@ function setCurrentFocusedObject(appConfig, object) {
   } else {
     removeAllTransformer(appConfig.stage);
     appConfig.currentFocusedObject = null;
-
   }
   appConfig.stage.batchDraw();
 }

@@ -1,10 +1,10 @@
-import { Layer, Shape, Image } from "konva";
+import { Layer, Shape } from "konva";
 import { Filters } from "konva";
 import * as supportedShapes from "./sim-supported-shape.config";
 
 export class SimLayer extends Layer {
-  addObject(className) {
-    const newShape = this.createShape(className);
+  addObject(className, props) {
+    const newShape = this.createShape(className, props);
     if(newShape) {
       console.log(`Created shape ${className}`, newShape);
       this.add(newShape);
@@ -16,11 +16,11 @@ export class SimLayer extends Layer {
     }
   }
 
-  private createShape(className) {
+  private createShape(className, props) {
     const constructor = supportedShapes[className];
     // generate randomly fill color and name
     if(constructor) {
-      const newShape = new constructor();
+      const newShape = new constructor(props);
       newShape.on("transform", () => {
         newShape.width(newShape.width() * newShape.scaleX());
         newShape.height(newShape.height() * newShape.scaleY());
@@ -33,18 +33,18 @@ export class SimLayer extends Layer {
       return null;
   }
 
-  addImage(src) {
+  addImage(src, props:any = {}) {
     const filters = [Filters.Blur, Filters.Brighten, Filters.Contrast, Filters.Enhance];
-    console.log("adding image into current layer");  
     const imageEle = document.createElement('img'); 
     imageEle.onload = () => {
-      const konvaImage = new Image({
+      const _newImage = new supportedShapes.Image({
         image: imageEle,
-        draggable: true
+        ...props
       });
-      konvaImage.filters(filters);
+      _newImage.cache();
+      _newImage.filters(props.filters || filters);
 
-      this.add(konvaImage);
+      this.add(_newImage);
       this.batchDraw();
     }
     imageEle.src = src;

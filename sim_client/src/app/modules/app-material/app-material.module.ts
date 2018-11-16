@@ -2,13 +2,13 @@ import { NgModule } from "@angular/core";
 import { 
   MatCheckboxModule, MatExpansionModule, MatSliderModule, MatRadioModule, MatTabsModule,
 	MatButtonModule, MatTableModule, MatIconModule, MatInputModule, MatListModule, MatSlideToggleModule,
-	MatGridListModule, MatSnackBarModule
+	MatGridListModule, MatSnackBarModule, MatTooltipModule
 } from "@angular/material";
 
 const materialsModules = [
   MatExpansionModule, MatSliderModule, MatRadioModule, MatCheckboxModule, MatTabsModule,
 	MatButtonModule, MatTableModule, MatIconModule, MatInputModule, MatListModule, MatSlideToggleModule,
-	MatGridListModule, MatSnackBarModule
+	MatGridListModule, MatSnackBarModule, MatTooltipModule
 ]
 
 @NgModule({

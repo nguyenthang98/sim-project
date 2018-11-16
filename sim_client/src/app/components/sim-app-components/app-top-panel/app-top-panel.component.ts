@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AppConfig } from 'src/app/models/app-config.model';
 import { _MatTreeNodeMixinBase } from '@angular/material';
-import { removeAllTransformer } from '../../../utils';
+import { removeAllTransformer, setCurrentFocusedObject } from '../../../utils';
 
 @Component({
   selector: 'app-top-panel',
@@ -11,8 +11,21 @@ import { removeAllTransformer } from '../../../utils';
 export class AppTopPanelComponent {
   @Input("app-config") appConfig: AppConfig;
   showObjectList: boolean;
+  showRotation: boolean;
+  showOpacity: boolean;
 
   constructor() { }
+
+  clearToggledPanels(except) {
+    const lastValue = this[except];
+    this.showObjectList = false;
+    this.showRotation = false;
+    this.showOpacity = false;
+
+    if(except) {
+      this[except] = lastValue;
+    }
+  }
 
   removeObject(object) {
     console.log("removing object", object);
@@ -22,6 +35,19 @@ export class AppTopPanelComponent {
     if(object == this.appConfig.currentFocusedObject) {
       this.appConfig.currentFocusedObject = null;
       removeAllTransformer(this.appConfig.stage);
+    }
+  }
+
+  duplicateObject(object) {
+    const objectProps = object.toObject();
+    console.log(objectProps);
+    objectProps.attrs.x = 0;
+    objectProps.attrs.y = 0;
+    objectProps.attrs.name += "(Copy)";
+    if(objectProps.className == "Image") {
+      this.appConfig.layers.currentLayer.addImage(object.getImage().src, objectProps.attrs);
+    } else {
+      this.appConfig.layers.currentLayer.addObject(objectProps.className, objectProps.attrs);
     }
   }
 
@@ -53,5 +79,9 @@ export class AppTopPanelComponent {
         else return false;
       }
     }
+  }
+
+  focusObject(object) {
+    setCurrentFocusedObject(this.appConfig, object);
   }
 }

@@ -1,16 +1,19 @@
 // Konva Shapes
-import { Circle as _circle, Rect as _rect, Ellipse as _ellipse, Wedge as _wedge, RegularPolygon as _regPolygon, Star as _star} from "konva";
+import {
+  Circle as _circle, Rect as _rect, Ellipse as _ellipse, Wedge as _wedge, RegularPolygon as _regPolygon, 
+  Star as _star, Image as _image
+} from "konva";
 
 // Konva-Based Shapes
 export {
-  Circle, Rect , Ellipse, Wedge, RegularPolygon, Star
+  Circle, Rect , Ellipse, Wedge, RegularPolygon, Star, Image
 }
 
 interface SimShape {
   getGeometricKeys: () => string[];
 }
 
-// general funcitons
+// general props and functions
 const defaultConfigs = { x: 0, y: 0, draggable: true, strokeEnabled: false, fillEnabled: true };
 function getRandomHash() {
   return "#" + Math.random().toString(36).substr(2, 5);
@@ -20,12 +23,13 @@ function getRandomColor() {
 }
 
 class Circle extends _circle implements SimShape {
-  constructor() {
+  constructor(props:any = {}) {
     super({
       ...defaultConfigs,
       radius: 100,
       name: getRandomHash(),
-      fill: getRandomColor()
+      fill: getRandomColor(),
+      ...props
     });
   }
 
@@ -35,13 +39,14 @@ class Circle extends _circle implements SimShape {
 }
 
 class Rect extends _rect implements SimShape {
-  constructor() {
+  constructor(props:any = {}) {
     super({
       ...defaultConfigs,
       width: 200,
       height: 200,
       name: getRandomHash(),
-      fill: getRandomColor()
+      fill: getRandomColor(),
+      ...props
     });
   }
 
@@ -51,7 +56,7 @@ class Rect extends _rect implements SimShape {
 }
 
 class Ellipse extends _ellipse implements SimShape{
-  constructor() {
+  constructor(props:any = {}) {
     super({
       ...defaultConfigs,
       radius: {
@@ -59,7 +64,8 @@ class Ellipse extends _ellipse implements SimShape{
         y: 100
       },
       name: getRandomHash(),
-      fill: getRandomColor()
+      fill: getRandomColor(),
+      ...props
     });
   }
 
@@ -69,13 +75,14 @@ class Ellipse extends _ellipse implements SimShape{
 }
 
 class Wedge extends _wedge implements SimShape {
-  constructor() {
+  constructor(props:any = {}) {
     super({
       ...defaultConfigs,
       angle: 60,
       radius: 100,
       name: getRandomHash(),
-      fill: getRandomColor()
+      fill: getRandomColor(),
+      ...props
     });
   }
 
@@ -86,13 +93,14 @@ class Wedge extends _wedge implements SimShape {
 }
 
 class RegularPolygon extends _regPolygon implements SimShape {
-  constructor() {
+  constructor(props:any = {}) {
     super({
       ...defaultConfigs,
       radius: 100,
       sides: 6,
       name: getRandomHash(),
-      fill: getRandomColor()
+      fill: getRandomColor(),
+      ...props
     });
   }
 
@@ -103,18 +111,35 @@ class RegularPolygon extends _regPolygon implements SimShape {
 }
 
 class Star extends _star implements SimShape {
-  constructor() {
+  constructor(props:any = {}) {
     super({
       ...defaultConfigs,
       innerRadius: 60,
       outerRadius: 70,
       numPoints: 6,
       name: getRandomHash(),
-      fill: getRandomColor()
+      fill: getRandomColor(),
+      ...props
     });
   }
 
   getGeometricKeys(): string[]{
     return ["innerRadius", "outerRadius", "numPoints"];
+  }
+}
+
+class Image extends _image implements SimShape {
+  constructor(props:any = {}) {
+    console.log("create Image", props);
+    super({
+      ...defaultConfigs,
+      name: getRandomHash(),
+      fill: getRandomColor(),
+      ...props
+    });
+  }
+
+  getGeometricKeys(): string[]{
+    return [];
   }
 }
