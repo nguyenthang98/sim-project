@@ -23,13 +23,13 @@ function getRandomColor() {
 }
 
 class Circle extends _circle implements SimShape {
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     super({
       ...defaultConfigs,
       radius: 100,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 
@@ -39,14 +39,14 @@ class Circle extends _circle implements SimShape {
 }
 
 class Rect extends _rect implements SimShape {
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     super({
       ...defaultConfigs,
       width: 200,
       height: 200,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 
@@ -56,7 +56,7 @@ class Rect extends _rect implements SimShape {
 }
 
 class Ellipse extends _ellipse implements SimShape{
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     super({
       ...defaultConfigs,
       radius: {
@@ -65,7 +65,7 @@ class Ellipse extends _ellipse implements SimShape{
       },
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 
@@ -75,14 +75,14 @@ class Ellipse extends _ellipse implements SimShape{
 }
 
 class Wedge extends _wedge implements SimShape {
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     super({
       ...defaultConfigs,
       angle: 60,
       radius: 100,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 
@@ -93,14 +93,14 @@ class Wedge extends _wedge implements SimShape {
 }
 
 class RegularPolygon extends _regPolygon implements SimShape {
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     super({
       ...defaultConfigs,
       radius: 100,
       sides: 6,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 
@@ -111,7 +111,7 @@ class RegularPolygon extends _regPolygon implements SimShape {
 }
 
 class Star extends _star implements SimShape {
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     super({
       ...defaultConfigs,
       innerRadius: 60,
@@ -119,7 +119,7 @@ class Star extends _star implements SimShape {
       numPoints: 6,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 
@@ -129,13 +129,13 @@ class Star extends _star implements SimShape {
 }
 
 class Image extends _image implements SimShape {
-  constructor(props:any = {}) {
+  constructor(props?:any) {
     console.log("create Image", props);
     super({
       ...defaultConfigs,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...props
+      ...(props || {})
     });
   }
 

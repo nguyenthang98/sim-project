@@ -33,16 +33,16 @@ export class SimLayer extends Layer {
       return null;
   }
 
-  addImage(src, props:any = {}) {
+  addImage(src, props?:any) {
     const filters = [Filters.Blur, Filters.Brighten, Filters.Contrast, Filters.Enhance];
     const imageEle = document.createElement('img'); 
     imageEle.onload = () => {
       const _newImage = new supportedShapes.Image({
         image: imageEle,
-        ...props
+        ...(props || {})
       });
       _newImage.cache();
-      _newImage.filters(props.filters || filters);
+      _newImage.filters((props || {}).filters || filters);
 
       this.add(_newImage);
       this.batchDraw();
