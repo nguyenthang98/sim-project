@@ -3,7 +3,7 @@ import { Filters } from "konva";
 import * as supportedShapes from "./sim-supported-shape.config";
 
 export class SimLayer extends Layer {
-  addObject(className, props) {
+  addObject(className, props?:any) {
     const newShape = this.createShape(className, props);
     if(newShape) {
       console.log(`Created shape ${className}`, newShape);
