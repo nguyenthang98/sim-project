@@ -16,7 +16,7 @@ export class SimLayer extends Layer {
     }
   }
 
-  private createShape(className, props) {
+  private createShape(className, props?:any) {
     const constructor = supportedShapes[className];
     // generate randomly fill color and name
     if(constructor) {
