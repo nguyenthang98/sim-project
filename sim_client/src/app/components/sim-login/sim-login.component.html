@@ -5,7 +5,7 @@
 	<mat-grid-tile [colspan]="1">
 		<mat-tab-group dynamicHeight>
 			<mat-tab label="Login">
-				<form [formGroup]="loginForm">
+				<form [formGroup]="loginForm" (ngSubmit)="onLoginButtonClicked()">
 					<div style="margin: 15px 0 0 0;" class="field-container">
 						<mat-form-field>
 							<input matInput placeholder="Enter your username" formControlName="username" required>
@@ -18,14 +18,14 @@
 							<mat-error *ngIf="loginForm.get('password').invalid">{{getErrorMessage('loginForm', 'password')}}</mat-error>
 						</mat-form-field>
 					</div>
+					<section class="login-section">
+						<mat-checkbox [checked]="rememberAuth" (change)='rememberAuth = !rememberAuth'>Remember login</mat-checkbox>
+					</section>
+					<button [disabled]="!loginForm.valid" (click)="onLoginButtonClicked()" mat-flat-button color="primary">Login</button>
 				</form>
-				<section class="login-section">
-					<mat-checkbox [checked]="rememberAuth" (change)='rememberAuth = !rememberAuth'>Remember login</mat-checkbox>
-				</section>
-				<button [disabled]="!loginForm.valid" (click)="onLoginButtonClicked()" mat-flat-button color="primary">Login</button>
 			</mat-tab>
 			<mat-tab label="Register">
-				<form [formGroup]="registerForm">
+				<form [formGroup]="registerForm" (ngSubmit)="onRegisterButtonClicked()">
 					<div style="margin: 15px 0 0 0;" class="field-container">
 						<mat-form-field>
 							<input matInput placeholder="Enter your username" formControlName="username" required>
@@ -50,8 +50,8 @@
 							<mat-error *ngIf="registerForm.get('confirmPassword').invalid">{{getErrorMessage('registerForm', 'confirmPassword')}}</mat-error>
 						</mat-form-field>
 					</div>
+					<button style="margin: 10px 0 0 0;" (click)="onRegisterButtonClicked()" [disabled]="!registerForm.valid" mat-flat-button color="primary">Register Now</button>
 				</form>
-				<button style="margin: 10px 0 0 0;" (click)="onRegisterButtonClicked()" [disabled]="!registerForm.valid" mat-flat-button color="primary">Register Now</button>
 			</mat-tab>
 		</mat-tab-group>
 	</mat-grid-tile>
