@@ -21,7 +21,7 @@
   background-color: lightblue;
   height: 180px;
   width: 180px;
-  border-radius: 10px;
+  border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -31,7 +31,6 @@
   /* column-width: 300px; */
   column-gap: 20px;
   width: 100%;
-  margin: 50px auto;
 }
 
 div#columns figure {
@@ -58,4 +57,73 @@ div#columns figure figcaption {
   font-size: 0.9rem;
   color: #444;
   line-height: 1.5;
+}
+
+.ch-grid {
+  padding: 0;
+  display: block;
+  text-align: center;
+  height: 180px;
+  width: 180px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.ch-grid:after,
+.ch-item:before {
+  content: "";
+  display: table;
+}
+
+.ch-grid:after {
+  clear: both;
+}
+
+.ch-item {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  transition: all 0.4s ease-in-out;
+}
+
+.ch-img-1 {
+  background-image: url(https://tympanus.net/Tutorials/CircleHoverEffects/images/2.jpg);
+}
+
+.ch-info {
+  position: absolute;
+  background: rgba(63, 147, 147, 0.8);
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+  transform: scale(0);
+}
+
+.ch-info p {
+  color: #fff;
+  padding: 10px 5px;
+  font-style: italic;
+  margin: 75% 30px;
+  font-size: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  opacity: 0;
+}
+
+.ch-info p:hover {
+  cursor: pointer;
+}
+
+.ch-item:hover .ch-info {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.ch-item:hover .ch-info p {
+  opacity: 1;
 }

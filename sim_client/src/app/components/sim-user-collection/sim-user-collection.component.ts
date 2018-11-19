@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-sim-user-collection',
-  templateUrl: './sim-user-collection.component.html',
-  styleUrls: ['./sim-user-collection.component.css']
+	selector: "app-sim-user-collection",
+	templateUrl: "./sim-user-collection.component.html",
+	styleUrls: ["./sim-user-collection.component.css"]
 })
 export class SimUserCollectionComponent implements OnInit {
+	constructor() {}
 
-  constructor() { }
+	ngOnInit() {}
 
-  ngOnInit() {
-  }
-
+	changeAvatar() {
+		console.log("===>Change Avatar");
+	}
 }
