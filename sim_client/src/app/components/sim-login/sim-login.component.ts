@@ -66,10 +66,10 @@ export class SimLoginComponent implements OnInit {
 				this.openSnackBar("Username or Password is incorrect", "Close");
 			} else {
 				if (this.rememberAuth) {
-					localStorage.setItem("token", res.content);
+					this.setUserInfo(localStorage, res.content);
 				} else {
 					localStorage.clear();
-					sessionStorage.setItem("token", res.content);
+					this.setUserInfo(sessionStorage, res.content);
 				}
 				this.router.navigate(["/"]);
 			}
@@ -86,11 +86,18 @@ export class SimLoginComponent implements OnInit {
 						this.openSnackBar("Email existed", "Close");
 					}
 				} else {
-					sessionStorage.setItem("token", res.content);
+					this.setUserInfo(sessionStorage, res.content);
 					this.router.navigate(["/"]);
 				}
 			});
 		}
+	}
+
+	private setUserInfo(storage: any, data: any) {
+		storage.setItem("token", data.token);
+		storage.setItem("idUser", data.idUser);
+		storage.setItem("username", data.username);
+		storage.setItem("avatar", data.avatar);
 	}
 
 	getErrorMessage(form: string, field: string) {

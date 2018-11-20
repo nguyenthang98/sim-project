@@ -2,7 +2,7 @@
 	<div class="nav">1</div>
 	<div class="left">
 		<div class="ch-grid">
-			<div class="ch-item ch-img-1">
+			<div class="ch-item" style="background-repeat: no-repeat;background-position: center;background-size: 100% 100%; " [ngStyle]="{'background-image': 'url(' + avatarUrl + ')'}">
 				<div class="ch-info">
 					<p (click)="changeAvatar()">Change your avatar</p>
 				</div>
@@ -18,7 +18,6 @@
 	<div class="images-container">
 		<div id="columns">
 			<figure>
-				<img src="//s3-us-west-2.amazonaws.com/s.cdpn.io/4273/cinderella.jpg">
 				<figcaption>Cinderella wearing European fashion of the mid-1860’s</figcaption>
 			</figure>
 

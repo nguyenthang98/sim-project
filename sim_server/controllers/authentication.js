@@ -7,6 +7,7 @@ const configApp = require('config').application;
 const User = models.User;
 
 const expiresValue = '72h';
+const avatarUrl = '1542713143327-1.png';
 
 module.exports.register = (req, res) => {
     req.body.password = md5(req.body.password);
@@ -22,15 +23,23 @@ module.exports.register = (req, res) => {
                 }
             }).then(user => {
                 if (!user) {
+                    req.body.avatar = avatarUrl;
                     User.create(req.body).then(result => {
                         let token = jwt.sign(req.body, configApp.jwtSecretKey, {
                             expiresIn: expiresValue
                         });
+
+                        let response = {
+                            token: token,
+                            username: req.body.username,
+                            idUser: result.idUser,
+                            avatar: result.avatar
+                        };
                         res.send(
                             jsonResponse(
                                 errorCodes.SUCCESS,
                                 'REGISTER SUCCESS',
-                                token
+                                response
                             )
                         );
                     });
@@ -90,8 +99,15 @@ module.exports.login = (req, res) => {
                 let token = jwt.sign(resUser, configApp.jwtSecretKey, {
                     expiresIn: expiresValue
                 });
+
+                let response = {
+                    token: token,
+                    idUser: user.idUser,
+                    username: req.body.username,
+                    avatar: user.avatar
+                };
                 res.send(
-                    jsonResponse(errorCodes.SUCCESS, 'LOGIN SUCCESS', token)
+                    jsonResponse(errorCodes.SUCCESS, 'LOGIN SUCCESS', response)
                 );
             }
         }

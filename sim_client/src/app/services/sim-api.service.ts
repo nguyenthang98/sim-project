@@ -14,6 +14,7 @@ const httpOptions = {
 		localStorage.getItem("token") || sessionStorage.getItem("token")
 	})
 };
+
 const basePath = "/api";
 const baseURL = "http://localhost:3000" + basePath;
 
@@ -40,6 +41,15 @@ export class SimApiService {
 
 	simRegister(payload: any): Observable<any> {
 		return this.httpClient.post(this.baseURL + "/auth/register", payload);
+	}
+
+	changeAvatar(payload: any): Observable<any> {
+		return this.httpClient.post(this.baseURL + "/user/change-avatar", payload, {
+			headers: new HttpHeaders({
+				Authorization:
+				localStorage.getItem("token") || sessionStorage.getItem("token")
+			})
+		});
 	}
 
 	private handleError(error: HttpErrorResponse) {

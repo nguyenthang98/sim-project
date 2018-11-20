@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(100),
             allowNull: false,
             unique: true
+        },
+        avatar: {
+            type: DataTypes.STRING(),
+            allowNull: false
         }
     });
 };

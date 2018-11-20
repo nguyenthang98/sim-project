@@ -89,10 +89,6 @@ div#columns figure figcaption {
   transition: all 0.4s ease-in-out;
 }
 
-.ch-img-1 {
-  background-image: url(https://tympanus.net/Tutorials/CircleHoverEffects/images/2.jpg);
-}
-
 .ch-info {
   position: absolute;
   background: rgba(63, 147, 147, 0.8);
