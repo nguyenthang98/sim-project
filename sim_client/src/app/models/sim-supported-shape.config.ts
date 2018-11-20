@@ -1,12 +1,12 @@
 // Konva Shapes
 import {
   Circle as _circle, Rect as _rect, Ellipse as _ellipse, Wedge as _wedge, RegularPolygon as _regPolygon, 
-  Star as _star, Image as _image
+  Star as _star, Image as _image, Line as _line
 } from "konva";
 
 // Konva-Based Shapes
 export {
-  Circle, Rect , Ellipse, Wedge, RegularPolygon, Star, Image
+  Circle, Rect , Ellipse, Wedge, RegularPolygon, Star, Image, Line
 }
 
 interface SimShape {
@@ -131,6 +131,22 @@ class Star extends _star implements SimShape {
 class Image extends _image implements SimShape {
   constructor(props?:any) {
     console.log("create Image", props);
+    super({
+      ...defaultConfigs,
+      name: getRandomHash(),
+      fill: getRandomColor(),
+      ...(props || {})
+    });
+  }
+
+  getGeometricKeys(): string[]{
+    return [];
+  }
+}
+
+class Line extends _line implements SimShape {
+  constructor(props?:any) {
+    console.log("create Line", props);
     super({
       ...defaultConfigs,
       name: getRandomHash(),

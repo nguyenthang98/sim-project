@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Filters, Image } from 'konva';
+import { Filters } from 'konva';
+import * as SimShapes from "../../models/sim-supported-shape.config";
 
 @Component({
   selector: 'sim-shape-properties',
@@ -17,7 +18,27 @@ export class SimShapePropertiesComponent {
   }
 
   isImage(shape) {
-    return shape instanceof Image;
+    return shape instanceof SimShapes.Image;
+  }
+
+  isLine(shape) {
+    return shape instanceof SimShapes.Line;
+  }
+
+  dashArrToString(dashArr) {
+    try {
+      return `${dashArr.join(" ")}`;
+    } catch(err) {
+      return "";
+    }
+  }
+
+  stringToDashArr(string) {
+    try {
+      return string.split(" ");
+    } catch(err) {
+      return [];
+    }
   }
 }
 
