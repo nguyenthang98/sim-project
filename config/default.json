@@ -12,5 +12,5 @@
         "dialect": "mysql",
         "host": "den1.mysql5.gear.host"
     },
-    "dataPath": "../sim-data"
+    "dataPath": "./sim-data"
 }
