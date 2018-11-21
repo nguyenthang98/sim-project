@@ -8,7 +8,7 @@
     "npm": "npm",
     "build-client": "cd ./sim_client && ng build && cd ..",
     "serve-client": "cd ./sim_client && ng s --open",
-    "postinstall": "npm i --prefix sim_client && cd ./sim_client && ng build --prod && cd ..",
+    "postinstall": "cd ./sim_client && npm i && ng build --prod && cd ..",
     "start": "node bin/www"
   },
   "repository": {
