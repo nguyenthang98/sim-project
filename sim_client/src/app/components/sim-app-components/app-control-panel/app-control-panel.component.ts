@@ -26,10 +26,6 @@ export class AppControlPanelComponent{
     return new MatTableDataSource(this.appConfig.layers.layerList);
   }
 
-  getAdjustmentsList() {
-    return Object.keys(this.appConfig.adjustments);
-  }
-
   removeLayer(layer) {
     console.log("removing layer!", layer);
     this.appConfig.layers.removeLayer(layer);
@@ -64,6 +60,19 @@ export class AppControlPanelComponent{
 
   focusObject(object) {
     setCurrentFocusedObject(this.appConfig, object);
+  }
+
+  drawLine() {
+    const _newLine = this.appConfig.layers.currentLayer.addObject("Line", {
+      strokeEnabled: true,
+      stroke: "black",
+      fillEnabled: false,
+      strokeWidth: 5,
+      width: 0,
+      height: 0
+    });
+    this.appConfig.mode = "draw-line";
+    setCurrentFocusedObject(this.appConfig, _newLine);
   }
 
   loadImage() {

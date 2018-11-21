@@ -95,6 +95,35 @@
       </span>
     </div>
   </div>
+
+  <!--Extra Options for Line-->
+  <div *ngIf="isLine(shape)">
+    <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+      <span style="flex: 2;">Dash</span>
+      <span style="flex: 4">
+        <mat-form-field>
+          <input matInput type="text" 
+            placeholder="Dash Array(space separated)"
+            [ngModel]="dashArrToString(shape.dash())"
+            (ngModelChange)="shape.dash(stringToDashArr($event)); shape.getLayer().batchDraw()">
+        </mat-form-field>
+        </span>
+    </div>
+    <!--
+    <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+      <span style="flex: 2;">Line Cap</span>
+      <span style="flex: 4">
+        <mat-form-field>
+          <mat-select [ngModel]="shape.lineCap()" (ngModelChange)="shape.lineCap($event); shape.getLayer().batchDraw()">
+            <mat-option *ngFor="let lc of [shape.lineCap(), 'butt', 'round', 'square']">
+              {{ lc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+    </div>
+    -->
+  </div>
 </div>
 
 <!--Filters-->

@@ -1,7 +1,6 @@
 <!--Shape list-->
 <div style="height: 100%; display: inline-flex; align-items: center">
-	<div *ngIf="appConfig.layers.currentLayer && appConfig.layers.currentLayer.getShapes().length && showObjectList"
-	 style="position: absolute;
+	<div *ngIf="appConfig.layers.currentLayer && appConfig.layers.currentLayer.getShapes().length && showObjectList" style="position: absolute;
 	 padding: 5px;
 	 background-color: white; 
 	 top: 56px; 
@@ -10,10 +9,9 @@
 	 border-radius: 0px 0px 5px 0px; 
 	 overflow-y: auto; 
 	 z-index: 1;"
-  class="">
+	 class="">
 		<mat-list>
-			<mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes().reverse();"
-  (click)="focusObject(object)">
+			<mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes().reverse();" (click)="focusObject(object)">
 				<button mat-button style="width: 100%;">
 					{{ object.getClassName() }}: {{ object.name() }}
 				</button>
@@ -23,41 +21,27 @@
 			</mat-list-item>
 		</mat-list>
 	</div>
-	<button 
-					   style="flex: 1"
-		mat-icon-button 
-		matTooltip="List Objects"
-  [matTooltipPosition]="'below'"
-  [disabled]="!appConfig.layers.currentLayer.getShapes().length"
-  (click)="clearToggledPanels('showObjectList'); showObjectList = !showObjectList">
+	<button style="flex: 1" mat-icon-button matTooltip="List Objects" [matTooltipPosition]="'below'" [disabled]="!appConfig.layers.currentLayer.getShapes().length"
+	 (click)="clearToggledPanels('showObjectList'); showObjectList = !showObjectList">
 		<mat-icon>category</mat-icon>
 	</button>
 </div>
 
 <!--Shape z-index -->
 <div style="display: inline-flex; align-items: center;">
-	<button mat-icon-button 
-	 matTooltip="Move Up"
-  [matTooltipPosition]="'below'"
-  style="flex: 1"
-  [disabled]="shouldDisableMoveUpObj()"
-  (click)="appConfig.currentFocusedObject.moveUp(); appConfig.currentFocusedObject.getLayer().draw();">
+	<button mat-icon-button matTooltip="Move Up" [matTooltipPosition]="'below'" style="flex: 1" [disabled]="shouldDisableMoveUpObj()"
+	 (click)="appConfig.currentFocusedObject.moveUp(); appConfig.currentFocusedObject.getLayer().draw();">
 		<mat-icon>expand_less</mat-icon>
 	</button>
-	<button mat-icon-button
-  matTooltip="Move Down"
-  [matTooltipPosition]="'below'"
-  style="flex: 1"
-  [disabled]="shouldDisableMoveDownObj()"
-  (click)="appConfig.currentFocusedObject.moveDown(); appConfig.currentFocusedObject.getLayer().draw();">
+	<button mat-icon-button matTooltip="Move Down" [matTooltipPosition]="'below'" style="flex: 1" [disabled]="shouldDisableMoveDownObj()"
+	 (click)="appConfig.currentFocusedObject.moveDown(); appConfig.currentFocusedObject.getLayer().draw();">
 		<mat-icon>expand_more</mat-icon>
 	</button>
 </div>
 
 <!--Shape rotation-->
 <div style="display: inline-flex; align-items: center;">
-	<div *ngIf="appConfig.currentFocusedObject && showRotation"
-	 style="position: absolute;
+	<div *ngIf="appConfig.currentFocusedObject && showRotation" style="position: absolute;
 	 padding: 5px;
 	 background-color: white; 
 	 top: 72px; 
@@ -65,46 +49,32 @@
 	 border-radius: 0px 0px 5px 5px; 
 	 overflow-y: auto; 
 	 z-index: 1;"
-  class="">
-		<button mat-icon-button
-  [disabled]="!appConfig.currentFocusedObject"
-  (click)="appConfig.currentFocusedObject.rotation(appConfig.currentFocusedObject.rotation() - 1);
+	 class="">
+		<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.rotation(appConfig.currentFocusedObject.rotation() - 1);
   appConfig.currentFocusedObject.getLayer().batchDraw();"
-  matTooltip="Rotate Left"
-  [matTooltipPosition]="'below'">
+		 matTooltip="Rotate Left" [matTooltipPosition]="'below'">
 			<mat-icon>rotate_left</mat-icon>
 		</button>
 
-		<input type="number" 
-		 step="1"
-   [ngModel]="appConfig.currentFocusedObject.rotation()"
-   (ngModelChange)="appConfig.currentFocusedObject.rotation($event); appConfig.currentFocusedObject.getLayer().batchDraw()"
-   style="max-width: 4em; padding: .5em; border: 1px solid rgba(0,0,0,0.54); border-radius: .25em;">
+		<input type="number" step="1" [ngModel]="appConfig.currentFocusedObject.rotation()" (ngModelChange)="appConfig.currentFocusedObject.rotation($event); appConfig.currentFocusedObject.getLayer().batchDraw()"
+		 style="max-width: 4em; padding: .5em; border: 1px solid rgba(0,0,0,0.54); border-radius: .25em;">
 
-		<button mat-icon-button
-   [disabled]="!appConfig.currentFocusedObject"
-   (click)="appConfig.currentFocusedObject.rotation(appConfig.currentFocusedObject.rotation() + 1);
+		<button mat-icon-button [disabled]="!appConfig.currentFocusedObject" (click)="appConfig.currentFocusedObject.rotation(appConfig.currentFocusedObject.rotation() + 1);
    appConfig.currentFocusedObject.getLayer().batchDraw();"
-   matTooltip="Rotate Right"
-   [matTooltipPosition]="'below'">
+		 matTooltip="Rotate Right" [matTooltipPosition]="'below'">
 			<mat-icon>rotate_right</mat-icon>
 		</button>
 	</div>
 
-	<button mat-icon-button
-   style="flex: 1"
-   [disabled]="!appConfig.currentFocusedObject"
-   (click)="clearToggledPanels('showRotation'); showRotation = !showRotation"
-   matTooltip="Rotation"
-   [matTooltipPosition]="'below'">
+	<button mat-icon-button style="flex: 1" [disabled]="!appConfig.currentFocusedObject" (click)="clearToggledPanels('showRotation'); showRotation = !showRotation"
+	 matTooltip="Rotation" [matTooltipPosition]="'below'">
 		<mat-icon>rotate_90_degrees_ccw</mat-icon>
 	</button>
 </div>
 
 <!--Shape opacity-->
 <div style="display: inline-flex; align-items: center;">
-	<div *ngIf="appConfig.currentFocusedObject && showOpacity"
-	 style="position: absolute;
+	<div *ngIf="appConfig.currentFocusedObject && showOpacity" style="position: absolute;
 	 padding: 5px;
 	 background-color: white; 
 	 top: 72px; 
@@ -112,29 +82,19 @@
 	 border-radius: 0px 0px 5px 5px; 
 	 overflow-y: auto; 
 	 z-index: 1;"
-  class="">
+	 class="">
 
-		<input type="number" 
-		 step="1"
-   [ngModel]="appConfig.currentFocusedObject.opacity()"
-   (ngModelChange)="appConfig.currentFocusedObject.opacity($event); appConfig.currentFocusedObject.getLayer().draw()"
-   style="max-width: 4em; padding: .5em; border: 1px solid rgba(0,0,0,0.54); border-radius: .25em;">
+		<input type="number" step="1" [ngModel]="appConfig.currentFocusedObject.opacity()" (ngModelChange)="appConfig.currentFocusedObject.opacity($event); appConfig.currentFocusedObject.getLayer().draw()"
+		 style="max-width: 4em; padding: .5em; border: 1px solid rgba(0,0,0,0.54); border-radius: .25em;">
 
-		<mat-slider
-   style="padding: 0px 1em"
-   [min]="0" [max]="1" [step]="0.01"
-   [ngModel]="appConfig.currentFocusedObject.opacity()"
-   (ngModelChange)="appConfig.currentFocusedObject.opacity($event); appConfig.currentFocusedObject.getLayer().draw();">
+		<mat-slider style="padding: 0px 1em" [min]="0" [max]="1" [step]="0.01" [ngModel]="appConfig.currentFocusedObject.opacity()"
+		 (ngModelChange)="appConfig.currentFocusedObject.opacity($event); appConfig.currentFocusedObject.getLayer().draw();">
 		</mat-slider>
 
 	</div>
 
-	<button mat-icon-button
-   style="flex: 1"
-   [disabled]="!appConfig.currentFocusedObject"
-   (click)="clearToggledPanels('showOpacity'); showOpacity = !showOpacity"
-   matTooltip="Shape Opacity"
-   [matTooltipPosition]="'below'">
+	<button mat-icon-button style="flex: 1" [disabled]="!appConfig.currentFocusedObject" (click)="clearToggledPanels('showOpacity'); showOpacity = !showOpacity"
+	 matTooltip="Shape Opacity" [matTooltipPosition]="'below'">
 		<mat-icon>opacity</mat-icon>
 	</button>
 </div>
@@ -145,26 +105,16 @@
 
 <!--Clone shape-->
 <div style="display: inline-flex; align-items: center;">
-	<button
-	 mat-icon-button
-	 (click)="duplicateObject(appConfig.currentFocusedObject)"
-	 style="flex: 1"
-  [disabled]="!appConfig.currentFocusedObject"
-  matTooltip="Duplicate Shape"
-  [matTooltipPosition]="'below'">
+	<button mat-icon-button (click)="duplicateObject(appConfig.currentFocusedObject)" style="flex: 1" [disabled]="!appConfig.currentFocusedObject"
+	 matTooltip="Duplicate Shape" [matTooltipPosition]="'below'">
 		<mat-icon>control_point_duplicate</mat-icon>
 	</button>
 </div>
 
 <!--Remove shape-->
 <div style="display: inline-flex; align-items: center;">
-	<button
-	 mat-icon-button
-	 (click)="removeObject(appConfig.currentFocusedObject)"
-	 style="flex: 1"
-  [disabled]="!appConfig.currentFocusedObject"
-  matTooltip="Remove Shape"
-  [matTooltipPosition]="'below'">
+	<button mat-icon-button (click)="removeObject(appConfig.currentFocusedObject)" style="flex: 1" [disabled]="!appConfig.currentFocusedObject"
+	 matTooltip="Remove Shape" [matTooltipPosition]="'below'">
 		<mat-icon>delete</mat-icon>
 	</button>
 </div>
