@@ -15,6 +15,7 @@ import { CanvasUtilsService } from "./services/canvas-utils.service";
 import { ColorPickerModule } from "ngx-color-picker";
 import { PassValidatorDirective } from "./directives/pass-validator/pass-validator.directive";
 import { SimUserCollectionComponent } from "./components/sim-user-collection/sim-user-collection.component";
+import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/app-nav-bar.component";
 
 @NgModule({
 	declarations: [
@@ -22,7 +23,8 @@ import { SimUserCollectionComponent } from "./components/sim-user-collection/sim
 		RoutingComponents,
 		SimComponents,
 		PassValidatorDirective,
-		SimUserCollectionComponent
+		SimUserCollectionComponent,
+		AppNavBarComponent
 	],
 	imports: [
 		BrowserModule,
@@ -37,4 +39,4 @@ import { SimUserCollectionComponent } from "./components/sim-user-collection/sim
 	providers: [SimApiService, CanvasUtilsService],
 	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -119,21 +119,6 @@
 	</button>
 </div>
 
-<!-- account icon -->
-<button style="margin: 0.5em; float: right;" mat-icon-button [matMenuTriggerFor]="menu">
-	<mat-icon>account_circle</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
-	<button mat-menu-item (click)="goToUserCollection()">
-		<mat-icon>photo_library</mat-icon>
-		<span>My designs</span>
-	</button>
-	<button mat-menu-item (click)="logout()">
-		<mat-icon>exit_to_app</mat-icon>
-		<span>Log out</span>
-	</button>
-</mat-menu>
-
 <!--save as image-->
 <div style="float: right;">
 	<mat-form-field>

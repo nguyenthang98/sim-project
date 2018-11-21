@@ -1,0 +1,29 @@
+<div class="nav-bar">
+    <div class="left-nav">
+        <ol>
+            <li>
+                <a href="/" style="display: block; line-height: 50px;">
+                    <span>Editor</span>
+                </a>
+            </li>
+        </ol>
+    </div>
+    <div style="display: inline-block; float:right;" class="right-nav">
+        <!-- account icon -->
+        <button style="margin: 0.5em; margin-right: 15px; float: right;" mat-icon-button [matMenuTriggerFor]="menu">
+            <div class="acc-icon">
+                <img style="border-radius: 50%;" height="37" width="37" [src]="avatarUrl">
+            </div>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="goToUserCollection()">
+                <mat-icon>photo_library</mat-icon>
+                <span>My designs</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Log out</span>
+            </button>
+        </mat-menu>
+    </div>
+</div>

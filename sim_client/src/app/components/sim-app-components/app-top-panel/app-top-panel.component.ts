@@ -15,7 +15,7 @@ export class AppTopPanelComponent {
 	showRotation: boolean;
 	showOpacity: boolean;
 
-	constructor(private router: Router) {}
+	constructor(private router: Router) { }
 
 	clearToggledPanels(except) {
 		const lastValue = this[except];
@@ -96,14 +96,5 @@ export class AppTopPanelComponent {
 
 	focusObject(object) {
 		setCurrentFocusedObject(this.appConfig, object);
-	}
-	goToUserCollection() {
-		this.router.navigate(["/user-collection"]);
-	}
-
-	logout() {
-		sessionStorage.clear();
-		localStorage.clear();
-		this.router.navigate(["/login"]);
 	}
 }

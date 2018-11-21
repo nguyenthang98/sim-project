@@ -1,0 +1,27 @@
+.nav-bar {
+    height: 100%;
+}
+
+.nav-bar .acc-icon {
+    height: 37px;
+    width: 37px;
+    border-radius: 50%;
+}
+
+.nav-bar .left-nav {
+    display: inline-block;
+    height: 100%;
+}
+
+.nav-bar .left-nav ol {
+    list-style: none;
+    margin: 0;
+}
+
+.nav-bar div {
+    height: 100%;
+}
+
+.nav-bar .left-nav * {
+    height: 100%;
+}
