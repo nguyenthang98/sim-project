@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SimApiService } from "../../services/sim-api.service";
+import { Router } from '@angular/router'
 
 @Component({
     selector: "app-sim-user-collection",
@@ -7,7 +8,7 @@ import { SimApiService } from "../../services/sim-api.service";
     styleUrls: ["./sim-user-collection.component.css"]
 })
 export class SimUserCollectionComponent implements OnInit {
-    constructor(private simApiService: SimApiService) { }
+    constructor(private simApiService: SimApiService, private router: Router) { }
 
     avatarUrl: string;
 
@@ -25,7 +26,12 @@ export class SimUserCollectionComponent implements OnInit {
             const payload = new FormData();
             payload.append("file", file, file.name);
             this.simApiService.changeAvatar(payload).subscribe(res => {
-                console.log(res);
+                if (localStorage.getItem('avatar')) {
+                    localStorage.setItem('avatar', res.content);
+                } else {
+                    sessionStorage.setItem('avatar', res.content);
+                }
+                location.reload();
             });
         });
 

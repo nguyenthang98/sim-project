@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const multer = require('multer');
 
@@ -9,7 +10,7 @@ const storage = multer.diskStorage({
         cb(null, 'sim-data/');
     },
     filename: function(req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+        cb(null, req.decoded.username + path.extname(file.originalname));
     }
 });
 

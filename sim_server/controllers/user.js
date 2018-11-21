@@ -3,12 +3,18 @@ const fs = require('fs');
 const jsonResponse = require('../response');
 const errorCodes = require('../errorCodes').CODES;
 const models = require('../models/index.js');
-const Image = models.Image;
+const User = models.User;
 const dataPath = require('config').dataPath;
 
-module.exports.changeAvatar = function(req, res) {
-    console.log(req);
-    res.send(
-        jsonResponse(errorCodes.SUCCESS, 'Change-avatar-success', 'Successful')
-    );
+module.exports.changeAvatar = function (req, res) {
+    User.find({ where: { username: req.decoded.username } }).then(user => {
+        if (user) {
+            user.update({
+                avatar: req.files[0].filename
+            })
+            res.send(jsonResponse(errorCodes.SUCCESS, 'Change avatar successful', req.files[0].filename));
+        } else {
+            res.send(jsonResponse(errorCodes.ERROR_USER_EXISTED, 'User not exists'));
+        }
+    })
 };

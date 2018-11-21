@@ -9,7 +9,7 @@
     "build-client": "cd ./sim_client && ng build && cd ..",
     "serve-client": "cd ./sim_client && ng s --open",
     "postinstall": "npm i --prefix sim_client && cd ./sim_client && ng build --prod && cd ..",
-    "start": "node bin/www"
+    "start": "mkdir -p sim-data && node bin/www"
   },
   "repository": {
     "type": "git",
