@@ -1,190 +1,203 @@
-<mat-accordion class="sim-control-panel">
-  <!--Main config-->
-  <mat-expansion-panel [expanded]="true" class="mat-elevation-z3">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Design Properties</mat-panel-title>
-    </mat-expansion-panel-header>
-    <div style="display: flex;">
-      <mat-form-field style="flex: 1; max-width: 50%;">
-        <input matInput type="number" placeholder="Width"
-          [(ngModel)]="appConfig.mainConfig.width" (ngModelChange)="appConfig.updateMainConfig($event)">
-      </mat-form-field>
-      <mat-form-field style="flex: 1">
-        <input matInput type="number" placeholder="Height"
-          [(ngModel)]="appConfig.mainConfig.height" (ngModelChange)="appConfig.updateMainConfig($event)">
-      </mat-form-field>
-    </div>
-    <div>
-      Background color:
-      <input matInput 
-        style="width: 100%; min-height: 25px; border: 0.5px solid darkgray; border-radius: 8px;"
-        [style.background]="appConfig.mainConfig.backgroundColor"
-        [cpWidth]="'300px'"
-        [cpFallbackColor]="'#fff'"
-        [cpPresetColors]="['#fff', '#ccc', '#888', '#000']"
-        [cpAddColorButton]="true"
-        [cpOutputFormat]="'rgba'"
-        [(colorPicker)]="appConfig.mainConfig.backgroundColor"
-        (colorPickerChange)="appConfig.updateMainConfig($event)">
-    </div>
-  </mat-expansion-panel>
+<mat-tab-group [selectedIndex]="appConfig.currentFocusedObject ? 1 : 0">
+  <mat-tab label="General">
+    <mat-accordion class="sim-control-panel">
+      <!--Main config-->
+      <mat-expansion-panel [expanded]="true" class="mat-elevation-z3">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Design Properties</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div style="display: flex;">
+          <sim-input style="flex: 1; max-width: 50%;"
+            [type]="'input-box'" [label]="'Width'" [value]="appConfig.mainConfig.width" [options]="{ inputType: 'number' }"
+            (valueChange)="appConfig.updateMainConfig($event)"
+          ></sim-input>
 
-  <!--Shapes-->
-  <mat-expansion-panel class="mat-elevation-z3" [expanded]="isShape(appConfig.currentFocusedObject)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Shapes</mat-panel-title>
-    </mat-expansion-panel-header>
-    <!--Shape control buttons-->
-    <div>
-      Add New
-      <br>
+          <sim-input style="flex: 1; max-width: 50%;"
+            [type]="'input-box'" [label]="'Height'" [value]="appConfig.mainConfig.height" [options]="{ inputType: 'number' }"
+            (valueChange)="appConfig.updateMainConfig($event)"
+          ></sim-input>
+          <!--
+          <mat-form-field style="flex: 1; max-width: 50%;">
+            <input matInput type="number" placeholder="Width"
+              [(ngModel)]="appConfig.mainConfig.width" (ngModelChange)="appConfig.updateMainConfig($event)">
+          </mat-form-field>
+          <mat-form-field style="flex: 1">
+            <input matInput type="number" placeholder="Height"
+              [(ngModel)]="appConfig.mainConfig.height" (ngModelChange)="appConfig.updateMainConfig($event)">
+          </mat-form-field>
+          -->
+        </div>
+        <div>
+          <sim-color-picker
+            [label]="'Background color'"
+            [(color)]="appConfig.mainConfig.backgroundColor"
+            (colorChange)="appConfig.updateMainConfig($event)">
+          </sim-color-picker>
+        </div>
+      </mat-expansion-panel>
+
+      <!--Shapes-->
+      <mat-expansion-panel class="mat-elevation-z3" [expanded]="isShape(appConfig.currentFocusedObject)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Shapes</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--Shape control buttons-->
+        <div>
+          Add New
+          <br>
+          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Rect'))">Rectangle</button>
+          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Ellipse'))">Ellipse</button>
+          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Circle'))">Circle</button>
+          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Wedge'))">Wedge</button>
+          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Star'))">Star</button>
+          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('RegularPolygon'))">RegularPolygon</button>
+          <hr>
+          <button mat-button (click)="drawLine()">Draw Line</button>
+        </div>
+      </mat-expansion-panel>
+
+      <!--Images-->
+      <mat-expansion-panel class="mat-elevation-z3">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Images</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!--Image control buttons-->
+        <button mat-button (click)="loadImage()">Add Image</button>
+        <!--Image properties controls-->
+      </mat-expansion-panel>
+
+      <!--Text-->
       <!--
-      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Rect')">Rectangle</button>
-      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Eclipse')">Eclipse</button>
-      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Circle')">Circle</button>
-      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Wedge')">Wedge</button>
-      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('Star')">Star</button>
-      <button mat-button (click)="appConfig.currentFocusedObject = appConfig.layers.currentLayer.addObject('RegularPolygon')">RegularPolygon</button>
+      <mat-expansion-panel class="mat-elevation-z3">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Text</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
       -->
-      <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Rect'))">Rectangle</button>
-      <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Ellipse'))">Ellipse</button>
-      <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Circle'))">Circle</button>
-      <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Wedge'))">Wedge</button>
-      <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Star'))">Star</button>
-      <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('RegularPolygon'))">RegularPolygon</button>
-      <hr>
-      <button mat-button (click)="drawLine()">Draw Line</button>
-    </div>
-  </mat-expansion-panel>
 
-  <!--Images-->
-  <mat-expansion-panel class="mat-elevation-z3">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Images</mat-panel-title>
-    </mat-expansion-panel-header>
-    <!--Image control buttons-->
-    <button mat-button (click)="loadImage()">Add Image</button>
-    <!--Image properties controls-->
+      <!--Shape/Image/Text Properties panel-->
+      <!--
+      <mat-expansion-panel *ngIf="appConfig.currentFocusedObject" [expanded]="true" class="mat-elevation-z3">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Properties</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div style="max-height: 50vh; overflow-y: auto; overflow-x: hidden;">
+          <sim-shape-properties [shape]="appConfig.currentFocusedObject"></sim-shape-properties>
+        </div>
+      </mat-expansion-panel>
+      -->
+    </mat-accordion>
 
-  </mat-expansion-panel>
+    <!-- Layers -->
+    <mat-accordion class="sim-control-panel">
+      <mat-expansion-panel [expanded]="true" class="mat-elevation-z3">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Layers</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div style="max-height: 350px; overflow: auto;">
+          <mat-form-field style="width: 70%;">
+            <input matInput type="text" placeholder="Layer Name" #newLayerName>
+            <button mat-button *ngIf="newLayerName.value" matSuffix mat-icon-button aria-label="Clear" (click)="newLayerName.value=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button style="width: 30%; max-width: 30%;" mat-button (click)="appConfig.layers.addLayer(newLayerName.value)">Add</button>
+          <mat-radio-group [(ngModel)]="appConfig.layers.currentLayer" (ngModelChange)="onChangeCurrentLayer($event)">
+            <table style="width: 100%;"
+              mat-table [dataSource]="getLayerDataSource()"
+              *ngIf="['selection', 'visibility', 'name', 'remove'] as displayedColumns;">
 
-  <!--Text-->
-  <mat-expansion-panel class="mat-elevation-z3">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Text</mat-panel-title>
-    </mat-expansion-panel-header>
-    <!--Text control buttons-->
+              <!-- Current Selected layer Column -->
+              <ng-container matColumnDef="selection">
+                <th mat-header-cell *matHeaderCellDef>Current</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-radio-button [value]="element"></mat-radio-button>
+                </td>
 
-    <!--Text properties controls-->
+                <td mat-footer-cell *matFooterCellDef>
+                  <mat-radio-button [value]="appConfig.layers.backgroundLayer"></mat-radio-button>
+                </td>
+              </ng-container>
 
-  </mat-expansion-panel>
+              <!-- Show/Hide Column -->
+              <ng-container matColumnDef="visibility">
+                <th mat-header-cell *matHeaderCellDef>Visibility</th>
+                <td mat-cell *matCellDef="let element">
+                  <!-- <mat-checkbox #layerVisible [checked]="element.isVisible()" (change)="element.visible(layerVisible.checked)"></mat-checkbox> -->
+                  <mat-slide-toggle #layerVisible [checked]="element.isVisible()" (change)="element.visible(layerVisible.checked)"></mat-slide-toggle>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                  <!-- <mat-checkbox #bgLayerVisible [checked]="appConfig.layers.backgroundLayer.isVisible()" (change)="appConfig.layers.backgroundLayer.visible(bgLayerVisible.checked)"></mat-checkbox> -->
+                  <mat-slide-toggle #bgLayerVisible [checked]="appConfig.layers.backgroundLayer.isVisible()" (change)="appConfig.layers.backgroundLayer.visible(bgLayerVisible.checked)"></mat-slide-toggle>
+                </td>
+              </ng-container>
 
-  <!--Shape/Image/Text Properties panel-->
-  <mat-expansion-panel *ngIf="appConfig.currentFocusedObject" [expanded]="true" class="mat-elevation-z3">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Properties</mat-panel-title>
-    </mat-expansion-panel-header>
-    <div style="max-height: 50vh; overflow-y: auto; overflow-x: hidden;">
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <button mat-button (click)="appConfig.layers.currentLayer = element">{{ element.name() }}</button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> 
+                  <button mat-button (click)="appConfig.layers.currentLayer = appConfig.layers.backgroundLayer">
+                    {{ appConfig.layers.backgroundLayer.name() }}
+                  </button> 
+                </td>
+              </ng-container>
+
+              <!-- remove layer Column -->
+              <ng-container matColumnDef="remove">
+                <th mat-header-cell *matHeaderCellDef>Remove</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="removeLayer(element)">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+
+              <!-- Move layer Up Column -->
+              <ng-container matColumnDef="moveup">
+                <th mat-header-cell *matHeaderCellDef>Move up</th>
+                <td mat-cell *matCellDef="let element">
+                  <button *ngIf="!appConfig.layers.isTopLayer(element)" mat-icon-button (click)="appConfig.layers.moveupLayer(element)">
+                    <mat-icon>&uarr;</mat-icon>
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+
+              <!-- Move Layer Down Column -->
+              <ng-container matColumnDef="movedown">
+                <th mat-header-cell *matHeaderCellDef>Move down</th>
+                <td mat-cell *matCellDef="let element">
+                  <button *ngIf="!appConfig.layers.isBottomLayer(element)" mat-icon-button (click)="appConfig.layers.movedownLayer(element)">
+                    <mat-icon>&darr;</mat-icon>
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr>
+            </table>
+          </mat-radio-group>
+
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-tab>
+
+  <mat-tab label="Properties" *ngIf="appConfig.currentFocusedObject">
+    <div style="width: inherit; padding: 1em .5em;">
       <sim-shape-properties [shape]="appConfig.currentFocusedObject"></sim-shape-properties>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  </mat-tab>
 
-<!-- Layers -->
-<mat-accordion class="sim-control-panel">
-  <mat-expansion-panel [expanded]="true" class="mat-elevation-z3">
-    <mat-expansion-panel-header>
-      <mat-panel-title>Layers</mat-panel-title>
-    </mat-expansion-panel-header>
-    <div style="max-height: 350px; overflow: auto;">
-      <mat-form-field style="width: 70%;">
-        <input matInput type="text" placeholder="Layer Name" #newLayerName>
-        <button mat-button *ngIf="newLayerName.value" matSuffix mat-icon-button aria-label="Clear" (click)="newLayerName.value=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-      <button style="width: 30%; max-width: 30%;" mat-button (click)="appConfig.layers.addLayer(newLayerName.value)">Add</button>
-      <mat-radio-group [(ngModel)]="appConfig.layers.currentLayer" (ngModelChange)="onChangeCurrentLayer($event)">
-        <table style="width: 100%;"
-          mat-table [dataSource]="getLayerDataSource()"
-          *ngIf="['selection', 'visibility', 'name', 'remove'] as displayedColumns;">
-
-          <!-- Current Selected layer Column -->
-          <ng-container matColumnDef="selection">
-            <th mat-header-cell *matHeaderCellDef>Current</th>
-            <td mat-cell *matCellDef="let element">
-              <mat-radio-button [value]="element"></mat-radio-button>
-            </td>
-
-            <td mat-footer-cell *matFooterCellDef>
-              <mat-radio-button [value]="appConfig.layers.backgroundLayer"></mat-radio-button>
-            </td>
-          </ng-container>
-
-          <!-- Show/Hide Column -->
-          <ng-container matColumnDef="visibility">
-            <th mat-header-cell *matHeaderCellDef>Visibility</th>
-            <td mat-cell *matCellDef="let element">
-              <!-- <mat-checkbox #layerVisible [checked]="element.isVisible()" (change)="element.visible(layerVisible.checked)"></mat-checkbox> -->
-              <mat-slide-toggle #layerVisible [checked]="element.isVisible()" (change)="element.visible(layerVisible.checked)"></mat-slide-toggle>
-            </td>
-            <td mat-footer-cell *matFooterCellDef>
-              <!-- <mat-checkbox #bgLayerVisible [checked]="appConfig.layers.backgroundLayer.isVisible()" (change)="appConfig.layers.backgroundLayer.visible(bgLayerVisible.checked)"></mat-checkbox> -->
-              <mat-slide-toggle #bgLayerVisible [checked]="appConfig.layers.backgroundLayer.isVisible()" (change)="appConfig.layers.backgroundLayer.visible(bgLayerVisible.checked)"></mat-slide-toggle>
-            </td>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element"> 
-              <button mat-button (click)="appConfig.layers.currentLayer = element">{{ element.name() }}</button>
-            </td>
-            <td mat-footer-cell *matFooterCellDef> 
-              <button mat-button (click)="appConfig.layers.currentLayer = appConfig.layers.backgroundLayer">
-                {{ appConfig.layers.backgroundLayer.name() }}
-              </button> 
-            </td>
-          </ng-container>
-
-          <!-- remove layer Column -->
-          <ng-container matColumnDef="remove">
-            <th mat-header-cell *matHeaderCellDef>Remove</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button (click)="removeLayer(element)">
-                <mat-icon>close</mat-icon>
-              </button>
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-
-          <!-- Move layer Up Column -->
-          <ng-container matColumnDef="moveup">
-            <th mat-header-cell *matHeaderCellDef>Move up</th>
-            <td mat-cell *matCellDef="let element">
-              <button *ngIf="!appConfig.layers.isTopLayer(element)" mat-icon-button (click)="appConfig.layers.moveupLayer(element)">
-                <mat-icon>&uarr;</mat-icon>
-              </button>
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-
-          <!-- Move Layer Down Column -->
-          <ng-container matColumnDef="movedown">
-            <th mat-header-cell *matHeaderCellDef>Move down</th>
-            <td mat-cell *matCellDef="let element">
-              <button *ngIf="!appConfig.layers.isBottomLayer(element)" mat-icon-button (click)="appConfig.layers.movedownLayer(element)">
-                <mat-icon>&darr;</mat-icon>
-              </button>
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-          </ng-container>
-
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr>
-        </table>
-      </mat-radio-group>
-
+  <mat-tab label="Filters" *ngIf="appConfig.currentFocusedObject">
+    <div style="width: inherit; padding: 1em .5em;">
+      <sim-filter [filterTarget]="appConfig.currentFocusedObject"></sim-filter>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  </mat-tab>
+
+</mat-tab-group>

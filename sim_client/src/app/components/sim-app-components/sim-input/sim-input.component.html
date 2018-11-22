@@ -1,0 +1,44 @@
+<div style="display: flex; margin: .5em .25em;">
+  <div *ngIf="!isInputBox()" style="flex: 3; padding: .5em .25em; font-weight: 500; display: flex; align-items: center">{{ label }}</div>
+  <div style="flex: 4; max-width: 100%;">
+    <!-- Slider -->
+    <div *ngIf="isSlider()" style="width: 100%; display: flex;">
+      <input *ngIf="options.showInputBox" style="flex: 2; min-width: 0px;" class="sim-input-box"
+        type="number" [min]='options.min' [max]='options.max' [step]='options.step'
+        [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+      <mat-slider 
+        [thumbLabel]="options.thumbLabel" style="flex: 4; min-width: 0px;"
+        [ngModel]="value" (ngModelChange)="valueChange.emit($event)"
+        [min]="options.min || 0" [max]="options.max || 100" [step]="options.step || 1"></mat-slider>
+    </div>
+
+    <div *ngIf="isToggle()" style="width: 100%; display: flex;">
+      <mat-slide-toggle
+        [ngModel]="value"
+        (ngModelChange)="valueChange.emit($event)"
+      ></mat-slide-toggle>
+    </div>
+
+    <div *ngIf="isInputBox()" style="max-width: 100%">
+      <mat-form-field style="max-width: 100%;">
+        <input matInput
+          [type]="options.inputType || 'text'" [placeholder]="label" [ngModel]="value" 
+          (ngModelChange)="valueChange.emit(getExactValue($event, options.inputType))">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="isClassicInputBox()" style="width: 100%; display: flex;">
+      <input style="flex: 1" class="sim-input-box"
+        [type]="options.inputType || 'text'" [placeholder]="options.placeholder" [title]="options.placeholder"
+        [ngModel]="value" (ngModelChange)="valueChange.emit(getExactValue($event, options.inputType))">
+    </div>
+
+    <div *ngIf="isDropdown()" style="width: 100%; display: flex;">
+      <mat-form-field>
+        <mat-select [(value)]="value" (selectionChange)="valueChange.emit(value)">
+          <mat-option *ngFor="let option of options" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

@@ -20,3 +20,8 @@ div::-webkit-scrollbar-thumb
 	background-color: rgba(0,0,0,0.54);
 }
 
+.sim-color-picker-btn {
+	padding: .75em 1.25em;
+	border: none;
+	border-radius: .4em;
+}

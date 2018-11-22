@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Filters } from 'konva';
-import * as SimShapes from "../../models/sim-supported-shape.config";
+import * as SimShapes from "../../../models/sim-supported-shape.config";
 
 @Component({
   selector: 'sim-shape-properties',
@@ -12,17 +12,18 @@ export class SimShapePropertiesComponent {
 
   constructor() { }
 
+  redrawShape() {
+    // const filters = this.shape.filters();
+    this.shape.clearCache();
+    this.shape.draw();
+    this.shape.cache();
+    // this.shape.filters(filters);
+    this.shape.getLayer().batchDraw();
+  }
+
   getFilterConfig(func) {
     const filterName = Object.keys(Filters).find(k => Filters[k] == func);
     return filterFuncMap[filterName];
-  }
-
-  isImage(shape) {
-    return shape instanceof SimShapes.Image;
-  }
-
-  isLine(shape) {
-    return shape instanceof SimShapes.Line;
   }
 
   dashArrToString(dashArr) {
@@ -35,7 +36,7 @@ export class SimShapePropertiesComponent {
 
   stringToDashArr(string) {
     try {
-      return string.split(" ");
+      return string.trim().split(" ");
     } catch(err) {
       return [];
     }

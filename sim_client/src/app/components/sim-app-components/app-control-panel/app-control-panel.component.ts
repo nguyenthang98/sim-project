@@ -68,8 +68,8 @@ export class AppControlPanelComponent{
       stroke: "black",
       fillEnabled: false,
       strokeWidth: 5,
-      width: 0,
-      height: 0
+      width: 1,
+      height: 1
     });
     this.appConfig.mode = "draw-line";
     setCurrentFocusedObject(this.appConfig, _newLine);

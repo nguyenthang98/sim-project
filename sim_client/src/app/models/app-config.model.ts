@@ -53,7 +53,10 @@ export class AppConfig {
         event.evt.preventDefault();
         const _additionScale = Math.sign(event.evt.deltaY) * -0.05;
         const _lastScale = this.stage.scaleX();
-        this.changeStageScale(_lastScale + _additionScale);
+        let _newScale = _lastScale + _additionScale
+        if(_newScale < 0) _newScale = 0;
+        else if(_newScale > 1) _newScale = 1;
+        this.changeStageScale(_newScale);
       }
     });
 
@@ -82,6 +85,7 @@ export class AppConfig {
   }
 
   updateMainConfig(event) {
+    console.log(event);
     this.stage.width(this.mainConfig.width);
     this.stage.height(this.mainConfig.height);
     this.layers.backgroundLayer.updateBackground(this.mainConfig);

@@ -1,0 +1,6 @@
+<div style="width: 100%;" *ngFor="let filter of getFilters()">
+  <sim-input
+    [label]="filter.name" [type]="filter.inputType" [options]="filter.options"
+    [value]="filterTarget[filter.valueFunc]()" (valueChange)="filterTarget.cache(); filterTarget[filter.valueFunc]($event); filterTarget.draw();"
+  ></sim-input>
+</div>

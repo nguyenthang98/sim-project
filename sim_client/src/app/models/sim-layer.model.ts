@@ -26,6 +26,12 @@ export class SimLayer extends Layer {
         newShape.height(newShape.height() * newShape.scaleY());
         newShape.scaleX(1);
         newShape.scaleY(1);
+
+        // update shape
+        newShape.clearCache();
+        newShape.draw();
+        newShape.cache();
+        newShape.getLayer().batchDraw();
       })
 
       return newShape;
@@ -36,6 +42,7 @@ export class SimLayer extends Layer {
   addImage(src, props?:any) {
     const filters = [Filters.Blur, Filters.Brighten, Filters.Contrast, Filters.Enhance];
     const imageEle = document.createElement('img'); 
+    imageEle.crossOrigin = "";
     imageEle.onload = () => {
       const _newImage = new supportedShapes.Image({
         image: imageEle,
