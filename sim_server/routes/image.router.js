@@ -1,9 +1,26 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
+const multer = require('multer');
+const fs = require('fs');
 
 const ctrlImage = require('../controllers/image');
 
-router.post('/new', (req, res) => {
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        let fileUrl = `sim-data/images/${req.decoded.username}`;
+        if (!fs.existsSync(fileUrl)) {
+            fs.mkdirSync(fileUrl);
+        }
+        cb(null, fileUrl + '/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+})
+const upload = multer({ storage: storage });
+
+router.post('/new', upload.array('file'), (req, res) => {
     ctrlImage.newImage(req, res);
 });
 

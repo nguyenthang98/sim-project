@@ -2,8 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { SimApiService } from "../../services/sim-api.service";
 import { Router } from '@angular/router'
 
-const localUrl = 'http://localhost:3000';
-
 @Component({
     selector: "app-sim-user-collection",
     templateUrl: "./sim-user-collection.component.html",
@@ -13,12 +11,17 @@ export class SimUserCollectionComponent implements OnInit {
     constructor(private simApiService: SimApiService, private router: Router) { }
 
     avatarUrl: string;
+    userDesigns: Array<any>;
+    localUrl: string;
 
     ngOnInit() {
-        this.avatarUrl = `/${localStorage.avatar ||
-            sessionStorage.avatar}`;
-        // this.avatarUrl = `${localUrl}/${localStorage.avatar ||
-        //     sessionStorage.avatar}`;
+        this.localUrl = 'http://localhost:3000';
+        this.localUrl = '';
+        this.avatarUrl = `${this.localUrl}/${localStorage.avatar || sessionStorage.avatar}`;
+
+        this.simApiService.listImages().subscribe(res => {
+            this.userDesigns = res.content;
+        });
     }
 
     changeAvatar() {

@@ -7,17 +7,22 @@ const Image = models.Image;
 const dataPath = require('config').dataPath;
 
 module.exports.newImage = (req, res) => {
-    req.body.path = md5(req.body.name + req.body.idUser);
+    req.body.idUser = req.decoded.idUser;
+    let data = {
+        idUser: req.decoded.idUser,
+        name: req.files[0].originalname,
+        path: req.files[0].path.replace('sim-data', '')
+    }
+
     Image.findOne({
         where: {
-            name: req.body.name,
-            idUser: req.body.idUser
+            name: data.name,
+            idUser: data.idUser
         }
     }).then(image => {
         if (!image) {
-            Image.create(req.body)
+            Image.create(data)
                 .then(result => {
-                    fs.mkdirSync(dataPath + '/' + req.body.path);
                     res.send(
                         jsonResponse(
                             errorCodes.SUCCESS,
@@ -27,11 +32,11 @@ module.exports.newImage = (req, res) => {
                     );
                 })
                 .catch(err => {
-                    res.send(jsonResponse(500, `IMAGE EXIST`, err));
+                    res.send(jsonResponse(500, err.errors[0].message));
                 });
         } else {
             res.send(
-                jsonResponse(500, 'IMAGE EXISTED', `CAN'T CREATE NEW IMAGE`)
+                jsonResponse(500, 'IMAGE EXISTED')
             );
         }
     });
@@ -64,8 +69,9 @@ module.exports.infoByName = (req, res) => {
 
 module.exports.listImage = (req, res) => {
     Image.findAll({
+        attributes: ['idImage', 'name', 'path'],
         where: {
-            idUser: req.body.idUser
+            idUser: req.decoded.idUser
         }
     }).then(images => {
         res.send(
@@ -119,9 +125,9 @@ module.exports.deleteImage = (req, res) => {
     });
 };
 
-let deleteFolderRecursive = function(path) {
+let deleteFolderRecursive = function (path) {
     if (fs.existsSync(path)) {
-        fs.readdirSync(path).forEach(function(file, index) {
+        fs.readdirSync(path).forEach(function (file, index) {
             var curPath = path + '/' + file;
             if (fs.lstatSync(curPath).isDirectory()) {
                 deleteFolderRecursive(curPath);

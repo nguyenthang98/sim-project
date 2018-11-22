@@ -52,6 +52,10 @@ export class SimApiService {
         });
     }
 
+    listImages(): Observable<any> {
+        return this.httpClient.post(this.baseURL + "/image/list", {}, httpOptions);
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             console.error("An error occurred:", error.error.message);

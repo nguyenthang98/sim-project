@@ -8,19 +8,19 @@ import { SimInputComponent } from './components/sim-app-components/sim-input/sim
 import { SimFilterComponent } from './components/sim-app-components/sim-filter/sim-filter.component';
 
 @Component({
-	selector: "app-root",
-	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.css"]
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-	ngOnInit() {}
+    ngOnInit() { }
 }
 
 export const SimComponents = [
-	AppControlPanelComponent,
-	AppTopPanelComponent,
-	SimShapePropertiesComponent,
-	SimFilterComponent,
-	SimInputComponent,
-	SimColorPickerComponent
+    AppControlPanelComponent,
+    AppTopPanelComponent,
+    SimShapePropertiesComponent,
+    SimFilterComponent,
+    SimInputComponent,
+    SimColorPickerComponent
 ]

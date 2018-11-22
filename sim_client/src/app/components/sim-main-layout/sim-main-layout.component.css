@@ -1,5 +1,5 @@
 .sim-left-container {
-  height: 100%;
+  height: calc(100% - 50px);
   width: 340px;
   background-color: transparent;
   float: left;
@@ -20,9 +20,8 @@
 }
 
 .sim-top-panel {
-  height: 56px;
+  height: 50px;
   background-color: transparent;
-  padding: 8px 0px;
 }
 
 .sim-work-area {
