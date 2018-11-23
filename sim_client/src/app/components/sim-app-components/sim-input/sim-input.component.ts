@@ -10,6 +10,8 @@ export class SimInputComponent {
   @Input() value: any;
   @Input() label: string; 
   @Input() options: any;
+  @Input() hideLabel: boolean;
+  @Input() placeholder: string;
 
   @Output() valueChange = new EventEmitter<any>();
 

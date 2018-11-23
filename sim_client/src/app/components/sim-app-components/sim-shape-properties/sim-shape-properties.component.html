@@ -1,61 +1,84 @@
 <!--Shape name-->
-<div>
-  <mat-form-field style="width: 100%">
-    <input matInput type="text" placeholder="Shape Name" [ngModel]="shape.name()" (ngModelChange)="shape.name($event)">
-  </mat-form-field>
-</div>
+<mat-accordion>
+  <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
+    <mat-expansion-panel-header>Name</mat-expansion-panel-header>
+    <mat-form-field style="width: 100%">
+      <input matInput type="text" placeholder="Shape Name" [ngModel]="shape.name()" (ngModelChange)="shape.name($event)">
+    </mat-form-field>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<hr>
+
 <!--Geometric-->
+<mat-accordion>
+  <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
+    <mat-expansion-panel-header>Geometric</mat-expansion-panel-header>
+      <div style="width: 100%; display: flex;">
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'X'" [value]="shape.x()" [options]="{ inputType: 'number' }"
+          (valueChange)="shape.x($event); redrawShape()"
+        ></sim-input>
+
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'Y'" [value]="shape.y()" [options]="{ inputType: 'number' }"
+          (valueChange)="shape.y($event); redrawShape()"
+        ></sim-input>
+      </div>
+
+      <div style="width: 100%; display: flex;">
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'"  [placeholder]="'Width'" [value]="shape.width() || 0" [options]="{ inputType: 'number' }"
+          (valueChange)="shape.width($event); redrawShape()"
+        ></sim-input>
+
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'Height'" [value]="shape.height() || 0" [options]="{ inputType: 'number' }"
+          (valueChange)="shape.height($event); redrawShape()"
+        ></sim-input>
+      </div>
+
+      <!--Geometric options-->
+      <div *ngIf="shape.getGeometricKeys && shape.getGeometricKeys().length">
+        <div *ngFor="let key of shape.getGeometricKeys();">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="number" placeholder="{{ key }}"
+                  [ngModel]="shape[key]()" (ngModelChange)="shape[key]($event); redrawShape()">
+          </mat-form-field>
+        </div>
+      </div>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+<!--
 <div>
   <h4>Geometric</h4>
-  <!--X, Y Coordinates-->
+
   <div style="width: 100%; display: flex;">
     <sim-input style="flex: 1; max-width: 50%;"
-      [type]="'input-box'" [label]="'X'" [value]="shape.x()" [options]="{ inputType: 'number' }"
+      [type]="'input-box'" [placeholder]="'X'" [value]="shape.x()" [options]="{ inputType: 'number' }"
       (valueChange)="shape.x($event); redrawShape()"
     ></sim-input>
 
     <sim-input style="flex: 1; max-width: 50%;"
-      [type]="'input-box'" [label]="'Y'" [value]="shape.y()" [options]="{ inputType: 'number' }"
+      [type]="'input-box'" [placeholder]="'Y'" [value]="shape.y()" [options]="{ inputType: 'number' }"
       (valueChange)="shape.y($event); redrawShape()"
     ></sim-input>
   </div>
-  <!--
-  <div style="display: flex;">
-    <mat-form-field style="flex: 1; max-width: 49%;">
-      <input matInput type="number" placeholder="X" [ngModel]="shape.x()" (ngModelChange)="shape.x($event); shape.getLayer().draw();">
-    </mat-form-field>
-    <mat-form-field style="flex: 1; max-width: 50%;">
-      <input matInput type="number" placeholder="Y" [ngModel]="shape.y()" (ngModelChange)="shape.y($event); shape.getLayer().draw();">
-    </mat-form-field>
-  </div>
-  -->
 
   <div style="width: 100%; display: flex;">
     <sim-input style="flex: 1; max-width: 50%;"
-      [type]="'input-box'" [label]="'Width'" [value]="shape.width() || 0" [options]="{ inputType: 'number' }"
+      [type]="'input-box'"  [placeholder]="'Width'" [value]="shape.width() || 0" [options]="{ inputType: 'number' }"
       (valueChange)="shape.width($event); redrawShape()"
     ></sim-input>
 
     <sim-input style="flex: 1; max-width: 50%;"
-      [type]="'input-box'" [label]="'Height'" [value]="shape.height() || 0" [options]="{ inputType: 'number' }"
+      [type]="'input-box'" [placeholder]="'Height'" [value]="shape.height() || 0" [options]="{ inputType: 'number' }"
       (valueChange)="shape.height($event); redrawShape()"
     ></sim-input>
   </div>
-  <!--Width and Height-->
-  <!--
-  <div style="display: flex;">
-    <mat-form-field style="flex: 1; max-width: 49%;">
-      <input matInput type="number" placeholder="Width" [ngModel]="shape.width() * shape.scaleX()"
-        (ngModelChange)="shape.scaleX(1); shape.width($event); shape.getLayer().draw();">
-    </mat-form-field>
-    <mat-form-field style="flex: 1; max-width: 50%;">
-      <input matInput type="number" placeholder="Height" [ngModel]="shape.height() * shape.scaleY()"
-        (ngModelChange)="shape.scaleY(1); shape.height($event); shape.getLayer().draw();">
-    </mat-form-field>
-  </div>
-  -->
 
-  <!--Geometric options-->
   <div *ngIf="shape.getGeometricKeys && shape.getGeometricKeys().length">
     <div *ngFor="let key of shape.getGeometricKeys();">
       <mat-form-field style="width: 100%;">
@@ -65,8 +88,75 @@
     </div>
   </div>
 </div>
+-->
+
+<hr>
+
+<mat-accordion>
+  <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
+    <mat-expansion-panel-header>Fill & Stroke</mat-expansion-panel-header> 
+      <div style="width: 100%">
+        <sim-input
+          [label]="'Enable fill'" [type]="'toggle'" [value]="shape.fillEnabled()" (valueChange)="shape.fillEnabled($event); redrawShape()"
+        ></sim-input>
+      </div>
+
+      <div *ngIf="shape.fillEnabled()" style=" margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
+          <sim-color-picker
+            style="width: 100%"
+            [label]="'Fill color'"
+            [color]="shape.fill()"
+            (colorChange)="shape.fill($event); redrawShape();">
+          </sim-color-picker>
+      </div>
+
+      <div style="width: 100%">
+        <sim-input [label]="'Enable stroke'" [type]="'toggle'" [value]="shape.strokeEnabled()"
+          (valueChange)="shape.strokeEnabled($event); redrawShape()"
+        ></sim-input>
+      </div>
+
+      <div *ngIf="shape.strokeEnabled()">
+        <div style="width: 100%">
+          <sim-color-picker
+            [label]="'Stroke'"
+            [color]="shape.stroke()"
+            (colorChange)="shape.stroke($event); redrawShape()"
+          ></sim-color-picker>
+        </div>
+
+        <div style="width: 100%">
+          <sim-input
+            [label]="'Stroke width'" [type]="'slider'" [options]="{min: 1, max: 100, step: 0.01, showInputBox: true, thumbLabel: false}"
+            [value]="shape.strokeWidth()" (valueChange)="shape.strokeWidth($event); redrawShape();"
+          ></sim-input>
+        </div>
+
+        <div style="width: 100%;">
+          <sim-input [type]="'classic-input-box'" [label]="'Dash'" [options]="{ inputType: 'text' }" [placeholder]="'Space separated'"
+            [value]="dashArrToString(shape.dash())" (valueChange)="shape.dash(stringToDashArr($event)); redrawShape()"
+          ></sim-input> 
+        </div>
+
+        <!--Line Join And Cap-->
+        <div style="width: 100%;">
+          <sim-input [type]="'dropdown'" [label]="'Line Join'"
+            [value]="shape.lineJoin() || 'miter'" [options]="['miter', 'round', 'bevel']"
+            (valueChange)="shape.lineJoin($event); redrawShape()"
+          ></sim-input>
+        </div>
+        <div style="width: 100%;">
+          <sim-input [type]="'dropdown'" [label]="'Line Cap'"
+            [value]="shape.lineCap() || 'butt'" [options]="['butt', 'round', 'square']"
+            (valueChange)="shape.lineCap($event); redrawShape()"
+          ></sim-input>
+        </div>
+      </div>
+  </mat-expansion-panel>
+</mat-accordion>
 
 <!--Color management and border-->
+<!--
 <div>
   <h4>Fill & Stroke</h4>
 
@@ -75,17 +165,7 @@
       [label]="'Enable fill'" [type]="'toggle'" [value]="shape.fillEnabled()" (valueChange)="shape.fillEnabled($event); redrawShape()"
     ></sim-input>
   </div>
-  <!--
-  <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
-    <span style="flex: 2;">Enable Fill</span>
-    <span style="flex: 4">
-      <mat-slide-toggle
-        [ngModel]="shape.fillEnabled()"
-        (ngModelChange)="shape.fillEnabled($event); shape.getLayer().batchDraw();">
-      </mat-slide-toggle> 
-    </span>
-  </div>
-  -->
+
   <div *ngIf="shape.fillEnabled()" style=" margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
       <sim-color-picker
         style="width: 100%"
@@ -93,17 +173,6 @@
         [color]="shape.fill()"
         (colorChange)="shape.fill($event); redrawShape();">
       </sim-color-picker>
-      <!--
-    <span style="flex: 2;">Fill Color</span>
-    <span style="flex: 4">
-      <input matInput style="width: 100%; min-height: 25px; border: 0.5px solid darkgray; border-radius: 8px;"
-        [style.background]="shape.fill()"
-        [cpPosition]="'top'" [cpPositionOffset]="'100%'" [cpPositionRelativeToArrow]="true"
-        [cpWidth]="'300px'" [cpFallbackColor]="'#fff'" [cpPresetColors]="['#fff', '#ccc', '#888', '#000']"
-        [cpAddColorButton]="true" [cpOutputFormat]="'rgba'" 
-        [colorPicker]="shape.fill()" (colorPickerChange)="shape.fill($event); shape.getLayer().draw();">
-    </span>
-      -->
   </div>
 
   <div style="width: 100%">
@@ -111,17 +180,6 @@
       (valueChange)="shape.strokeEnabled($event); redrawShape()"
     ></sim-input>
   </div>
-  <!--
-  <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
-    <span style="flex: 2;">Enable Stroke</span>
-    <span style="flex: 4">
-      <mat-slide-toggle
-        [ngModel]="shape.strokeEnabled()"
-        (ngModelChange)="shape.strokeEnabled($event); shape.getLayer().batchDraw();">
-      </mat-slide-toggle> 
-    </span>
-  </div>
-  -->
 
   <div *ngIf="shape.strokeEnabled()">
     <div style="width: 100%">
@@ -130,16 +188,6 @@
         [color]="shape.stroke()"
         (colorChange)="shape.stroke($event); redrawShape()"
       ></sim-color-picker>
-      <!--
-      <span style="flex: 2;">Stroke</span>
-      <span style="flex: 4">
-        <input matInput style="width: 100%; min-height: 25px; border: 0.5px solid darkgray; border-radius: 8px;"
-          [cpPosition]="'top'" [cpPositionOffset]="'100%'" [cpPositionRelativeToArrow]="true"
-          [style.background]="shape.stroke()"
-          [cpWidth]="'300px'" [cpFallbackColor]="'#fff'" [cpPresetColors]="['#fff', '#ccc', '#888', '#000']" [cpAddColorButton]="true"
-          [cpOutputFormat]="'rgba'" [colorPicker]="shape.stroke()" (colorPickerChange)="shape.stroke($event); shape.getLayer().draw();">
-      </span>
-      -->
     </div>
 
     <div style="width: 100%">
@@ -148,42 +196,13 @@
         [value]="shape.strokeWidth()" (valueChange)="shape.strokeWidth($event); redrawShape();"
       ></sim-input>
     </div>
-    <!--
-    <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
-      <span style="flex: 2;">Stroke Width</span>
-      <span style="flex: 4">
-          <mat-slider style="width: 100%;"
-            [thumbLabel]="true"
-            [min]="1" [max]="100" [step]="0.01" 
-            (ngModelChange)="shape.strokeWidth($event);
-                            shape.clearCache();
-                            shape.getLayer().batchDraw();"
-            [ngModel]="shape.strokeWidth()">
-          </mat-slider>
-      </span>
-    </div>
-    -->
 
     <div style="width: 100%;">
-      <sim-input [type]="'classic-input-box'" [label]="'Dash'" [options]="{ placeholder: 'Space separated', inputType: 'text' }"
+      <sim-input [type]="'classic-input-box'" [label]="'Dash'" [options]="{ inputType: 'text' }" [placeholder]="'Space separated'"
         [value]="dashArrToString(shape.dash())" (valueChange)="shape.dash(stringToDashArr($event)); redrawShape()"
       ></sim-input> 
     </div>
-    <!--
-    <div style="margin: 1em 0; display: flex; flex-direction: row; align-items: center;">
-      <span style="flex: 2;">Dash</span>
-      <span style="flex: 4">
-        <mat-form-field>
-          <input matInput type="text" 
-            placeholder="Dash Array(space separated)"
-            [ngModel]="dashArrToString(shape.dash())"
-            (ngModelChange)="shape.dash(stringToDashArr($event)); shape.getLayer().batchDraw()">
-        </mat-form-field>
-        </span>
-    </div>
-    -->
 
-    <!--Line Join And Cap-->
     <div style="width: 100%;">
       <sim-input [type]="'dropdown'" [label]="'Line Join'"
         [value]="shape.lineJoin() || 'miter'" [options]="['miter', 'round', 'bevel']"
@@ -198,3 +217,4 @@
     </div>
   </div>
 </div>
+-->

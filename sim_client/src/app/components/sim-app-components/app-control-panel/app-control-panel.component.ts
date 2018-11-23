@@ -78,6 +78,7 @@ export class AppControlPanelComponent{
   loadImage() {
     const inputEle = document.createElement("input");
     inputEle.type = "file";
+    inputEle.accept = "image/*";
 
     inputEle.addEventListener('change', () => {
       const file = inputEle.files[0];

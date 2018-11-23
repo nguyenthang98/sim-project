@@ -15,4 +15,15 @@ export class SimColorPickerComponent {
   constructor() { 
     this.showDialog = false;
   }
+
+  getColorPresets() {
+    return colorPresets;
+  }
+
+  setColorPresets(cps) {
+    console.log("set preset colors")
+    colorPresets = cps;
+  }
 }
+
+let colorPresets = ['#fff', '#ccc', '#888', '#000'];
