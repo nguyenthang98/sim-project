@@ -35,7 +35,7 @@
 </button>
 <mat-menu #shapeListMenu="matMenu">
   <mat-list (click)="$event.stopPropagation()">
-    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes().reverse();" (click)="focusObject(object)">
+    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes();" (click)="focusObject(object)">
       <button mat-button style="width: 100%;">
         {{ object.getClassName() }}: {{ object.name() }}
       </button>
