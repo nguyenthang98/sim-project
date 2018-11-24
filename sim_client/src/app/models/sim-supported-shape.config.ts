@@ -145,6 +145,7 @@ class Image extends _image implements SimShape {
 }
 
 class Line extends _line implements SimShape {
+  tempPoints: any[];
   constructor(props?:any) {
     console.log("create Line", props);
     super({
@@ -153,9 +154,11 @@ class Line extends _line implements SimShape {
       fill: getRandomColor(),
       ...(props || {})
     });
+    this.tempPoints = [];
   }
 
   getGeometricKeys(): string[]{
     return [];
   }
+
 }

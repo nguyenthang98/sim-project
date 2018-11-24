@@ -1,3 +1,13 @@
-.sim-control-panel > mat-expansion-panel {
-  margin-top: 5px;
+.sim-control-panel mat-expansion-panel {
+  border-bottom: 1px solid grey;
+  border-radius: 0px;
+}
+
+.sim-control-panel .button-group {
+  margin: .75em 0 0;
+}
+
+.sim-control-panel .button-group-label {
+  padding: .25em 0;
+  border-bottom: 1px solid grey;
 }

@@ -5,7 +5,7 @@ export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, re
 
 function registerStageOnClick (appConfig) {
   appConfig.stage.on("click tap", (event) => {
-    if(appConfig.mode == "draw-line") {
+    if(["draw-line", "draw-polygon"].includes(appConfig.mode)) {
       removeAllTransformer(appConfig.stage);
     } else {
       if (event.target == appConfig.stage || event.target == appConfig.layers.backgroundLayer.bgRect) {
@@ -34,19 +34,42 @@ function registerStageOnDrawLine(appConfig) {
       appConfig.mode = null;
       appConfig.stage.draggable(true);
       setCurrentFocusedObject(appConfig, appConfig.currentFocusedObject);
+    } else if(appConfig.mode == "draw-polygon") {
+      removeAllTransformer(appConfig.stage);
+      if(appConfig.currentFocusedObject instanceof SimShapes.Line) {
+        const _currObj = appConfig.currentFocusedObject;
+        let pos = appConfig.stage.getPointerPosition();
+        const _stageScale = appConfig.stage.scale();
+        pos.x = (pos.x - appConfig.stage.x()) / _stageScale.x;
+        pos.y = (pos.y - appConfig.stage.y()) / _stageScale.y;
+        _currObj.tempPoints = [..._currObj.tempPoints, pos.x, pos.y];
+
+        const points = _currObj.tempPoints;
+        _currObj.points(points);
+        _currObj.getLayer().batchDraw();
+      }
     }
   })
 
   appConfig.stage.on("mousemove touchmove", (event) => {
-    if(isDrawing && appConfig.mode == "draw-line" && (appConfig.currentFocusedObject instanceof SimShapes.Line)) {
+    const _currObj = appConfig.currentFocusedObject;
+    if(isDrawing && appConfig.mode == "draw-line" && (_currObj instanceof SimShapes.Line)) {
       let pos = appConfig.stage.getPointerPosition();
       const _stageScale = appConfig.stage.scale();
       pos.x = (pos.x - appConfig.stage.x()) / _stageScale.x;
       pos.y = (pos.y - appConfig.stage.y()) / _stageScale.y;
 
-      const points = [...appConfig.currentFocusedObject.points(), pos.x, pos.y];
-      appConfig.currentFocusedObject.points(points);
-      appConfig.currentFocusedObject.draw();
+      const points = [..._currObj.points(), pos.x, pos.y];
+      _currObj.points(points);
+      _currObj.getLayer().batchDraw();
+    } else if(appConfig.mode == "draw-polygon" && _currObj instanceof SimShapes.Line) {
+        let pos = appConfig.stage.getPointerPosition();
+        const _stageScale = appConfig.stage.scale();
+        pos.x = (pos.x - appConfig.stage.x()) / _stageScale.x;
+        pos.y = (pos.y - appConfig.stage.y()) / _stageScale.y;
+
+        _currObj.points([..._currObj.tempPoints, pos.x, pos.y]);
+        _currObj.getLayer().batchDraw();
     }
   })
 }
@@ -59,7 +82,7 @@ function setCurrentFocusedObject(appConfig, object) {
     appConfig.layers.currentLayer = _newLayer;
     appConfig.currentFocusedObject = object;
 
-    if(appConfig.mode != "draw-line") {
+    if(!["draw-line", "draw-polygon"].includes(appConfig.mode)) {
       const _newTransformer = new Transformer();
       _newLayer.add(_newTransformer);
       _newTransformer.attachTo(object);

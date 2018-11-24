@@ -11,7 +11,6 @@ import {
 import { AppMaterialModule } from "./modules/app-material/app-material.module";
 import { SimApiService } from "./services/sim-api.service";
 import { HttpClientModule } from "@angular/common/http";
-import { CanvasUtilsService } from "./services/canvas-utils.service";
 import { ColorPickerModule } from "ngx-color-picker";
 import { PassValidatorDirective } from "./directives/pass-validator/pass-validator.directive";
 import { SimUserCollectionComponent } from "./components/sim-user-collection/sim-user-collection.component";
@@ -36,7 +35,7 @@ import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/
 		ColorPickerModule,
 		BrowserAnimationsModule
 	],
-	providers: [SimApiService, CanvasUtilsService],
+	providers: [SimApiService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

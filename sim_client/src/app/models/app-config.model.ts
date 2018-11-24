@@ -56,7 +56,7 @@ export class AppConfig {
         const _lastScale = this.stage.scaleX();
         let _newScale = _lastScale + _additionScale
         if(_newScale < 0) _newScale = 0;
-        else if(_newScale > 1) _newScale = 1;
+        else if(_newScale > 2) _newScale = 2;
         this.changeStageScale(_newScale);
       }
     });

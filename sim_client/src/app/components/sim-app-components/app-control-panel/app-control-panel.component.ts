@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import {AppConfig } from "../../../models/app-config.model";
+import { AppConfig } from "../../../models/app-config.model";
 import { MatTableDataSource } from '@angular/material/table';
-import { CanvasUtilsService } from 'src/app/services/canvas-utils.service';
 import { setCurrentFocusedObject } from "../../../utils";
+import { MatSnackBar } from "@angular/material"
+import { Shape } from "konva" 
 
 @Component({
   selector: 'app-control-panel',
@@ -16,7 +17,7 @@ export class AppControlPanelComponent{
   private SCREEN_HEIGHT: number;
   private fileToURL: any;
 
-  constructor(private canvasUtils: CanvasUtilsService) { 
+  constructor(private snackBar: MatSnackBar) { 
     this.SCREEN_HEIGHT = window.screen.height;
     this.SCREEN_WIDTH = window.screen.width;
     this.fileToURL = window.URL.createObjectURL;
@@ -33,7 +34,7 @@ export class AppControlPanelComponent{
   }
 
   isShape(object) {
-    return this.canvasUtils.isShape(object);
+    return object instanceof Shape;
   }
 
   getCpPosition(ele: any) {
@@ -73,6 +74,35 @@ export class AppControlPanelComponent{
     });
     this.appConfig.mode = "draw-line";
     setCurrentFocusedObject(this.appConfig, _newLine);
+  }
+
+  drawPolygon() {
+    const _newLine = this.appConfig.layers.currentLayer.addObject("Line", {
+      strokeEnabled: true,
+      stroke: "black",
+      fillEnabled: true,
+      strokeWidth: 10,
+      closed: true,
+      width: 1,
+      height: 1
+    });
+    this.appConfig.mode = "draw-polygon";
+    setCurrentFocusedObject(this.appConfig, _newLine);
+
+    const message = "Press ESC To Stop Drawing";
+    const action = "OK"
+    this.snackBar.open(message, action, {
+      duration: 5000
+    });
+  }
+
+  stopDrawPolygon() {
+    this.appConfig.mode = null;
+    const _currObj = this.appConfig.currentFocusedObject;
+    if(_currObj && _currObj.getClassName() == "Line") {
+      _currObj.points(_currObj.tempPoints);
+      this.focusObject(_currObj);
+    }
   }
 
   loadImage() {

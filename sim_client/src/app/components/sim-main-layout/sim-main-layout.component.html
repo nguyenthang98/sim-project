@@ -16,7 +16,7 @@
 
       <div class="sim-floating-panel" *ngIf="!!appConfig.stage">
         <span style="color: white; margin-left: 1em;">Zoom</span>
-        <mat-slider [min]="0" [max]="1" [step]="0.01" [thumbLabel]="true"
+        <mat-slider [min]="0" [max]="2" [step]="0.01" [thumbLabel]="true"
           [ngModel]="appConfig.stage.scaleX()"
           (ngModelChange)="appConfig.changeStageScale($event)"></mat-slider>
       </div>

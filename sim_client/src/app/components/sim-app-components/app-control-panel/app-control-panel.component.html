@@ -24,8 +24,6 @@
         </div>
       </mat-expansion-panel>
 
-      <hr/>
-
       <!--Shapes-->
       <mat-expansion-panel class="mat-elevation-z0" [expanded]="isShape(appConfig.currentFocusedObject)">
         <mat-expansion-panel-header>
@@ -33,21 +31,33 @@
         </mat-expansion-panel-header>
         <!--Shape control buttons-->
         <div>
-          Add New
-          <br>
-          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Rect'))">Rectangle</button>
-          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Ellipse'))">Ellipse</button>
-          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Circle'))">Circle</button>
-          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Wedge'))">Wedge</button>
-          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Star'))">Star</button>
-          <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('RegularPolygon'))">RegularPolygon</button>
-          <hr>
-          <button mat-button (click)="drawLine()">Draw Line</button>
+          <div class="button-group">
+            <div class="button-group-label">Regular Shapes</div>
+            <br>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Rect'))">Rectangle</button>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Ellipse'))">Ellipse</button>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Circle'))">Circle</button>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Wedge'))">Wedge</button>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Star'))">Star</button>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('RegularPolygon'))">RegularPolygon</button>
+          </div>
+
+          <div class="button-group">
+            <div class="button-group-label">Lines & Polygon</div>
+            <br>
+            <button mat-button (click)="drawLine()">Draw Line</button>
+            <button mat-button (click)="drawPolygon()" *ngIf="appConfig.mode != 'draw-polygon'">Draw Polygon</button>
+            <button mat-button (click)="stopDrawPolygon()" *ngIf="appConfig.mode == 'draw-polygon'">Stop Draw Polygon</button>
+          </div>
+
+          <div class="button-group">
+            <div class="button-group-label">Images</div>
+            <br>
+            <button mat-button (click)="loadImage()">Load Image</button>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-
-    <hr>
 
     <!-- Layers -->
     <mat-accordion class="sim-control-panel">
