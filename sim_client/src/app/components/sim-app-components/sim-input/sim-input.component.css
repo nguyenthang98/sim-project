@@ -4,3 +4,17 @@
   border-radius: .25em;
   margin: .5em 0em;
 }
+
+.sim-input-label {
+  flex: 3;
+  padding: .5em .25em;
+  font-weight: 500;
+  display: flex;
+  align-items: center
+}
+
+.sim-input-area {
+  flex: 4;
+  max-width: 100%;
+  padding: .5em .25em;
+}

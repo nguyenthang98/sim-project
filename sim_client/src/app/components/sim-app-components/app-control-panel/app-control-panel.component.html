@@ -2,30 +2,18 @@
   <mat-tab label="General">
     <mat-accordion class="sim-control-panel">
       <!--Main config-->
-      <mat-expansion-panel [expanded]="true" class="mat-elevation-z3">
+      <mat-expansion-panel [expanded]="true" class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Design Properties</mat-panel-title>
         </mat-expansion-panel-header>
         <div style="display: flex;">
           <sim-input style="flex: 1; max-width: 50%;"
-            [type]="'input-box'" [label]="'Width'" [value]="appConfig.mainConfig.width" [options]="{ inputType: 'number' }"
-            (valueChange)="appConfig.updateMainConfig($event)"
-          ></sim-input>
+            [type]="'input-box'" [placeholder]="'Width'" [value]="appConfig.mainConfig.width" [options]="{ inputType: 'number' }"
+            (valueChange)="appConfig.updateMainConfig($event)" ></sim-input>
 
           <sim-input style="flex: 1; max-width: 50%;"
-            [type]="'input-box'" [label]="'Height'" [value]="appConfig.mainConfig.height" [options]="{ inputType: 'number' }"
-            (valueChange)="appConfig.updateMainConfig($event)"
-          ></sim-input>
-          <!--
-          <mat-form-field style="flex: 1; max-width: 50%;">
-            <input matInput type="number" placeholder="Width"
-              [(ngModel)]="appConfig.mainConfig.width" (ngModelChange)="appConfig.updateMainConfig($event)">
-          </mat-form-field>
-          <mat-form-field style="flex: 1">
-            <input matInput type="number" placeholder="Height"
-              [(ngModel)]="appConfig.mainConfig.height" (ngModelChange)="appConfig.updateMainConfig($event)">
-          </mat-form-field>
-          -->
+            [type]="'input-box'" [placeholder]="'Height'" [value]="appConfig.mainConfig.height" [options]="{ inputType: 'number' }"
+            (valueChange)="appConfig.updateMainConfig($event)" ></sim-input>
         </div>
         <div>
           <sim-color-picker
@@ -36,8 +24,10 @@
         </div>
       </mat-expansion-panel>
 
+      <hr/>
+
       <!--Shapes-->
-      <mat-expansion-panel class="mat-elevation-z3" [expanded]="isShape(appConfig.currentFocusedObject)">
+      <mat-expansion-panel class="mat-elevation-z0" [expanded]="isShape(appConfig.currentFocusedObject)">
         <mat-expansion-panel-header>
           <mat-panel-title>Shapes</mat-panel-title>
         </mat-expansion-panel-header>
@@ -55,48 +45,19 @@
           <button mat-button (click)="drawLine()">Draw Line</button>
         </div>
       </mat-expansion-panel>
-
-      <!--Images-->
-      <mat-expansion-panel class="mat-elevation-z3">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Images</mat-panel-title>
-        </mat-expansion-panel-header>
-        <!--Image control buttons-->
-        <button mat-button (click)="loadImage()">Add Image</button>
-        <!--Image properties controls-->
-      </mat-expansion-panel>
-
-      <!--Text-->
-      <!--
-      <mat-expansion-panel class="mat-elevation-z3">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Text</mat-panel-title>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-      -->
-
-      <!--Shape/Image/Text Properties panel-->
-      <!--
-      <mat-expansion-panel *ngIf="appConfig.currentFocusedObject" [expanded]="true" class="mat-elevation-z3">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Properties</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div style="max-height: 50vh; overflow-y: auto; overflow-x: hidden;">
-          <sim-shape-properties [shape]="appConfig.currentFocusedObject"></sim-shape-properties>
-        </div>
-      </mat-expansion-panel>
-      -->
     </mat-accordion>
+
+    <hr>
 
     <!-- Layers -->
     <mat-accordion class="sim-control-panel">
-      <mat-expansion-panel [expanded]="true" class="mat-elevation-z3">
+      <mat-expansion-panel [expanded]="true" class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Layers</mat-panel-title>
         </mat-expansion-panel-header>
         <div style="max-height: 350px; overflow: auto;">
           <mat-form-field style="width: 70%;">
-            <input matInput type="text" placeholder="Layer Name" #newLayerName>
+            <input matInput type="text" placeholder="Layer Name" (keyup.enter)="appConfig.layers.addLayer(newLayerName.value);newLayerName.value='';" #newLayerName>
             <button mat-button *ngIf="newLayerName.value" matSuffix mat-icon-button aria-label="Clear" (click)="newLayerName.value=''">
               <mat-icon>close</mat-icon>
             </button>

@@ -1,6 +1,7 @@
 import { LayerList } from './layer-list.model';
 import { Stage } from 'konva';
 import { registerStageOnClick, removeAllTransformer, registerStageOnDrawLine } from "../utils.js"; 
+import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 export class AppConfig {
   mainConfig: {
@@ -91,7 +92,7 @@ export class AppConfig {
     this.layers.backgroundLayer.updateBackground(this.mainConfig);
   }
 
-  saveStageAsImage(imageName) {
+  saveStageAsImage(imageName, exportType) {
     removeAllTransformer(this.stage);
     const _lastScale = this.stage.scale();
     this.stage.scale({x: 1, y: 1});
@@ -101,11 +102,12 @@ export class AppConfig {
       x: this.stage.x(),
       y: this.stage.y(),
       width: this.mainConfig.width,
-      height: this.mainConfig.height
+      height: this.mainConfig.height,
+      mimeType: exportType ? `image/${exportType}`:'image/png'
     });
 
     let link = document.createElement("a");
-    link.download = imageName + ".png";
+    link.download = imageName;
     link.href = dataUri;
     document.body.appendChild(link);
     link.click();

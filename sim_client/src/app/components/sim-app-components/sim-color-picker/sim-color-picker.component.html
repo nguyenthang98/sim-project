@@ -1,13 +1,20 @@
 <div style="display: flex; margin: .5em .25em;">
   <div style="flex: 3; padding: .5em .25em; font-weight: 500;">{{ label }}</div>
-  <div style="flex: 4; border: 1px solid gray; border-radius: .25em">
-    <div [style.background]="color" (click)="showDialog = !showDialog" style="width: 100%; height: 100%;"></div>
+  <div style="flex: 4; padding: 0 .25em;">
+    <button mat-stroked-button [style.background]="color" (click)="showDialog = !showDialog" style="width: 100%; text-align: center;">
+      <mat-icon>
+        {{ showDialog ? 'expand_less' : 'expand_more' }}
+      </mat-icon>
+    </button>
   </div>
 </div>
-<div style="display: flex; justify-content: center" *ngIf="showDialog">
+<div style="display: flex; justify-content: center;" *ngIf="showDialog">
   <span [cpDialogDisplay]="'inline'" [style.background]="color" [cpFallbackColor]="'#fff'" [cpToggle]="true"
-    [cpPresetColors]="['#fff', '#ccc', '#888', '#000']" [cpAddColorButton]="true" [cpOutputFormat]="'rgba'"
-    [cpWidth]="'300px'" [cpOKButton]="true" [cpOKButtonClass]="'sim-color-picker-btn'"
+    [cpAddColorButton]="true" [cpOutputFormat]="'rgba'"
+    [cpWidth]="'280px'" [cpOKButton]="true" [cpOKButtonClass]="'sim-color-picker-btn'"
     [(colorPicker)]="color" (colorPickerChange)="colorChange.emit(color)"
-    (colorPickerSelect)="showDialog = !showDialog"></span>
+    [cpPresetColors]="getColorPresets()" 
+    (cpPresetColorsChange)="setColorPresets($event)"
+    (colorPickerSelect)="showDialog = !showDialog">
+  </span>
 </div>

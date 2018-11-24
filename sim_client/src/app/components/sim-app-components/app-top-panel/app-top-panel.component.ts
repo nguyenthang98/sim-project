@@ -11,22 +11,8 @@ import { Router } from "@angular/router";
 })
 export class AppTopPanelComponent {
 	@Input("app-config") appConfig: AppConfig;
-	showObjectList: boolean;
-	showRotation: boolean;
-	showOpacity: boolean;
 
 	constructor(private router: Router) { }
-
-	clearToggledPanels(except) {
-		const lastValue = this[except];
-		this.showObjectList = false;
-		this.showRotation = false;
-		this.showOpacity = false;
-
-		if (except) {
-			this[except] = lastValue;
-		}
-	}
 
 	removeObject(object) {
 		console.log("removing object", object);
