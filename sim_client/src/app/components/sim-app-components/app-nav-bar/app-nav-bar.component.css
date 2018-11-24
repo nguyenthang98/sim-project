@@ -1,5 +1,9 @@
 .nav-bar {
-    height: 100%;
+   height: 50px; 
+}
+
+.nav-bar .fill-remaining-space {
+    flex: 1 1 auto;
 }
 
 .nav-bar .acc-icon {
@@ -8,20 +12,11 @@
     border-radius: 50%;
 }
 
-.nav-bar .left-nav {
-    display: inline-block;
-    height: 100%;
+.nav-bar .mr20 {
+    margin-right: 20px;
 }
 
-.nav-bar .left-nav ol {
-    list-style: none;
-    margin: 0;
-}
-
-.nav-bar div {
-    height: 100%;
-}
-
-.nav-bar .left-nav * {
-    height: 100%;
+.nav-bar a {
+    text-decoration: unset;
+    color: black;
 }
