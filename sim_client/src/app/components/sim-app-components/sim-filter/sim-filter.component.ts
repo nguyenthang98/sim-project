@@ -34,11 +34,16 @@ export class SimFilterComponent implements OnChanges{
     return this.findFilterIndex(filter) == -1 ? false : true;
   }
 
-  applyFilter(filter, newValue, valueConfig) {
+  applyFilter(filter, newValue, options) {
     if(filter.type == 'single-input') {
-      //single input filters
-      this.filterTarget[filter.valueFunc](newValue);
-      this.addFilter(filter);
+      // single input value
+      if(options && options.useFilter) {
+        this.addFilter(filter);
+      } else if(options && !options.useFilter) {
+        this.removeFilter(filter);
+      } else {
+        this.filterTarget[filter.valueFunc](newValue);
+      }
     } else if(filter.type == 'toggle-input') {
       //toggle filters
       if(newValue) {
@@ -47,8 +52,9 @@ export class SimFilterComponent implements OnChanges{
         this.removeFilter(filter);
       }
     } else if(filter.type == 'multiple-input') {
-      if(valueConfig) {
-        this.filterTarget[valueConfig.valueFunc](newValue);
+      // multiple input filters
+      if(options) {
+        this.filterTarget[options.valueFunc](newValue);
         this.addFilter(filter);
       } else {
         if(newValue) this.addFilter(filter);

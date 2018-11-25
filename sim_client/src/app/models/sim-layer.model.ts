@@ -40,19 +40,23 @@ export class SimLayer extends Layer {
   }
 
   addImage(src, props?:any) {
-    const filters = [Filters.Blur, Filters.Brighten, Filters.Contrast, Filters.Enhance];
     const imageEle = document.createElement('img'); 
     imageEle.crossOrigin = "";
     imageEle.onload = () => {
+      const _newImage = this.createShape('Image', {
+        image: imageEle,
+        ...(props || {})
+      })
+      _newImage.cache();
+
+      this.add(_newImage);
+      this.batchDraw();
+      /*
       const _newImage = new supportedShapes.Image({
         image: imageEle,
         ...(props || {})
       });
-      _newImage.cache();
-      _newImage.filters((props || {}).filters || filters);
-
-      this.add(_newImage);
-      this.batchDraw();
+      */
     }
     imageEle.src = src;
   }

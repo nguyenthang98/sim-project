@@ -109,10 +109,7 @@ export class AppConfig {
     let link = document.createElement("a");
     link.download = imageName;
     link.href = dataUri;
-    document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-
 
     this.stage.scale(_lastScale);
     this.stage.batchDraw();

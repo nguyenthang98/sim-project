@@ -39,7 +39,8 @@
 .sim-floating-panel {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.54);
+  color: white;
   border-radius: 1.75em;
-  bottom: 1em;
-  right: 2em;
+  bottom: .5em;
+  right: .5em;
 }

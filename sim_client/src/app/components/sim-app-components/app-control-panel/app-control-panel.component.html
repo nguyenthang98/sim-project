@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="appConfig.currentFocusedObject ? 1 : 0">
+<mat-tab-group [selectedIndex]="appConfig.currentFocusedObject ? 2 : 0">
   <mat-tab label="General">
     <mat-accordion class="sim-control-panel">
       <!--Main config-->
@@ -8,11 +8,11 @@
         </mat-expansion-panel-header>
         <div style="display: flex;">
           <sim-input style="flex: 1; max-width: 50%;"
-            [type]="'input-box'" [placeholder]="'Width'" [value]="appConfig.mainConfig.width" [options]="{ inputType: 'number' }"
+            [type]="'input-box'" [placeholder]="'Width'" [(value)]="appConfig.mainConfig.width" [options]="{ inputType: 'number' }"
             (valueChange)="appConfig.updateMainConfig($event)" ></sim-input>
 
           <sim-input style="flex: 1; max-width: 50%;"
-            [type]="'input-box'" [placeholder]="'Height'" [value]="appConfig.mainConfig.height" [options]="{ inputType: 'number' }"
+            [type]="'input-box'" [placeholder]="'Height'" [(value)]="appConfig.mainConfig.height" [options]="{ inputType: 'number' }"
             (valueChange)="appConfig.updateMainConfig($event)" ></sim-input>
         </div>
         <div>
@@ -159,15 +159,15 @@
     </mat-accordion>
   </mat-tab>
 
-  <mat-tab label="Properties" *ngIf="appConfig.currentFocusedObject">
-    <div style="width: inherit; padding: 1em .5em;">
-      <sim-shape-properties [shape]="appConfig.currentFocusedObject"></sim-shape-properties>
-    </div>
-  </mat-tab>
-
   <mat-tab label="Filters" *ngIf="appConfig.currentFocusedObject">
     <div style="width: inherit; padding: 1em .5em;">
       <sim-filter [filterTarget]="appConfig.currentFocusedObject"></sim-filter>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Properties" *ngIf="appConfig.currentFocusedObject">
+    <div style="width: inherit; padding: 1em .5em;">
+      <sim-shape-properties [shape]="appConfig.currentFocusedObject"></sim-shape-properties>
     </div>
   </mat-tab>
 

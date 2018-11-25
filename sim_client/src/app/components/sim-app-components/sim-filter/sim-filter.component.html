@@ -1,8 +1,21 @@
 <div style="width: 100%;" *ngFor="let filter of getFilters()">
-  <sim-input *ngIf="filter.type == 'single-input'"
+  <div style="width: 100%;" *ngIf="filter.type == 'single-input'">
+    <sim-input 
+      [label]="filter.name" [type]="'toggle'"
+      [value]="hasFilter(filter)" (valueChange)="applyFilter( filter, null, {useFilter: $event} )"
+    ></sim-input>
+    <div *ngIf="hasFilter(filter)" style="padding-left: 1em; font-size: .9em;">
+      <sim-input
+        [label]="filter.valueFunc" [type]="filter.inputType" [options]="filter.options"
+        [value]="filterTarget[filter.valueFunc]()" (valueChange)="applyFilter(filter, $event);"
+      ></sim-input>
+    </div>
+  </div>
+
+  <!-- <sim-input *ngIf="filter.type == 'single-input'"
     [label]="filter.name" [type]="filter.inputType" [options]="filter.options"
     [value]="filterTarget[filter.valueFunc]() || filter.options.defaultValue" (valueChange)="applyFilter(filter, $event)"
-  ></sim-input>
+  ></sim-input> -->
 
   <sim-input *ngIf="filter.type == 'toggle-input'"
     [label]="filter.name" [type]="filter.inputType" [options]="filter.options"
