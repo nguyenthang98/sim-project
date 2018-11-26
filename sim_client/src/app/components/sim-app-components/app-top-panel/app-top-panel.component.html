@@ -5,8 +5,12 @@
 </button>
 <mat-menu #shapeListMenu="matMenu">
   <mat-list (click)="$event.stopPropagation()">
-    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes();" (click)="focusObject(object)">
-      <button mat-button style="width: 100%;">
+    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes();">
+      <mat-slide-toggle
+        [ngModel]="object.visible()"
+        (ngModelChange)="object.visible($event); object.getLayer().batchDraw();"
+      ></mat-slide-toggle>
+      <button mat-button style="width: 100%" (click)="focusObject(object);">
         {{ object.getClassName() }}: {{ object.name() }}
       </button>
       <button mat-icon-button (click)="removeObject(object)">
@@ -17,11 +21,11 @@
 </mat-menu>
 
 <!--Shape z-index -->
-<button mat-icon-button matTooltip="Move Up" [matTooltipPosition]="'below'" style="flex: 1" [disabled]="shouldDisableMoveUpObj()"
+<button mat-icon-button matTooltip="Move Shape Up" [matTooltipPosition]="'below'" style="flex: 1" [disabled]="shouldDisableMoveUpObj()"
   (click)="appConfig.currentFocusedObject.moveUp(); appConfig.currentFocusedObject.getLayer().batchDraw();">
   <mat-icon>expand_less</mat-icon>
 </button>
-<button mat-icon-button matTooltip="Move Down" [matTooltipPosition]="'below'" style="flex: 1" [disabled]="shouldDisableMoveDownObj()"
+<button mat-icon-button matTooltip="Move Shape Down" [matTooltipPosition]="'below'" style="flex: 1" [disabled]="shouldDisableMoveDownObj()"
   (click)="appConfig.currentFocusedObject.moveDown(); appConfig.currentFocusedObject.getLayer().batchDraw();">
   <mat-icon>expand_more</mat-icon>
 </button>
@@ -102,7 +106,7 @@
       </button>
     </mat-form-field>
     <sim-input #typeSelect
-      [hideLabel]="true" [type]="'dropdown'" [placeholder]="'Export Type'" [options]="['png', 'jpeg']" [value]="'png'"
+      [hideLabel]="true" [type]="'dropdown'" [placeholder]="'Export Type'" [options]="['png', 'jpeg', 'webp']" [value]="'png'"
       (valueChange)="typeSelect.value = $event"></sim-input>
     <button mat-button style="width: 100%;" (click)="appConfig.saveStageAsImage(imageName.value, typeSelect.value)">
       <mat-icon>save</mat-icon>

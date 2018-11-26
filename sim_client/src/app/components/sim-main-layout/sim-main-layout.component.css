@@ -33,6 +33,8 @@
 
 .sim-work-area {
   height: calc(100% - 40px);
+  border-left: .5px dashed gray;
+  border-top: .5px dashed gray;
   background-color: #ddd;
 }
 

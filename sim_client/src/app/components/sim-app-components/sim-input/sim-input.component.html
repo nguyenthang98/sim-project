@@ -20,7 +20,7 @@
     </div>
 
     <div *ngIf="isInputBox()" style="max-width: 100%">
-      <mat-form-field style="max-width: 100%;">
+      <mat-form-field style="max-width: 100%; width: 100%;">
         <input matInput
           [type]="options.inputType || 'text'" [placeholder]="placeholder" [ngModel]="value" 
           (ngModelChange)="valueChange.emit(getExactValue($event, options.inputType))">

@@ -25,7 +25,7 @@
       </mat-expansion-panel>
 
       <!--Shapes-->
-      <mat-expansion-panel class="mat-elevation-z0" [expanded]="isShape(appConfig.currentFocusedObject)">
+      <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="isShape(appConfig.currentFocusedObject)">
         <mat-expansion-panel-header>
           <mat-panel-title>Shapes</mat-panel-title>
         </mat-expansion-panel-header>
@@ -55,13 +55,19 @@
             <br>
             <button mat-button (click)="loadImage()">Load Image</button>
           </div>
+
+          <div class="button-group">
+            <div class="button-group-label">Text</div>
+            <br>
+            <button mat-button (click)="focusObject(appConfig.layers.currentLayer.addObject('Text'))">Add Text</button>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
 
     <!-- Layers -->
     <mat-accordion class="sim-control-panel">
-      <mat-expansion-panel [expanded]="true" class="mat-elevation-z0">
+      <mat-expansion-panel [expanded]="true" class="expansion-panel mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-title>Layers</mat-panel-title>
         </mat-expansion-panel-header>

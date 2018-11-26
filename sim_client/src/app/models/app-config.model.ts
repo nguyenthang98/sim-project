@@ -98,19 +98,28 @@ export class AppConfig {
     this.stage.scale({x: 1, y: 1});
     this.stage.batchDraw();
 
-    let dataUri = this.stage.toDataURL({
+    const _canvas = this.stage.toCanvas({
+      callback: function(cv) {
+        console.log(cv);
+      },
       x: this.stage.x(),
       y: this.stage.y(),
       width: this.mainConfig.width,
-      height: this.mainConfig.height,
-      mimeType: exportType ? `image/${exportType}`:'image/png'
+      height: this.mainConfig.height
     });
 
-    let link = document.createElement("a");
-    link.download = imageName;
-    link.href = dataUri;
-    link.click();
+    const mimeType = exportType ? `image/${exportType}` : "image\png";
 
+    _canvas.toBlob((blob) => {
+      const dataURL = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.download = imageName;
+      link.href = dataURL;
+      link.click();
+      link.remove();
+    }, mimeType, 1);
+
+    // return last scale
     this.stage.scale(_lastScale);
     this.stage.batchDraw();
   }
