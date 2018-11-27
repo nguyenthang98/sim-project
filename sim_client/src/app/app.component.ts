@@ -13,7 +13,11 @@ import { SimFilterComponent } from './components/sim-app-components/sim-filter/s
     styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-    ngOnInit() { }
+    currentRoute: string;
+
+    ngOnInit() {
+        this.currentRoute = location.pathname;
+    }
 }
 
 export const SimComponents = [

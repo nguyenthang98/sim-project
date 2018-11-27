@@ -13,11 +13,13 @@
   height: calc(100% - 66px);
   width: 300px;
   padding: 5px;
+  border-right: 1px solid #ccc;
 }
 
 .collection-container .images-container {
-  height: calc(100% - 56px);
-  width: calc(100% - 310px);
+  height: calc(100% - 66px);
+  width: calc(100% - 325px);
+  padding: 5px;
 }
 
 .collection-container .avatar {
