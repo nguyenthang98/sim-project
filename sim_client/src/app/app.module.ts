@@ -33,7 +33,7 @@ import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/
 		ReactiveFormsModule,
 		AppMaterialModule,
 		ColorPickerModule,
-		BrowserAnimationsModule
+		BrowserAnimationsModule,
 	],
 	providers: [SimApiService],
 	bootstrap: [AppComponent]

@@ -105,18 +105,22 @@ export class AppControlPanelComponent{
     }
   }
 
-  loadImage() {
-    const inputEle = document.createElement("input");
-    inputEle.type = "file";
-    inputEle.accept = "image/*";
+  loadImage(imageURL?) {
+    if(imageURL) {
+      this.appConfig.layers.currentLayer.addImage(imageURL);
+    } else {
+      const inputEle = document.createElement("input");
+      inputEle.type = "file";
+      inputEle.accept = "image/*";
 
-    inputEle.addEventListener('change', () => {
-      const file = inputEle.files[0];
-      if(!file) return;
-      if(!this.appConfig.layers.currentLayer) return;
-      this.appConfig.layers.currentLayer.addImage(this.fileToURL(file)); 
-    })
+      inputEle.addEventListener('change', () => {
+        const file = inputEle.files[0];
+        if (!file) return;
+        if (!this.appConfig.layers.currentLayer) return;
+        this.appConfig.layers.currentLayer.addImage(this.fileToURL(file));
+      })
 
-    inputEle.click();
+      inputEle.click();
+    }
   }
 }

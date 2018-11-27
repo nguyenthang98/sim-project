@@ -54,6 +54,14 @@
             <div class="button-group-label">Images</div>
             <br>
             <button mat-button (click)="loadImage()">Load Image</button>
+            <div style="width: 100%; display: flex;">
+              <mat-form-field style="flex: 7; max-width: 70%;">
+                <input matInput type="text" placeholder="Image URL" #imageURLInput>
+              </mat-form-field>
+              <div style="flex: 3; max-width: 30%; text-align: center; padding: .75em 0em;">
+                <button mat-button (click)="loadImage(imageURLInput.value)">Add</button>
+              </div>
+            </div>
           </div>
 
           <div class="button-group">

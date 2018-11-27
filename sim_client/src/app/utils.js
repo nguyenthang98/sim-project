@@ -1,7 +1,20 @@
 import { Shape, Transformer } from "konva";
 import * as SimShapes from "./models/sim-supported-shape.config";
 
-export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, registerStageOnDrawLine };
+export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, registerStageOnDrawLine, loadFontToDocument };
+
+function loadFontToDocument(fontData, fontName, callback) {
+  const newFontFace = new FontFace(fontName, fontData);
+  newFontFace.load()
+    .then(function (loadedFontFace) {
+      console.log(loadedFontFace);
+      document.fonts.add(loadedFontFace);
+      callback && callback();
+    })
+    .catch(err => {
+      console.error(err);
+    })
+}
 
 function registerStageOnClick (appConfig) {
   appConfig.stage.on("click tap", (event) => {

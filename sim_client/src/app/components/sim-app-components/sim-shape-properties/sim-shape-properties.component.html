@@ -175,17 +175,17 @@
 
         <sim-input style="flex: 3; max-width: 30%;"
           [type]="'input-box'" [placeholder]="'Font size'" [value]="shape.fontSize()" [options]="{ inputType: 'number' }"
-          (valueChange)="shape.fontSize($event); redrawShape()"
+          (valueChange)="shape.fontSize($event); redrawShape();"
         ></sim-input>
       </div>
 
       <div style="width: 100%;">
-        <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Font Family" [matAutocomplete]='autoFontFamily'
-            [ngModel]="shape.fontFamily() || 'Arial'" (ngModelChange)="shape.fontFamily($event); redrawShape()">
+        <mat-form-field style="width: 100%">
+          <input matInput placeholder="Font Family" [matAutocomplete]='autoFontFamily' (keyup.enter)="loadFont(fontFamilyName.value)"
+            [ngModel]="shape.fontFamily()" (ngModelChange)="shape.fontFamily($event);" #fontFamilyName>
           <mat-autocomplete #autoFontFamily="matAutocomplete">
-            <mat-option *ngFor="let family of getFontFamilys()" [value]="family">
-              {{ family }}
+            <mat-option *ngFor="let font of getFonts(fontFamilyName.value) | async" [value]="font.family" (click)="loadFont(font.family)">
+              <div [style.font-family]="font.family">{{ font.family }}</div>
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>

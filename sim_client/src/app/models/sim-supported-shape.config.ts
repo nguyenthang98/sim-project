@@ -174,6 +174,7 @@ class Text extends _text implements SimShape {
       fill: getRandomColor(),
       stroke: getRandomColor(),
       strokeEnabled: true,
+      fontSize: 100,
       ...(props || {})
     });
 

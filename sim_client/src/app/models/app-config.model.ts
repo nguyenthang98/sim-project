@@ -1,7 +1,6 @@
 import { LayerList } from './layer-list.model';
 import { Stage } from 'konva';
 import { registerStageOnClick, removeAllTransformer, registerStageOnDrawLine } from "../utils.js"; 
-import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 export class AppConfig {
   mainConfig: {

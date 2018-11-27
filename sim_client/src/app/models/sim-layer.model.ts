@@ -41,7 +41,7 @@ export class SimLayer extends Layer {
 
   addImage(src, props?:any) {
     const imageEle = document.createElement('img'); 
-    imageEle.crossOrigin = "";
+    imageEle.crossOrigin = "Anonymous";
     imageEle.onload = () => {
       const _newImage = this.createShape('Image', {
         image: imageEle,
@@ -51,12 +51,6 @@ export class SimLayer extends Layer {
 
       this.add(_newImage);
       this.batchDraw();
-      /*
-      const _newImage = new supportedShapes.Image({
-        image: imageEle,
-        ...(props || {})
-      });
-      */
     }
     imageEle.src = src;
   }

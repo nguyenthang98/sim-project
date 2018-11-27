@@ -1,14 +1,22 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { SimApiService } from 'src/app/services/sim-api.service';
 
 @Component({
   selector: 'sim-shape-properties',
   templateUrl: './sim-shape-properties.component.html',
   styleUrls: ['./sim-shape-properties.component.css']
 })
-export class SimShapePropertiesComponent {
+export class SimShapePropertiesComponent implements OnDestroy{
   @Input() shape;
 
-  constructor() { }
+  currentSelectedFont: any;
+
+  constructor(private apiService: SimApiService) {
+    this.currentSelectedFont = null;
+  }
+
+  ngOnDestroy() {
+  }
 
   redrawShape() {
     this.shape.clearCache();
@@ -19,8 +27,14 @@ export class SimShapePropertiesComponent {
     this.shape.getLayer().batchDraw();
   }
 
-  getFontFamilys() {
-    return ['Arial', 'Serif', 'San-Serif'];
+  getFonts(filterText) {
+    return this.apiService.getListFontsAsync(filterText);
+  }
+
+  loadFont(fontFamily) {
+    this.apiService.loadFont(fontFamily, 'regular', ()=>{
+      this.redrawShape();
+    }); 
   }
 
   dashArrToString(dashArr) {

@@ -231,7 +231,7 @@ const multipleInputFilters = [
         inputType: "slider",
         options: {
           min: 0,
-          max: 256,
+          max: 255,
           step: 1,
           showInputBox: true,
           thumbLabel: true
@@ -242,7 +242,7 @@ const multipleInputFilters = [
         inputType: "slider",
         options: {
           min: 0,
-          max: 256,
+          max: 255,
           step: 1,
           showInputBox: true,
           thumbLabel: true
@@ -253,7 +253,7 @@ const multipleInputFilters = [
         inputType: "slider",
         options: {
           min: 0,
-          max: 256,
+          max: 255,
           step: 1,
           showInputBox: true,
           thumbLabel: true
