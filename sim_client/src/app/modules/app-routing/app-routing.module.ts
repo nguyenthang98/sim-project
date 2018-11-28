@@ -8,7 +8,7 @@ import { SimMainLayoutComponent } from "../../components/sim-main-layout/sim-mai
 import { SimUserCollectionComponent } from "../../components/sim-user-collection/sim-user-collection.component";
 
 const routes: Routes = [
-	{ path: "", component: SimMainLayoutComponent},
+	{ path: "", component: SimMainLayoutComponent, canActive: [SimAuthGuard]},
 	{ path: "login", component: SimLoginComponent },
 	{
 		path: "user-collection",
