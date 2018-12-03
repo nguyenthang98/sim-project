@@ -18,3 +18,16 @@
 .logo-wrapper {
   width: 100%;
 }
+.img_bg{
+  background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)),url("../../../assets/bg1.png");
+    background-size: cover;
+}
+button.mat-flat-button.mat-primary {
+  background-color: #000!important;
+}
+.mat-flat-button.mat-primary {
+  color: #fff!important;
+}
+.mat-form-field-underline {
+  background-color: #000!important;
+}

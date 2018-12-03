@@ -46,3 +46,11 @@
   bottom: .5em;
   right: .5em;
 }
+.sim-left-container{
+  background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)),url("../../../assets/bg1.png");
+  background-size: cover;
+}
+.sim-top-panel{
+  background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)),url("../../../assets/bg1.png");
+  background-size: cover;
+}

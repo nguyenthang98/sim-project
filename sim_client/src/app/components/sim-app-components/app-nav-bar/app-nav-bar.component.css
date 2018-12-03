@@ -18,5 +18,8 @@
 
 .nav-bar a {
     text-decoration: unset;
-    color: black;
+    color: #fff;
 }
+.mat-toolbar {
+    background: #000;
+  }

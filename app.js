@@ -17,12 +17,12 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'sim_client/dist/sim_client')));
 app.use(express.static(path.join(__dirname, 'sim-data')));
 app.use(
-    '/**',
-    express.static(path.join(__dirname, 'sim_client/dist/sim_client'))
+  '/**',
+  express.static(path.join(__dirname, 'sim_client/dist/sim_client'))
 );
 
 const authFunc = require('./sim_server/controllers/authentication')
-    .authenticate;
+  .authenticate;
 app.use('/api/auth', authApiRouter);
 app.use('/api/image', authFunc(), imageApiRouter);
 app.use('/api/user', authFunc(), userApiRouter);
