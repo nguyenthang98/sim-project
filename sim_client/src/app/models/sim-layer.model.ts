@@ -1,5 +1,4 @@
 import { Layer, Shape } from "konva";
-import { Filters } from "konva";
 import * as supportedShapes from "./sim-supported-shape.config";
 
 export class SimLayer extends Layer {
@@ -55,7 +54,17 @@ export class SimLayer extends Layer {
     imageEle.src = src;
   }
 
-  getShapes() {
+  getShapes(): any {
     return this.getChildren(c => c instanceof Shape);
+  }
+
+  exportJSON() {
+    return {
+      attrs: {
+        name: this.name()        
+      },
+      chidren: this.getShapes().map(shape => shape.exportJSON()),
+      className: 'SimLayer'
+    }
   }
 }

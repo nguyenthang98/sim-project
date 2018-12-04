@@ -3,6 +3,7 @@ import {
   Circle as _circle, Rect as _rect, Ellipse as _ellipse, Wedge as _wedge, RegularPolygon as _regPolygon, 
   Star as _star, Image as _image, Line as _line, Text as _text
 } from "konva";
+import { getFiltersClassName } from "../utils";
 
 // Konva-Based Shapes
 export {
@@ -11,6 +12,7 @@ export {
 
 interface SimShape {
   getGeometricKeys: () => string[];
+  exportJSON: () => any;
 }
 
 // general props and functions
@@ -36,6 +38,14 @@ class Circle extends _circle implements SimShape {
   getGeometricKeys(): string[]{
     return ["radius"];
   }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    if(JSONObj.attrs.filters && JSONObj.attrs.filters.length) {
+      JSONObj.attrs.filters = getFiltersClassName(this);
+    }
+    return JSONObj;
+  }
 }
 
 class Rect extends _rect implements SimShape {
@@ -52,6 +62,11 @@ class Rect extends _rect implements SimShape {
 
   getGeometricKeys(): string[]{
     return [];
+  }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
   }
 }
 
@@ -72,6 +87,11 @@ class Ellipse extends _ellipse implements SimShape{
   getGeometricKeys(): string[]{
     return ["radiusX", "radiusY"];
   }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
+  }
 }
 
 class Wedge extends _wedge implements SimShape {
@@ -90,6 +110,10 @@ class Wedge extends _wedge implements SimShape {
     return ["angle", "radius"];
   }
 
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
+  }
 }
 
 class RegularPolygon extends _regPolygon implements SimShape {
@@ -108,6 +132,10 @@ class RegularPolygon extends _regPolygon implements SimShape {
     return ["sides", "radius"];
   }
 
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
+  }
 }
 
 class Star extends _star implements SimShape {
@@ -126,6 +154,11 @@ class Star extends _star implements SimShape {
   getGeometricKeys(): string[]{
     return ["innerRadius", "outerRadius", "numPoints"];
   }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
+  }
 }
 
 class Image extends _image implements SimShape {
@@ -141,6 +174,11 @@ class Image extends _image implements SimShape {
 
   getGeometricKeys(): string[]{
     return [];
+  }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
   }
 }
 
@@ -159,6 +197,11 @@ class Line extends _line implements SimShape {
 
   getGeometricKeys(): string[]{
     return [];
+  }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
   }
 }
 
@@ -183,5 +226,10 @@ class Text extends _text implements SimShape {
 
   getGeometricKeys(): string[]{
     return [];
+  }
+
+  exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    return JSONObj;
   }
 }

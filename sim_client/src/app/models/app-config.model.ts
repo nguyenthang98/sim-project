@@ -34,7 +34,7 @@ export class AppConfig {
     });
 
     // for dev
-    console.log(this.stage);
+    console.log(this, this.stage);
 
     // set stage scale to fit window
     const _stageContainer = this.stage.container();
@@ -121,5 +121,13 @@ export class AppConfig {
     // return last scale
     this.stage.scale(_lastScale);
     this.stage.batchDraw();
+  }
+
+  exportJSON() {
+    return {
+      attrs: this.mainConfig,
+      children: this.layers.exportJSON(),
+      className: 'AppConfig'
+    }
   }
 }

@@ -1,7 +1,15 @@
-import { Shape, Transformer } from "konva";
+import { Shape, Transformer, Filters } from "konva";
 import * as SimShapes from "./models/sim-supported-shape.config";
 
-export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, registerStageOnDrawLine, loadFontToDocument };
+export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, registerStageOnDrawLine, loadFontToDocument,
+         getFiltersClassName };
+
+const availableFilters = ["Blur", "Brighten", "Contrast", "Enhance", "Noise", "Posterize",
+                          "Pixelate", "Emboss", "RGB", "HSL", "Invert", "Grayscale"];
+function getFiltersClassName(shape) {
+  const filters = shape.filters();
+  return availableFilters.filter(className => filters.find(f => f === Filters[className]));
+}
 
 function loadFontToDocument(fontData, fontName, callback) {
   const newFontFace = new FontFace(fontName, fontData);

@@ -62,4 +62,14 @@ export class LayerList {
     this.layerList.splice(layerIdx, 1);
     this.layerList.splice(layerIdx + 1, 0, layer);
   }
+
+  exportJSON() {
+    return {
+      attrs: {
+        backgroundLayer: this.backgroundLayer.exportJSON()
+      },
+      children: this.layerList.map(layer => layer.exportJSON()),
+      className: 'LayerList'
+    }
+  }
 } 
