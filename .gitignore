@@ -4,4 +4,7 @@ node_modules
 #vscode folder
 .vscode
 
+#data folder
+sim-data
+
 package-lock.json
