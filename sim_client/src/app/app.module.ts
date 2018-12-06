@@ -15,6 +15,7 @@ import { ColorPickerModule } from "ngx-color-picker";
 import { PassValidatorDirective } from "./directives/pass-validator/pass-validator.directive";
 import { SimUserCollectionComponent } from "./components/sim-user-collection/sim-user-collection.component";
 import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/app-nav-bar.component";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
 	declarations: [
@@ -34,9 +35,10 @@ import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/
 		AppMaterialModule,
 		ColorPickerModule,
 		BrowserAnimationsModule,
+		NgxSpinnerModule
 	],
 	providers: [SimApiService],
-	entryComponents: [ SimEntryComponents ],
+	entryComponents: [SimEntryComponents],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

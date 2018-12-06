@@ -27,6 +27,7 @@ export class SimApiService {
 
   constructor(private httpClient: HttpClient) {
     this.baseURL = location.origin + basePath;
+    // this.baseURL = baseURL;
     this.loadedFont = [];
     this.getListFontsAsync().subscribe();
   }

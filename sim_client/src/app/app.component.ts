@@ -7,6 +7,8 @@ import { SimColorPickerComponent } from './components/sim-app-components/sim-col
 import { SimInputComponent } from './components/sim-app-components/sim-input/sim-input.component';
 import { SimFilterComponent } from './components/sim-app-components/sim-filter/sim-filter.component';
 import { SimExportDialogComponent } from './components/sim-app-components/dialogs/sim-export-dialog/sim-export-dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: "app-root",
@@ -15,9 +17,26 @@ import { SimExportDialogComponent } from './components/sim-app-components/dialog
 })
 export class AppComponent {
   currentRoute: string;
+  constructor(private spinner: NgxSpinnerService, private router: Router) {
+    this.router.events.subscribe((routerEvent: Event) => {
+      if (routerEvent instanceof NavigationStart) {
+        this.spinner.show();
+      }
+      if (routerEvent instanceof NavigationEnd) {
+        this.spinner.hide();
+      }
+    })
+  }
 
   ngOnInit() {
     this.currentRoute = location.pathname;
+
+    // this.spinner.show();
+
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //   this.spinner.hide();
+    // }, 5000);
   }
 }
 

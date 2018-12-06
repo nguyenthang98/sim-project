@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { passValidator } from "../../directives/pass-validator/pass-validator.directive";
 import { MatSnackBar } from "@angular/material";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const jwtHelper = new JwtHelperService();
 
@@ -24,7 +25,8 @@ export class SimLoginComponent implements OnInit {
     constructor(
         private simApiService: SimApiService,
         private router: Router,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private spinner: NgxSpinnerService
     ) { }
 
     ngOnInit() {
@@ -33,7 +35,7 @@ export class SimLoginComponent implements OnInit {
 
         const token = localStorage.getItem("token") || "";
         if (token && !jwtHelper.isTokenExpired(token)) {
-            this.router.navigate(["/"]);
+            this.router.navigate(["/editor"]);
         }
     }
 
@@ -61,6 +63,7 @@ export class SimLoginComponent implements OnInit {
     }
 
     onLoginButtonClicked(): void {
+        this.spinner.show();
         this.simApiService.simLogin(this.loginForm.value).subscribe(res => {
             if (res.code !== 200) {
                 this.openSnackBar("Username or Password is incorrect", "Close");
@@ -71,12 +74,14 @@ export class SimLoginComponent implements OnInit {
                     localStorage.clear();
                     this.setUserInfo(sessionStorage, res.content);
                 }
-                this.router.navigate(["/"]);
+                this.router.navigate(["/editor"]);
             }
+            this.spinner.hide();
         });
     }
 
     onRegisterButtonClicked(): void {
+        this.spinner.show();
         if (this.checkValidPass) {
             this.simApiService.simRegister(this.registerForm.value).subscribe(res => {
                 if (res.code !== 200) {
@@ -87,8 +92,9 @@ export class SimLoginComponent implements OnInit {
                     }
                 } else {
                     this.setUserInfo(sessionStorage, res.content);
-                    this.router.navigate(["/"]);
+                    this.router.navigate(["/editor"]);
                 }
+                this.spinner.hide();
             });
         }
     }
