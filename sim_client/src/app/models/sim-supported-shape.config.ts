@@ -1,13 +1,20 @@
 // Konva Shapes
 import {
   Circle as _circle, Rect as _rect, Ellipse as _ellipse, Wedge as _wedge, RegularPolygon as _regPolygon, 
-  Star as _star, Image as _image, Line as _line, Text as _text
+  Star as _star, Image as _image, Line as _line, Text as _text, Filters
 } from "konva";
-import { getFiltersClassName } from "../utils";
+//import { getFiltersClassName } from "../utils";
 
 // Konva-Based Shapes
 export {
   Circle, Rect , Ellipse, Wedge, RegularPolygon, Star, Image, Line, Text
+}
+
+const availableFilters = ["Blur", "Brighten", "Contrast", "Enhance", "Noise", "Posterize",
+                          "Pixelate", "Emboss", "RGB", "HSL", "Invert", "Grayscale"];
+function getFiltersClassName(shape) {
+  const filters = shape.filters();
+  return availableFilters.filter(className => filters.find(f => f === Filters[className]));
 }
 
 interface SimShape {

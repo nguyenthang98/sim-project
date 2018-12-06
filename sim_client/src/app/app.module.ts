@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { AppComponent, SimComponents } from "./app.component";
+import { AppComponent, SimComponents, SimEntryComponents } from "./app.component";
 import {
 	AppRoutingModule,
 	RoutingComponents
@@ -23,7 +23,7 @@ import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/
 		SimComponents,
 		PassValidatorDirective,
 		SimUserCollectionComponent,
-		AppNavBarComponent
+		AppNavBarComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -36,6 +36,7 @@ import { AppNavBarComponent } from "./components/sim-app-components/app-nav-bar/
 		BrowserAnimationsModule,
 	],
 	providers: [SimApiService],
-	bootstrap: [AppComponent]
+	entryComponents: [ SimEntryComponents ],
+	bootstrap: [AppComponent],
 })
 export class AppModule { }

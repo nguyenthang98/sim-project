@@ -84,23 +84,29 @@ export class AppControlPanelComponent{
       strokeWidth: 10,
       closed: true,
       width: 1,
-      height: 1
+      height: 1,
+      draggable: false
     });
     this.appConfig.mode = "draw-polygon";
     setCurrentFocusedObject(this.appConfig, _newLine);
 
-    const message = "Press ESC To Stop Drawing";
+    const message = "Press ESC Or Click OK To Stop Drawing";
     const action = "OK"
-    this.snackBar.open(message, action, {
-      duration: 5000
-    });
+    this.snackBar.open(message, action)
+      .onAction().subscribe(() => {
+        console.log("action triggered");
+        this.stopDrawPolygon();
+      })
+
   }
 
   stopDrawPolygon() {
     this.appConfig.mode = null;
+    this.appConfig.stage.draggable(true);
     const _currObj = this.appConfig.currentFocusedObject;
     if(_currObj && _currObj.getClassName() == "Line") {
       _currObj.points(_currObj.tempPoints);
+      _currObj.draggable(true);
       this.focusObject(_currObj);
     }
   }
@@ -121,6 +127,16 @@ export class AppControlPanelComponent{
       })
 
       inputEle.click();
+    }
+  }
+
+  layerDropped(event) {
+    console.log(event);
+    const layer = event.item.data;
+    if(layer) {
+      const _newZIndex = event.currentIndex;
+      layer.setZIndex(_newZIndex);
+      this.appConfig.stage.batchDraw();
     }
   }
 }

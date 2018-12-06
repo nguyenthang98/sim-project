@@ -55,7 +55,11 @@ export class SimLayer extends Layer {
   }
 
   getShapes(): any {
-    return this.getChildren(c => c instanceof Shape);
+    return this.getChildren(c => c instanceof Shape).toArray().reverse();
+  }
+
+  isBGLayer(): boolean {
+    return false;
   }
 
   exportJSON() {

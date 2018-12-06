@@ -24,6 +24,9 @@
         <input matInput
           [type]="options.inputType || 'text'" [placeholder]="placeholder" [ngModel]="value" 
           (ngModelChange)="valueChange.emit(getExactValue($event, options.inputType))">
+        <button mat-button *ngIf="options.showClearButton" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
     </div>
 

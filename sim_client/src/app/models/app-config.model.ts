@@ -1,6 +1,7 @@
 import { LayerList } from './layer-list.model';
 import { Stage } from 'konva';
 import { registerStageOnClick, removeAllTransformer, registerStageOnDrawLine } from "../utils.js"; 
+import { isFinte } from "lodash";
 
 export class AppConfig {
   mainConfig: {
@@ -91,7 +92,30 @@ export class AppConfig {
     this.layers.backgroundLayer.updateBackground(this.mainConfig);
   }
 
-  saveStageAsImage(imageName, exportType) {
+  toImageURL({ imageName, exportType, exportQuality, x, y, width, height}) {
+    removeAllTransformer(this.stage);
+    const _lastScale = this.stage.scale();
+    const mimeType = exportType ? `image/${exportType}` : "image\png";
+    this.stage.scale({x: 1, y: 1});
+    this.stage.batchDraw();
+
+    const dataURL = this.stage.toDataURL({
+      x: this.stage.x() + (isFinite(x) ? x : 0),
+      y: this.stage.y() + (isFinite(y) ? y : 0),
+      width: isFinite(width) ? width : this.mainConfig.width,
+      height: isFinite(height) ? height : this.mainConfig.height,
+      mimeType: mimeType,
+      quality: exportQuality
+    });
+
+    // return last scale
+    this.stage.scale(_lastScale);
+    this.stage.batchDraw();
+
+    return dataURL;
+  }
+
+  toBlob({ imageName, exportType, exportQuality, x, y, width, height}) {
     removeAllTransformer(this.stage);
     const _lastScale = this.stage.scale();
     this.stage.scale({x: 1, y: 1});
@@ -101,26 +125,35 @@ export class AppConfig {
       callback: function(cv) {
         console.log(cv);
       },
-      x: this.stage.x(),
-      y: this.stage.y(),
-      width: this.mainConfig.width,
-      height: this.mainConfig.height
+      x: this.stage.x() - (isFinite(x) ? x : 0),
+      y: this.stage.y() - (isFinite(y) ? y : 0),
+      width: isFinite(width) ? width : this.mainConfig.width,
+      height: isFinite(width) ? width : this.mainConfig.height
     });
 
     const mimeType = exportType ? `image/${exportType}` : "image\png";
 
-    _canvas.toBlob((blob) => {
-      const dataURL = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.download = imageName;
-      link.href = dataURL;
-      link.click();
-      link.remove();
-    }, mimeType, 1);
-
     // return last scale
     this.stage.scale(_lastScale);
     this.stage.batchDraw();
+
+    return new Promise(resolve => {
+      _canvas.toBlob((blob) => {
+        resolve(blob);
+      }, mimeType, exportQuality || 1);
+    })
+  }
+
+  saveStageAsImage({ imageName, exportType, exportQuality, x, y, width, height}) {
+    this.toBlob({ imageName, exportType, exportQuality, x, y, width, height })
+      .then((blob:any) => {
+        const imgURL = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = imageName;
+        link.href = imgURL;
+        link.click();
+        link.remove();
+      })
   }
 
   exportJSON() {

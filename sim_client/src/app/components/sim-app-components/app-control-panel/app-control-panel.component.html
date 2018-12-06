@@ -93,7 +93,7 @@
           <mat-radio-group [(ngModel)]="appConfig.layers.currentLayer" (ngModelChange)="onChangeCurrentLayer($event)">
             <table style="width: 100%;"
               mat-table [dataSource]="getLayerDataSource()"
-              *ngIf="['selection', 'visibility', 'name', 'remove'] as displayedColumns;">
+              *ngIf="['selection', 'visibility', 'name', 'remove'] as displayedColumns;" cdkDropList (cdkDropListDropped)="layerDropped($event)">
 
               <!-- Current Selected layer Column -->
               <ng-container matColumnDef="selection">

@@ -17,10 +17,13 @@ import {
     MatMenuModule,
     MatSelectModule,
     MatToolbarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule,
 } from "@angular/material";
 
-const materialsModules = [
+import { DragDropModule } from "@angular/cdk/drag-drop";
+
+const importedModules = [
     MatExpansionModule,
     MatSliderModule,
     MatRadioModule,
@@ -38,10 +41,13 @@ const materialsModules = [
     MatMenuModule,
     MatSelectModule,
     MatToolbarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule,
+
+    DragDropModule
 ];
 
 @NgModule({
-    exports: materialsModules
+    exports: importedModules
 })
 export class AppMaterialModule { }

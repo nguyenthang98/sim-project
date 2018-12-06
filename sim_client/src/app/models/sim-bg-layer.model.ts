@@ -26,6 +26,10 @@ export class SimBgLayer extends SimLayer {
   }
 
   getShapes() {
-    return this.getChildren(c => c instanceof Shape && c != this.bgRect);
+    return this.getChildren(c => c instanceof Shape && c != this.bgRect).toArray().reverse();
+  }
+
+  isBGLayer(): boolean {
+    return true;
   }
 }

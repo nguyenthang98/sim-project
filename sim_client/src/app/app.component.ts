@@ -6,25 +6,31 @@ import { SimShapePropertiesComponent } from './components/sim-app-components/sim
 import { SimColorPickerComponent } from './components/sim-app-components/sim-color-picker/sim-color-picker.component';
 import { SimInputComponent } from './components/sim-app-components/sim-input/sim-input.component';
 import { SimFilterComponent } from './components/sim-app-components/sim-filter/sim-filter.component';
+import { SimExportDialogComponent } from './components/sim-app-components/dialogs/sim-export-dialog/sim-export-dialog.component';
 
 @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-    currentRoute: string;
+  currentRoute: string;
 
-    ngOnInit() {
-        this.currentRoute = location.pathname;
-    }
+  ngOnInit() {
+    this.currentRoute = location.pathname;
+  }
 }
 
 export const SimComponents = [
-    AppControlPanelComponent,
-    AppTopPanelComponent,
-    SimShapePropertiesComponent,
-    SimFilterComponent,
-    SimInputComponent,
-    SimColorPickerComponent
+  AppControlPanelComponent,
+  AppTopPanelComponent,
+  SimShapePropertiesComponent,
+  SimFilterComponent,
+  SimInputComponent,
+  SimColorPickerComponent,
+  SimExportDialogComponent
+]
+
+export const SimEntryComponents = [
+  SimExportDialogComponent
 ]

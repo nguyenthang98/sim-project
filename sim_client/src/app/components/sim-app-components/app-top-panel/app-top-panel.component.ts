@@ -1,8 +1,9 @@
 import { Component, Input } from "@angular/core";
 import { AppConfig } from "src/app/models/app-config.model";
-import { _MatTreeNodeMixinBase } from "@angular/material";
+import { _MatTreeNodeMixinBase, MatDialog } from "@angular/material";
 import { removeAllTransformer, setCurrentFocusedObject } from "../../../utils";
 import { Router } from "@angular/router";
+import { SimExportDialogComponent } from "../dialogs/sim-export-dialog/sim-export-dialog.component";
 
 @Component({
   selector: "app-top-panel",
@@ -12,7 +13,7 @@ import { Router } from "@angular/router";
 export class AppTopPanelComponent {
   @Input("app-config") appConfig: AppConfig;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dialog: MatDialog) { }
 
   removeObject(object) {
     console.log("removing object", object);
@@ -82,5 +83,20 @@ export class AppTopPanelComponent {
 
   focusObject(object) {
     setCurrentFocusedObject(this.appConfig, object);
+  }
+
+  shapeDropped(event) {
+    console.log(event);
+    const shape = event.item.data;
+    if(shape) {
+      const _length = this.appConfig.layers.currentLayer.getShapes().length;
+      const _newZIndex = this.appConfig.layers.currentLayer.isBGLayer() ? _length - event.currentIndex : _length - event.currentIndex - 1;
+      shape.setZIndex(_newZIndex);
+      shape.getLayer().batchDraw();
+    }
+  }
+
+  openExportDialog() {
+    const dialogRef = this.dialog.open(SimExportDialogComponent, { data: this.appConfig });
   }
 }

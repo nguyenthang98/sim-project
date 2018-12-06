@@ -1,0 +1,38 @@
+/* .dialog-title {
+} */
+
+.dialog-content .main-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.dialog-content .main-content > .preview-area {
+  flex: 5;
+  /* display: flex;
+  flex-direction: column; */
+  max-width: 45%;
+  max-height: 30vh;
+}
+
+.dialog-content .main-content > .property-area {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  max-width: 45%;
+}
+
+.dialog-content .main-content > .preview-area > img {
+  max-width: 30vw;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  margin: .5em;
+  border: 1px dashed grey;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

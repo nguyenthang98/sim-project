@@ -1,0 +1,55 @@
+<h1 mat-dialog-title class="dialog-title">Export</h1>
+<div mat-dialog-content class="dialog-content">
+
+  <div class="main-content">
+    <div class="preview-area">
+      <img [src]="imageURL || 'https://www.dia.org/sites/default/files/No_Img_Avail.jpg'" alt="Oops. Preview not available!">
+    </div>
+    <div class="property-area">
+      <sim-input [type]="'input-box'" [placeholder]="'Image Name'" [options]="{hideLabel: true, showClearButton: true}"
+        [value]="exportConfig.imageName" (valueChange)="exportConfig.imageName = $event"></sim-input>
+      <sim-input [hideLabel]="false" [label]="'Export Type'" [type]="'dropdown'" [placeholder]="'Export Type'" [options]="['png', 'jpeg', 'webp']"
+        [value]="exportConfig.exportType" (valueChange)="exportConfig.exportType = $event;"></sim-input>
+      <sim-input [label]="'Quality'" [type]="'slider'" [options]="{showInputBox: true, thumbLable: true, min: 0, max: 1, step: 0.1}"
+        [value]="exportConfig.exportQuality" (valueChange)="exportConfig.exportQuality = $event; reloadImageURL();"></sim-input>
+
+      <h4>Crop</h4>
+      <div style="width: 100%; display: flex;">
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'X'" [value]="exportConfig.x" [options]="{ inputType: 'number' }"
+          (valueChange)="exportConfig.x = $event; reloadImageURL()"
+        ></sim-input>
+
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'Y'" [value]="exportConfig.y" [options]="{ inputType: 'number' }"
+          (valueChange)="exportConfig.y = $event; reloadImageURL()"
+        ></sim-input>
+      </div>
+      <div style="width: 100%; display: flex;">
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'Width'" [value]="exportConfig.width" [options]="{ inputType: 'number' }"
+          (valueChange)="exportConfig.width = $event; reloadImageURL()"
+        ></sim-input>
+
+        <sim-input style="flex: 1; max-width: 50%;"
+          [type]="'input-box'" [placeholder]="'Height'" [value]="exportConfig.height" [options]="{ inputType: 'number' }"
+          (valueChange)="exportConfig.height = $event; reloadImageURL()"
+        ></sim-input>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="cancelButtonClicked()">
+    <mat-icon>cancel</mat-icon>
+    Cancel
+  </button>
+  <!-- <button mat-button (click)="reloadImageURL()">
+    <mat-icon>loop</mat-icon>
+    Reload
+  </button> -->
+  <button mat-button (click)="saveButtonClicked()">
+    <mat-icon>save</mat-icon>
+    Save
+  </button>
+</div>

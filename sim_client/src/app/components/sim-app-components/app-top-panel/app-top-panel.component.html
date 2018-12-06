@@ -4,18 +4,34 @@
   <mat-icon>category</mat-icon>
 </button>
 <mat-menu #shapeListMenu="matMenu">
-  <mat-list (click)="$event.stopPropagation()">
-    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes();">
-      <mat-slide-toggle
-        [ngModel]="object.visible()"
-        (ngModelChange)="object.visible($event); object.getLayer().batchDraw();"
-      ></mat-slide-toggle>
-      <button mat-button style="width: 100%" (click)="focusObject(object);">
-        {{ object.getClassName() }}: {{ object.name() }}
-      </button>
-      <button mat-icon-button (click)="removeObject(object)">
-        <mat-icon>close</mat-icon>
-      </button>
+  <mat-list (click)="$event.stopPropagation()"
+    cdkDropList (cdkDropListDropped)="shapeDropped($event)">
+    <mat-list-item *ngFor="let object of appConfig.layers.currentLayer.getShapes();"
+      cdkDrag cdkDragLockAxis="y" [cdkDragData]="object">
+      <div cdkDragHandle style="flex: 1; display: inline; max-width: 2em; min-width: 2em; justify-self: flex-start;">
+        <mat-icon>drag_indicator</mat-icon>
+      </div>
+      <div style="flex: 7; justify-self: flex-start; display: inline-flex; align-items: center; justify-content: flex-start;">
+        <mat-slide-toggle
+          style="flex: 1"
+          [ngModel]="object.visible()"
+          (ngModelChange)="object.visible($event); object.getLayer().batchDraw();"
+        ></mat-slide-toggle>
+        <button mat-button
+          style="flex: 5;"
+          (click)="focusObject(object);">
+          {{ object.getClassName() }}: {{ object.name() }}
+        </button>
+        <button 
+          style="flex: 1"
+          mat-icon-button (click)="removeObject(object)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div style="background: #ccc;
+                  border: dashed .25em #999;
+                  min-height: 2em;
+                  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);" *cdkDragPlaceholder></div>
     </mat-list-item>
   </mat-list>
 </mat-menu>
@@ -108,9 +124,12 @@
     <sim-input #typeSelect
       [hideLabel]="true" [type]="'dropdown'" [placeholder]="'Export Type'" [options]="['png', 'jpeg', 'webp']" [value]="'png'"
       (valueChange)="typeSelect.value = $event"></sim-input>
-    <button mat-button style="width: 100%;" (click)="appConfig.saveStageAsImage(imageName.value, typeSelect.value)">
+    <button mat-button style="width: 100%;" (click)="appConfig.saveStageAsImage({ imageName: imageName.value, exportType: typeSelect.value })">
       <mat-icon>save</mat-icon>
       Save
     </button>
   </div>
 </mat-menu>
+
+<!--Export button to trigger dialog -->
+<button mat-button (click)="openExportDialog()" style="float:right; height: 100%">Export</button>

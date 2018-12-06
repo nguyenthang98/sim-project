@@ -1,15 +1,7 @@
 import { Shape, Transformer, Filters } from "konva";
 import * as SimShapes from "./models/sim-supported-shape.config";
 
-export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, registerStageOnDrawLine, loadFontToDocument,
-         getFiltersClassName };
-
-const availableFilters = ["Blur", "Brighten", "Contrast", "Enhance", "Noise", "Posterize",
-                          "Pixelate", "Emboss", "RGB", "HSL", "Invert", "Grayscale"];
-function getFiltersClassName(shape) {
-  const filters = shape.filters();
-  return availableFilters.filter(className => filters.find(f => f === Filters[className]));
-}
+export { registerStageOnClick, removeAllTransformer, setCurrentFocusedObject, registerStageOnDrawLine, loadFontToDocument, };
 
 function loadFontToDocument(fontData, fontName, callback) {
   const newFontFace = new FontFace(fontName, fontData);
@@ -46,6 +38,8 @@ function registerStageOnDrawLine(appConfig) {
     if(appConfig.mode == "draw-line") {
       appConfig.stage.draggable(false);
       isDrawing = true;
+    } else if(appConfig.mode == "draw-polygon") {
+      appConfig.stage.draggable(false);
     }
   })
 
@@ -88,11 +82,23 @@ function registerStageOnDrawLine(appConfig) {
         const _stageScale = appConfig.stage.scale();
         pos.x = (pos.x - appConfig.stage.x()) / _stageScale.x;
         pos.y = (pos.y - appConfig.stage.y()) / _stageScale.y;
-
         _currObj.points([..._currObj.tempPoints, pos.x, pos.y]);
         _currObj.getLayer().batchDraw();
     }
   })
+
+  window.addEventListener("keyup", function(event) {
+      if (event.keyCode == 27 && appConfig.mode == "draw-polygon") {
+        appConfig.mode = null;
+        appConfig.stage.draggable(true);
+        const _currObj = appConfig.currentFocusedObject;
+        if (_currObj && _currObj.getClassName() == "Line") {
+          _currObj.draggable(true);
+          _currObj.points(_currObj.tempPoints);
+          setCurrentFocusedObject(appConfig, _currObj);
+        }
+      }
+    });
 }
 
 function setCurrentFocusedObject(appConfig, object) {
