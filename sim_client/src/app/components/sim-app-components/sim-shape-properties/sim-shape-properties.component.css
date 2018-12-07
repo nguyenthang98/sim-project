@@ -3,7 +3,13 @@
 }
 
 .sim-control-panel .expansion-panel {
-  border-top: 1px solid grey;
+  background-color: #dddddd6e;
+  /* border-bottom: 1px solid grey; */
+  /* border-top: 1px solid grey; */
+}
+
+.sim-control-panel .expansion-panel:last-child {
+  border-bottom: unset;
 }
 
 .sim-control-panel .child-options-group {

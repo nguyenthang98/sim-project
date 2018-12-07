@@ -45,6 +45,7 @@ function registerStageOnDrawLine(appConfig) {
 
   appConfig.stage.on("mouseup touchend", () => {
     if(appConfig.mode == "draw-line") {
+      appConfig.stage.container().style.cursor = "auto";
       isDrawing = false;
       appConfig.mode = null;
       appConfig.stage.draggable(true);
@@ -68,6 +69,9 @@ function registerStageOnDrawLine(appConfig) {
 
   appConfig.stage.on("mousemove touchmove", (event) => {
     const _currObj = appConfig.currentFocusedObject;
+    if(["draw-line", "draw-polygon"].includes(appConfig.mode)) {
+      appConfig.stage.container().style.cursor = "url('/assets/cursor.cur'), auto";
+    }
     if(isDrawing && appConfig.mode == "draw-line" && (_currObj instanceof SimShapes.Line)) {
       let pos = appConfig.stage.getPointerPosition();
       const _stageScale = appConfig.stage.scale();
@@ -78,26 +82,27 @@ function registerStageOnDrawLine(appConfig) {
       _currObj.points(points);
       _currObj.getLayer().batchDraw();
     } else if(appConfig.mode == "draw-polygon" && _currObj instanceof SimShapes.Line) {
-        let pos = appConfig.stage.getPointerPosition();
-        const _stageScale = appConfig.stage.scale();
-        pos.x = (pos.x - appConfig.stage.x()) / _stageScale.x;
-        pos.y = (pos.y - appConfig.stage.y()) / _stageScale.y;
-        _currObj.points([..._currObj.tempPoints, pos.x, pos.y]);
-        _currObj.getLayer().batchDraw();
+      let pos = appConfig.stage.getPointerPosition();
+      const _stageScale = appConfig.stage.scale();
+      pos.x = (pos.x - appConfig.stage.x()) / _stageScale.x;
+      pos.y = (pos.y - appConfig.stage.y()) / _stageScale.y;
+      _currObj.points([..._currObj.tempPoints, pos.x, pos.y]);
+      _currObj.getLayer().batchDraw();
     }
   })
 
   window.addEventListener("keyup", function(event) {
-      if (event.keyCode == 27 && appConfig.mode == "draw-polygon") {
-        appConfig.mode = null;
-        appConfig.stage.draggable(true);
-        const _currObj = appConfig.currentFocusedObject;
-        if (_currObj && _currObj.getClassName() == "Line") {
-          _currObj.draggable(true);
-          _currObj.points(_currObj.tempPoints);
-          setCurrentFocusedObject(appConfig, _currObj);
-        }
+    if (event.keyCode == 27 && appConfig.mode == "draw-polygon") {
+      appConfig.mode = null;
+      appConfig.stage.draggable(true);
+      appConfig.stage.container().style.cursor = "auto";
+      const _currObj = appConfig.currentFocusedObject;
+      if (_currObj && _currObj.getClassName() == "Line") {
+        _currObj.draggable(true);
+        _currObj.points(_currObj.tempPoints);
+        setCurrentFocusedObject(appConfig, _currObj);
       }
+    }
     });
 }
 

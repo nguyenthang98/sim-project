@@ -90,19 +90,15 @@ export class AppControlPanelComponent{
     this.appConfig.mode = "draw-polygon";
     setCurrentFocusedObject(this.appConfig, _newLine);
 
-    const message = "Press ESC Or Click OK To Stop Drawing";
+    const message = "Press ESC To Stop Drawing";
     const action = "OK"
-    this.snackBar.open(message, action)
-      .onAction().subscribe(() => {
-        console.log("action triggered");
-        this.stopDrawPolygon();
-      })
-
+    this.snackBar.open(message, action, {duration: 5000})
   }
 
   stopDrawPolygon() {
     this.appConfig.mode = null;
     this.appConfig.stage.draggable(true);
+    this.appConfig.stage.container().style.cursor = "auto";
     const _currObj = this.appConfig.currentFocusedObject;
     if(_currObj && _currObj.getClassName() == "Line") {
       _currObj.points(_currObj.tempPoints);

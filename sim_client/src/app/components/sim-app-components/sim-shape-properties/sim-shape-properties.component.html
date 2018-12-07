@@ -1,17 +1,20 @@
 <!--Shape name-->
-<mat-accordion class="sim-control-panel">
-  <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
+<mat-accordion class="sim-control-panel" [multi]="true">
+  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="false">
     <mat-expansion-panel-header>Name</mat-expansion-panel-header>
-    <mat-form-field style="width: 100%">
-      <input matInput type="text" placeholder="Shape Name" [ngModel]="shape.name()" (ngModelChange)="shape.name($event)">
-    </mat-form-field>
+    <ng-template matExpansionPanelContent>
+      <mat-form-field style="width: 100%">
+        <input matInput type="text" placeholder="Shape Name" [ngModel]="shape.name()" (ngModelChange)="shape.name($event)">
+      </mat-form-field>
+    </ng-template>
   </mat-expansion-panel>
-</mat-accordion>
+<!-- </mat-accordion> -->
 
 <!--Geometric-->
-<mat-accordion class="sim-control-panel">
-  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="true">
+<!-- <mat-accordion class="sim-control-panel"> -->
+  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="false">
     <mat-expansion-panel-header>Geometric</mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
       <div style="width: 100%; display: flex;">
         <sim-input style="flex: 1; max-width: 50%;"
           [type]="'input-box'" [placeholder]="'X'" [value]="shape.x()" [options]="{ inputType: 'number' }"
@@ -24,7 +27,7 @@
         ></sim-input>
       </div>
 
-      <div style="width: 100%; display: flex;">
+      <div style="width: 100%; display: flex;" *ngIf="shape.getClassName() != 'Line'">
         <sim-input style="flex: 1; max-width: 50%;"
           [type]="'input-box'"  [placeholder]="'Width'" [value]="shape.width() || 0" [options]="{ inputType: 'number' }"
           (valueChange)="shape.width($event); redrawShape()"
@@ -45,14 +48,16 @@
           </mat-form-field>
         </div>
       </div>
-
+    </ng-template>
   </mat-expansion-panel>
-</mat-accordion>
+<!-- </mat-accordion> -->
 
 
-<mat-accordion class="sim-control-panel">
-  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="true">
+<!-- <mat-accordion class="sim-control-panel"> -->
+  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="false">
     <mat-expansion-panel-header>Fill & Stroke</mat-expansion-panel-header> 
+    <ng-template matExpansionPanelContent>
+
       <div style="width: 100%">
         <sim-input
           [label]="'Enable fill'" [type]="'toggle'" [value]="shape.fillEnabled()" (valueChange)="shape.fillEnabled($event); redrawShape()"
@@ -158,52 +163,58 @@
           ></sim-input>
         </div>
       </div>
+    </ng-template>
   </mat-expansion-panel>
 
-</mat-accordion>
+<!-- </mat-accordion> -->
 
-<mat-accordion class="sim-control-panel">
-  <mat-expansion-panel *ngIf="shape.hasExtraProps" class="expansion-panel mat-elevation-z0" [expanded]="true">
+<!-- <mat-accordion class="sim-control-panel"> -->
+  <mat-expansion-panel *ngIf="shape.hasExtraProps" class="expansion-panel mat-elevation-z0" [expanded]="false">
     <mat-expansion-panel-header>Misc</mat-expansion-panel-header>
 
-    <div style="width: 100%;" *ngIf="shape.getClassName() == 'Text'">
-      <div style="width: 100%; display: flex;">
-        <sim-input style="flex: 7; max-width: 70%;"
-          [type]="'input-box'" [placeholder]="'Text'" [value]="shape.text()" [options]="{ inputType: 'text' }"
-          (valueChange)="shape.text($event); redrawShape()"
-        ></sim-input>
+    <ng-template matExpansionPanelContent>
 
-        <sim-input style="flex: 3; max-width: 30%;"
-          [type]="'input-box'" [placeholder]="'Font size'" [value]="shape.fontSize()" [options]="{ inputType: 'number' }"
-          (valueChange)="shape.fontSize($event); redrawShape();"
-        ></sim-input>
+      <div style="width: 100%;" *ngIf="shape.getClassName() == 'Text'">
+        <div style="width: 100%; display: flex;">
+          <sim-input style="flex: 7; max-width: 70%;"
+            [type]="'input-box'" [placeholder]="'Text'" [value]="shape.text()" [options]="{ inputType: 'text' }"
+            (valueChange)="shape.text($event); redrawShape()"
+          ></sim-input>
+  
+          <sim-input style="flex: 3; max-width: 30%;"
+            [type]="'input-box'" [placeholder]="'Font size'" [value]="shape.fontSize()" [options]="{ inputType: 'number' }"
+            (valueChange)="shape.fontSize($event); redrawShape();"
+          ></sim-input>
+        </div>
+  
+        <div style="width: 100%;">
+          <mat-form-field style="width: 100%">
+            <input matInput placeholder="Font Family" [matAutocomplete]='autoFontFamily' (keyup.enter)="loadFont(fontFamilyName.value)"
+              [ngModel]="shape.fontFamily()" (ngModelChange)="shape.fontFamily($event);" #fontFamilyName>
+            <mat-autocomplete #autoFontFamily="matAutocomplete">
+              <mat-option *ngFor="let font of getFonts(fontFamilyName.value) | async" [value]="font.family" (click)="loadFont(font.family)">
+                <div [style.font-family]="font.family">{{ font.family }}</div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+  
+        <div style="width: 100%;">
+          <sim-input
+            [type]="'dropdown'" [label]="'Style'" [value]="shape.fontStyle() || 'normal'" [options]="['normal', 'bold', 'italic']"
+            (valueChange)="shape.fontStyle($event); redrawShape()"
+          ></sim-input>
+        </div>
       </div>
-
-      <div style="width: 100%;">
-        <mat-form-field style="width: 100%">
-          <input matInput placeholder="Font Family" [matAutocomplete]='autoFontFamily' (keyup.enter)="loadFont(fontFamilyName.value)"
-            [ngModel]="shape.fontFamily()" (ngModelChange)="shape.fontFamily($event);" #fontFamilyName>
-          <mat-autocomplete #autoFontFamily="matAutocomplete">
-            <mat-option *ngFor="let font of getFonts(fontFamilyName.value) | async" [value]="font.family" (click)="loadFont(font.family)">
-              <div [style.font-family]="font.family">{{ font.family }}</div>
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
-
-      <div style="width: 100%;">
-        <sim-input
-          [type]="'dropdown'" [label]="'Style'" [value]="shape.fontStyle() || 'normal'" [options]="['normal', 'bold', 'italic']"
-          (valueChange)="shape.fontStyle($event); redrawShape()"
-        ></sim-input>
-      </div>
-    </div>
+    </ng-template>
   </mat-expansion-panel>
-</mat-accordion>
+<!-- </mat-accordion> -->
 
-<mat-accordion class="sim-control-panel">
-  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="true">
+<!-- <mat-accordion class="sim-control-panel"> -->
+  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="false">
     <mat-expansion-panel-header>Filters</mat-expansion-panel-header>
-    <sim-filter [filterTarget]="shape"></sim-filter>
+    <ng-template matExpansionPanelContent>
+      <sim-filter [filterTarget]="shape"></sim-filter>
+    </ng-template>
   </mat-expansion-panel>
 </mat-accordion>

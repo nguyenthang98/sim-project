@@ -3,7 +3,11 @@
 }
 
 .sim-control-panel .expansion-panel {
-  border-top: 1px solid grey;
+  background-color: #dddddd6e;
+}
+
+.sim-control-panel .expansion-panel:last-child {
+  border-bottom: unset;
 }
 
 .sim-control-panel .button-group {
@@ -13,4 +17,8 @@
 .sim-control-panel .button-group-label {
   padding: .25em 0;
   border-bottom: 1px solid grey;
+}
+
+.sim-control-panel table {
+  background: transparent;
 }
