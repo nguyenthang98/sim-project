@@ -125,10 +125,10 @@ export class AppConfig {
       callback: function(cv) {
         console.log(cv);
       },
-      x: this.stage.x() - (isFinite(x) ? x : 0),
-      y: this.stage.y() - (isFinite(y) ? y : 0),
+      x: this.stage.x() + (isFinite(x) ? x : 0),
+      y: this.stage.y() + (isFinite(y) ? y : 0),
       width: isFinite(width) ? width : this.mainConfig.width,
-      height: isFinite(width) ? width : this.mainConfig.height
+      height: isFinite(height) ? height : this.mainConfig.height
     });
 
     const mimeType = exportType ? `image/${exportType}` : "image\png";

@@ -200,3 +200,10 @@
     </div>
   </mat-expansion-panel>
 </mat-accordion>
+
+<mat-accordion class="sim-control-panel">
+  <mat-expansion-panel class="expansion-panel mat-elevation-z0" [expanded]="true">
+    <mat-expansion-panel-header>Filters</mat-expansion-panel-header>
+    <sim-filter [filterTarget]="shape"></sim-filter>
+  </mat-expansion-panel>
+</mat-accordion>

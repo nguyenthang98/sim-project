@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="appConfig.currentFocusedObject ? 2 : 0">
+<mat-tab-group [selectedIndex]="appConfig.currentFocusedObject ? 1 : 0">
   <mat-tab label="General">
     <mat-accordion class="sim-control-panel">
       <!--Main config-->
@@ -176,11 +176,13 @@
     </mat-accordion>
   </mat-tab>
 
+  <!--
   <mat-tab label="Filters" *ngIf="appConfig.currentFocusedObject">
     <div style="width: inherit; padding: 1em .5em;">
       <sim-filter [filterTarget]="appConfig.currentFocusedObject"></sim-filter>
     </div>
   </mat-tab>
+  -->
 
   <mat-tab label="Properties" *ngIf="appConfig.currentFocusedObject">
     <div style="width: inherit; padding: 1em .5em;">
