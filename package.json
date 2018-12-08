@@ -8,7 +8,7 @@
 		"npm": "npm",
 		"b": "cd ./sim_client && ng build && cd ..",
 		"s": "cd ./sim_client && ng s",
-		"postinstall": "mkdir -p sim-data/images && npm i --prefix sim_client && cd ./sim_client && ng build --prod && cd ..",
+		"postinstall": "mkdir -p sim-data sim-data/images sim-data/avatars && npm i --prefix sim_client && cd ./sim_client && ng build --prod && cd ..",
 		"start": "node bin/www"
 	},
 	"repository": {

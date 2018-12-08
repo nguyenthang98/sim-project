@@ -16,7 +16,7 @@ export class SimUserCollectionComponent implements OnInit {
 
   ngOnInit() {
     this.localUrl = 'http://localhost:3000';
-    // this.localUrl = '';
+    this.localUrl = '';
     this.avatarUrl = `${this.localUrl}/${localStorage.avatar || sessionStorage.avatar}`;
 
     this.spinner.show();

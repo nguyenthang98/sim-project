@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { SimApiService } from 'src/app/services/sim-api.service';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './app-nav-bar.component.html',
@@ -10,11 +10,11 @@ export class AppNavBarComponent implements OnInit {
   localUrl: string;
   avatarUrl: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private simApiService: SimApiService) { }
 
   ngOnInit() {
     this.localUrl = 'http://localhost:3000';
-    // this.localUrl = '';
+    this.localUrl = '';
     this.avatarUrl = `${this.localUrl}/${localStorage.avatar || sessionStorage.avatar}`;
   }
 
@@ -23,6 +23,7 @@ export class AppNavBarComponent implements OnInit {
   }
 
   logout() {
+    this.simApiService.isLogin = false;
     sessionStorage.clear();
     localStorage.clear();
     this.router.navigate(["/login"]);

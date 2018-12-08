@@ -21,13 +21,21 @@ const ggFontApiKey = "AIzaSyCmMgSQuny5V9A9ei-a_T5SZw4AMnLP7II"
   providedIn: "root"
 })
 export class SimApiService {
+  isLogin: boolean;
   baseURL: string;
   private fontList: any[];
   private loadedFont: any[];
 
   constructor(private httpClient: HttpClient) {
+    let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (token) {
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
+
     this.baseURL = location.origin + basePath;
-    this.baseURL = baseURL;
+    // this.baseURL = baseURL;
     this.loadedFont = [];
     this.getListFontsAsync().subscribe();
   }

@@ -9,6 +9,7 @@ import { SimFilterComponent } from './components/sim-app-components/sim-filter/s
 import { SimExportDialogComponent } from './components/sim-app-components/dialogs/sim-export-dialog/sim-export-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { SimApiService } from 'src/app/services/sim-api.service';
 
 @Component({
   selector: "app-root",
@@ -17,7 +18,7 @@ import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   currentRoute: string;
-  constructor(private spinner: NgxSpinnerService, private router: Router) {
+  constructor(private spinner: NgxSpinnerService, private router: Router, private simApiService: SimApiService) {
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
         this.spinner.show();

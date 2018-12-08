@@ -74,6 +74,7 @@ export class SimLoginComponent implements OnInit {
                     localStorage.clear();
                     this.setUserInfo(sessionStorage, res.content);
                 }
+                this.simApiService.isLogin = true;
                 this.router.navigate(["/editor"]);
             }
             this.spinner.hide();
@@ -91,6 +92,7 @@ export class SimLoginComponent implements OnInit {
                         this.openSnackBar("Email existed", "Close");
                     }
                 } else {
+                    this.simApiService.isLogin = true;
                     this.setUserInfo(sessionStorage, res.content);
                     this.router.navigate(["/editor"]);
                 }
