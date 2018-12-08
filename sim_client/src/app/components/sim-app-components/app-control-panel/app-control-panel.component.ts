@@ -126,11 +126,16 @@ export class AppControlPanelComponent{
     }
   }
 
+  getListOfLayers() {
+    return this.appConfig.layers.layerList.sort((la, lb) => -la.getZIndex() + lb.getZIndex());
+  }
+
   layerDropped(event) {
     console.log(event);
     const layer = event.item.data;
     if(layer) {
-      const _newZIndex = event.currentIndex;
+      const _length = this.appConfig.layers.layerList.length;
+      const _newZIndex = _length - event.currentIndex;
       layer.setZIndex(_newZIndex);
       this.appConfig.stage.batchDraw();
     }

@@ -22,3 +22,35 @@
 .sim-control-panel table {
   background: transparent;
 }
+
+.sim-control-panel .layer-group {
+  display: flex;
+  flex-direction: column;
+  max-height: 30vh;
+  overflow-y: overlay;
+}
+
+.sim-control-panel .layer-group .layer-group-item {
+  flex: 1;
+  padding: .25em .75em;
+  /* display: block; */
+}
+
+.sim-control-panel .layer-group .layer-group-item .layer-group-item-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sim-control-panel .layer-group .layer-group-item .layer-group-item-label > .layer-group-item-name{
+  max-width: 10em;
+  min-width: 10em;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.sim-control-panel .layer-group .layer-group-item .layer-group-item-label > .layer-group-item-close-btn{
+  max-width: 2em;
+  min-width: 2em;
+}
