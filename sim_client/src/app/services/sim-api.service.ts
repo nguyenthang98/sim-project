@@ -27,7 +27,7 @@ export class SimApiService {
 
   constructor(private httpClient: HttpClient) {
     this.baseURL = location.origin + basePath;
-    // this.baseURL = baseURL;
+    this.baseURL = baseURL;
     this.loadedFont = [];
     this.getListFontsAsync().subscribe();
   }
@@ -78,6 +78,15 @@ export class SimApiService {
 
   changeAvatar(payload: any): Observable<any> {
     return this.httpClient.post(this.baseURL + "/user/change-avatar", payload, {
+      headers: new HttpHeaders({
+        Authorization:
+          localStorage.getItem("token") || sessionStorage.getItem("token")
+      })
+    });
+  }
+
+  createImage(payload: any): Observable<any> {
+    return this.httpClient.post(this.baseURL + "/image/new", payload, {
       headers: new HttpHeaders({
         Authorization:
           localStorage.getItem("token") || sessionStorage.getItem("token")

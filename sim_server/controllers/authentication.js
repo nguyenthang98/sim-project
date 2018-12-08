@@ -7,7 +7,7 @@ const configApp = require('config').application;
 const User = models.User;
 
 const expiresValue = '72h';
-const avatarUrl = 'default-avatar.jpg';
+const avatarUrl = 'assets/default-avatar.png';
 
 module.exports.register = (req, res) => {
     req.body.password = md5(req.body.password);
