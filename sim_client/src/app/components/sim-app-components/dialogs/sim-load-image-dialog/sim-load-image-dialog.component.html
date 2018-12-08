@@ -1,0 +1,22 @@
+<h1 mat-dialog-title class="dialog-title">My Collections</h1>
+<div mat-dialog-content class="dialog-content">
+  <figure *ngFor="let image of listImages" (click)="image.selected = !image.selected">
+      <img [src]="image.path">
+      <figcaption>
+        <button mat-button>
+          {{ image.name }}
+          <mat-icon *ngIf="image.selected" style="color: green;">check_circle</mat-icon>
+        </button>
+      </figcaption>
+  </figure>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button mat-dialog-close>
+    <mat-icon>cancel</mat-icon>
+    Cancel
+  </button>
+  <button mat-button (click)="loadButtonClicked()">
+    <mat-icon>cloud_download</mat-icon>
+    Load
+  </button>
+</div>

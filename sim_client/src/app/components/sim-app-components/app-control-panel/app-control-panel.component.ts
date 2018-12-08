@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core';
 import { AppConfig } from "../../../models/app-config.model";
 import { MatTableDataSource } from '@angular/material/table';
 import { setCurrentFocusedObject } from "../../../utils";
-import { MatSnackBar } from "@angular/material"
+import { MatSnackBar, MatDialog } from "@angular/material"
 import { Shape } from "konva" 
+import { SimLoadImageDialogComponent } from "../dialogs/sim-load-image-dialog/sim-load-image-dialog.component";
 
 @Component({
   selector: 'app-control-panel',
@@ -17,7 +18,10 @@ export class AppControlPanelComponent{
   private SCREEN_HEIGHT: number;
   private fileToURL: any;
 
-  constructor(private snackBar: MatSnackBar) { 
+  constructor(
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) { 
     this.SCREEN_HEIGHT = window.screen.height;
     this.SCREEN_WIDTH = window.screen.width;
     this.fileToURL = window.URL.createObjectURL;
@@ -107,9 +111,9 @@ export class AppControlPanelComponent{
     }
   }
 
-  loadImage(imageURL?) {
+  loadImage(imageURL?, imageName?) {
     if(imageURL) {
-      this.appConfig.layers.currentLayer.addImage(imageURL);
+      this.appConfig.layers.currentLayer.addImage(imageURL, {name: imageName});
     } else {
       const inputEle = document.createElement("input");
       inputEle.type = "file";
@@ -119,11 +123,20 @@ export class AppControlPanelComponent{
         const file = inputEle.files[0];
         if (!file) return;
         if (!this.appConfig.layers.currentLayer) return;
-        this.appConfig.layers.currentLayer.addImage(this.fileToURL(file));
+        this.appConfig.layers.currentLayer.addImage(this.fileToURL(file), {name: file.name});
       })
 
       inputEle.click();
     }
+  }
+
+  loadImageFromCollection() {
+    const dialogRef = this.dialog.open(SimLoadImageDialogComponent);
+    dialogRef.afterClosed().subscribe((imgs) => {
+      if(imgs && imgs.length) {
+        imgs.forEach(img => (this.loadImage(img.path, img.name)));
+      }
+    })
   }
 
   getListOfLayers() {
