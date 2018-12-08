@@ -18,7 +18,7 @@ import { SimApiService } from 'src/app/services/sim-api.service';
 })
 export class AppComponent {
   currentRoute: string;
-  constructor(private spinner: NgxSpinnerService, private router: Router, private simApiService: SimApiService) {
+  constructor(private spinner: NgxSpinnerService, private router: Router, simApiService: SimApiService) {
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
         this.spinner.show();
