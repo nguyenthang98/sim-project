@@ -1,3 +1,3 @@
 <ngx-spinner></ngx-spinner>
-<app-nav-bar *ngIf="simApiService.isLogin"></app-nav-bar>
+<app-nav-bar *ngIf="getLoginState()"></app-nav-bar>
 <router-outlet></router-outlet>
