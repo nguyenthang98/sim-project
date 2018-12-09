@@ -36,13 +36,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.currentRoute = location.pathname;
-
-    // this.spinner.show();
-
-    // setTimeout(() => {
-    //   /** spinner ends after 5 seconds */
-    //   this.spinner.hide();
-    // }, 5000);
   }
 }
 
