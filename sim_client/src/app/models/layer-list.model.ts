@@ -72,4 +72,23 @@ export class LayerList {
       className: 'LayerList'
     }
   }
+
+  fromJSON(json) {
+    // remove previous layers
+    this.layerList.forEach(layer => {
+      layer.destroy();
+    });
+    this.backgroundLayer.destroy();
+
+    this.layerList = [];
+    this.backgroundLayer = new SimBgLayer();
+    this.backgroundLayer.fromJSON(json.attrs.backgroundLayer);
+
+    json.children.forEach(layer => {
+      console.log("load layer", layer);
+      const newLayer = new SimLayer();
+      newLayer.fromJSON(layer);
+      this.layerList.unshift(newLayer);
+    })
+  }
 } 

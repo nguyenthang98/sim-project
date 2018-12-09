@@ -20,6 +20,7 @@ function getFiltersClassName(shape) {
 interface SimShape {
   getGeometricKeys: () => string[];
   exportJSON: () => any;
+  fromJSON: (any) => any;
 }
 
 // general props and functions
@@ -53,6 +54,17 @@ class Circle extends _circle implements SimShape {
     }
     return JSONObj;
   }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
+  }
 }
 
 class Rect extends _rect implements SimShape {
@@ -74,6 +86,17 @@ class Rect extends _rect implements SimShape {
   exportJSON() {
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
+  }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
   }
 }
 
@@ -99,6 +122,17 @@ class Ellipse extends _ellipse implements SimShape{
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
   }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
+  }
 }
 
 class Wedge extends _wedge implements SimShape {
@@ -121,6 +155,17 @@ class Wedge extends _wedge implements SimShape {
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
   }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
+  }
 }
 
 class RegularPolygon extends _regPolygon implements SimShape {
@@ -142,6 +187,17 @@ class RegularPolygon extends _regPolygon implements SimShape {
   exportJSON() {
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
+  }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
   }
 }
 
@@ -166,6 +222,17 @@ class Star extends _star implements SimShape {
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
   }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
+  }
 }
 
 class Image extends _image implements SimShape {
@@ -185,7 +252,21 @@ class Image extends _image implements SimShape {
 
   exportJSON() {
     const JSONObj = JSON.parse(this.toJSON());
+    JSONObj.attrs.imageSource = this.image().src;
     return JSONObj;
+  }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters' && key !== 'imageSource') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      } else if(key == 'imageSource') {
+        console.log(json.attrs.imageSource);
+      }
+    })
   }
 }
 
@@ -209,6 +290,17 @@ class Line extends _line implements SimShape {
   exportJSON() {
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
+  }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
   }
 }
 
@@ -238,5 +330,16 @@ class Text extends _text implements SimShape {
   exportJSON() {
     const JSONObj = JSON.parse(this.toJSON());
     return JSONObj;
+  }
+
+  fromJSON(json) {
+    Object.keys(json.attrs).forEach(key => {
+      if(typeof(this[key]) == 'function' && key !== 'filters') {
+        this[key](json.attrs[key]);
+      } else if(key == 'filters') {
+        const filters = json.attrs[key];
+        this.filters(filters.map(f => Filters[f]));
+      }
+    })
   }
 }

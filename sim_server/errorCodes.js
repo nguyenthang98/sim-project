@@ -6,5 +6,5 @@ module.exports.CODES = {
     ERROR_DELETE_DENIED: 521, //Error can't delete. common reason is foreignKey Constraint
     ERROR_USER_EXISTED: 400,
     ERROR_WRONG_PASSWORD: 401,
-    ERROR_USER_NOT_EXISTS: 411
+    ERROR_USER_NOT_EXISTS: 411,
 };

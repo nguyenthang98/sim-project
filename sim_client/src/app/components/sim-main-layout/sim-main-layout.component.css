@@ -35,7 +35,8 @@
   height: calc(100% - 40px);
   border-left: .5px dashed gray;
   border-top: .5px dashed gray;
-  background-color: #ddd;
+  /* background-color: #ddd; */
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKElEQVQoU2NcvHjxfwY0YG1tjS7EwDgUFN67dw/DM0ePHsX0zBBQCACqAC+QaDthkQAAAABJRU5ErkJggg==) repeat;
 }
 
 .sim-floating-panel {

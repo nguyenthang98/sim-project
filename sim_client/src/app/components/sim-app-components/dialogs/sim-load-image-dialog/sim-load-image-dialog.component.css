@@ -20,9 +20,12 @@
 }
 
 .dialog-content figure img{
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJ0lEQVQoU2NcsWLFfwY0MHnyZHQhBsahoNDa2hrDM7m5uZieGQIKAablJk4t9l0tAAAAAElFTkSuQmCC) repeat;
   width: 100%;
   height: auto;
   max-height: 10em;
+  min-height: 10em;
+  object-position: center;
   object-fit: contain;
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;

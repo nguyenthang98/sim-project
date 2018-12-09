@@ -205,6 +205,13 @@
             (valueChange)="shape.fontStyle($event); redrawShape()"
           ></sim-input>
         </div>
+
+        <div style="width: 100%;">
+          <sim-input
+            [type]="'dropdown'" [label]="'Text Decoration'" [value]="shape.textDecoration() || ''" [options]="['', 'underline', 'line-through', 'underline line-through']"
+            (valueChange)="shape.textDecoration($event); redrawShape()"
+          ></sim-input>
+        </div>
       </div>
     </ng-template>
   </mat-expansion-panel>

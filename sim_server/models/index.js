@@ -23,7 +23,7 @@ sequelize
         console.log(err);
     });
 
-var models = ['User', 'UserImage', 'Image'];
+var models = ['User', 'UserImage', 'Image', 'Project'];
 
 models.forEach(model => {
     module.exports[model] = sequelize.import(__dirname + '/' + model);
@@ -49,6 +49,20 @@ models.forEach(model => {
         },
         foreignKey: 'idUser'
     });
+
+    m.User.hasMany(m.Project, {
+        foreignKey: {
+            name: 'idUser',
+            allowNull: false
+        },
+        onDelete: 'CASCADE'
+    });
+    m.Project.belongsTo(m.User, {
+        foreignKey: {
+            name: 'idUser',
+            allowNull: false
+        }
+    })
 })(module.exports);
 
 module.exports.sequelize = sequelize;

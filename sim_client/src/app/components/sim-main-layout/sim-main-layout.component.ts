@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppConfig } from 'src/app/models/app-config.model';
+import { SimApiService } from 'src/app/services/sim-api.service';
 
 @Component({
   selector: 'app-sim-main-layout',
@@ -10,7 +11,7 @@ export class SimMainLayoutComponent {
   appConfig: AppConfig; 
   private containerId: string = "sim-work-area" + Date.now();
 
-  constructor() { 
+  constructor(private simApiService: SimApiService) { 
     this.appConfig = new AppConfig();
   }
 

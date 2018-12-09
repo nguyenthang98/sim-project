@@ -6,8 +6,8 @@ export class SimLayer extends Layer {
     const newShape = this.createShape(className, props);
     if(newShape) {
       console.log(`Created shape ${className}`, newShape);
-      this.add(newShape);
-      this.batchDraw();
+      // this.add(newShape);
+      // this.batchDraw();
       return newShape;
     } else {
       console.log(`Cannot create shape ${className}`);
@@ -20,20 +20,7 @@ export class SimLayer extends Layer {
     // generate randomly fill color and name
     if(constructor) {
       const newShape = new constructor(props);
-      newShape.on("transform", () => {
-        newShape.width(newShape.width() * newShape.scaleX());
-        newShape.height(newShape.height() * newShape.scaleY());
-        newShape.scaleX(1);
-        newShape.scaleY(1);
-
-        // update shape
-        newShape.clearCache();
-        newShape.draw();
-        newShape.cache();
-        newShape.getLayer().batchDraw();
-      })
-
-      return newShape;
+      return this.addShape(newShape);
     } else
       return null;
   }
@@ -54,6 +41,26 @@ export class SimLayer extends Layer {
     imageEle.src = src;
   }
 
+  private addShape(newShape) {
+    newShape.on("transform", () => {
+      newShape.width(newShape.width() * newShape.scaleX());
+      newShape.height(newShape.height() * newShape.scaleY());
+      newShape.scaleX(1);
+      newShape.scaleY(1);
+
+      // update shape
+      newShape.clearCache();
+      newShape.draw();
+      newShape.cache();
+      newShape.getLayer().batchDraw();
+    })
+
+    this.add(newShape);
+    this.batchDraw();
+
+    return newShape;
+  }
+
   getShapes(): any {
     return this.getChildren(c => c instanceof Shape).toArray().reverse();
   }
@@ -70,5 +77,18 @@ export class SimLayer extends Layer {
       chidren: this.getShapes().map(shape => shape.exportJSON()),
       className: 'SimLayer'
     }
+  }
+
+  fromJSON(json) {
+    // remove previous shapes
+    this.getShapes().forEach(shape => shape.destroy());
+    this.name(json.attrs.name);
+
+    json.chidren.forEach(shape => {
+      console.log("load Shape", shape);
+      const newShape = new supportedShapes[shape.className];
+      newShape.fromJSON(shape);
+      this.addShape(newShape);
+    })
   }
 }

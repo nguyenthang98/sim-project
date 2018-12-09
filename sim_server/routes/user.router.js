@@ -20,4 +20,24 @@ router.post('/change-avatar', upload.array('file'), (req, res) => {
     ctrlUser.changeAvatar(req, res);
 });
 
+router.post('/new-project', (req, res) => {
+    ctrlUser.newProject(req, res);
+});
+
+router.post('/update-project', (req, res) => {
+    ctrlUser.updateProject(req, res);
+})
+
+router.post('/info-project', (req, res) => {
+    ctrlUser.infoProject(req, res);
+});
+
+router.post('/list-projects', (req, res) => {
+    ctrlUser.listProject(req, res);
+});
+
+router.post('/delete-project', (req, res) => {
+    ctrlUser.deleteProject(req, res);
+});
+
 module.exports = router;

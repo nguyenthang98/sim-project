@@ -2,33 +2,26 @@
 } */
 
 .dialog-content .main-content{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  display: block;
 }
 
 .dialog-content .main-content > .preview-area {
-  flex: 5;
-  /* display: flex;
-  flex-direction: column; */
-  max-width: 45%;
-  max-height: 30vh;
-}
-
-.dialog-content .main-content > .property-area {
-  flex: 5;
-  display: flex;
-  flex-direction: column;
-  max-width: 45%;
+  width: 45%;
+  display: inline-block;
 }
 
 .dialog-content .main-content > .preview-area > img {
-  max-width: 30vw;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: auto;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJ0lEQVQoU2NcsWLFfwY0MHnyZHQhBsahoNDa2hrDM7m5uZieGQIKAablJk4t9l0tAAAAAElFTkSuQmCC) repeat;
+  width: 20rem;
+  height: 20rem;
+  object-fit: contain;
   margin: .5em;
   border: 1px dashed grey;
+}
+
+.dialog-content .main-content > .property-area {
+  display: inline-block;
+  float: right;
 }
 
 .dialog-actions {

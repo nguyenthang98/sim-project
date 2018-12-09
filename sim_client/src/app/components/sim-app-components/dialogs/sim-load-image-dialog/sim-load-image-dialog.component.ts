@@ -23,12 +23,18 @@ export class SimLoadImageDialogComponent {
   getImages() {
     this.spinner.show();
     return this.simApiService.listImages().subscribe(res => {
-      this.listImages = res.content || [];
+      if(res.content.length) {
+        this.listImages = res.content || [];
+      }
       this.spinner.hide();
     });
   }
 
   loadButtonClicked() {
     this.matDialogRef.close(this.listImages.filter(img => img.selected));
+  }
+
+  hasImageSelected() {
+    return this.listImages.filter(img => img.selected).length;
   }
 }

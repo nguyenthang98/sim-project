@@ -35,7 +35,7 @@ export class SimApiService {
     }
 
     this.baseURL = location.origin + basePath;
-    // this.baseURL = baseURL;
+    this.baseURL = baseURL;
     this.loadedFont = [];
     this.getListFontsAsync().subscribe();
   }
@@ -104,5 +104,26 @@ export class SimApiService {
 
   listImages(): Observable<any> {
     return this.httpClient.post(this.baseURL + "/image/list", {}, httpOptions);
+  }
+
+  // Project manager
+  newProject(payload) {
+    return this.httpClient.post(this.baseURL + '/new-project', payload, httpOptions);
+  }
+
+  updateProject(payload) {
+    return this.httpClient.post(this.baseURL + '/update-project', payload, httpOptions);
+  }
+
+  listProjects() {
+    return this.httpClient.post(this.baseURL + '/user/list-projects', {}, httpOptions);
+  }
+
+  infoProject(idProject) {
+    return this.httpClient.post(this.baseURL + '/user/info-project', {idProject}, httpOptions);
+  }
+
+  deleteProject(idProject) {
+    return this.httpClient.post(this.baseURL + '/user/delete-project', {idProject}, httpOptions);
   }
 }

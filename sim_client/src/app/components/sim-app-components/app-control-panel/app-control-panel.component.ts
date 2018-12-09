@@ -5,6 +5,8 @@ import { setCurrentFocusedObject } from "../../../utils";
 import { MatSnackBar, MatDialog } from "@angular/material"
 import { Shape } from "konva" 
 import { SimLoadImageDialogComponent } from "../dialogs/sim-load-image-dialog/sim-load-image-dialog.component";
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SimApiService } from 'src/app/services/sim-api.service';
 
 @Component({
   selector: 'app-control-panel',
@@ -20,7 +22,9 @@ export class AppControlPanelComponent{
 
   constructor(
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    private simApiService: SimApiService
   ) { 
     this.SCREEN_HEIGHT = window.screen.height;
     this.SCREEN_WIDTH = window.screen.width;
@@ -123,7 +127,20 @@ export class AppControlPanelComponent{
         const file = inputEle.files[0];
         if (!file) return;
         if (!this.appConfig.layers.currentLayer) return;
-        this.appConfig.layers.currentLayer.addImage(this.fileToURL(file), {name: file.name});
+        this.appConfig.layers.currentLayer.addImage(this.fileToURL(file), { name: file.name });
+
+        /*
+         * For save image into server
+        const payload = new FormData();
+        payload.append("file", file, file.name);
+        this.spinner.show();
+        this.simApiService.createImage(payload)
+          .subscribe(res => {
+            console.log(res);
+            this.appConfig.layers.currentLayer.addImage(res.content.path, { name: res.content.name});
+            this.spinner.hide();
+          })
+         */
       })
 
       inputEle.click();

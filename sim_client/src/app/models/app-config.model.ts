@@ -4,6 +4,10 @@ import { registerStageOnClick, removeAllTransformer, registerStageOnDrawLine } f
 import { isFinte } from "lodash";
 
 export class AppConfig {
+  project: {
+    idProject: number,
+    projectName: string,
+  }
   mainConfig: {
     width: number,
     height: number,
@@ -24,6 +28,13 @@ export class AppConfig {
     this.currentFocusedObject = null;
     this.stage = null;
     this.mode = null;
+  }
+
+  loadProject(project) {
+    this.project.idProject = project.idProject;
+    this.project.projectName = project.projectName;
+    const jsonInfo = JSON.parse(project.projectInfo);
+    this.fromJSON(jsonInfo);
   }
 
   initStage(containerId) {
@@ -86,7 +97,6 @@ export class AppConfig {
   }
 
   updateMainConfig(event) {
-    console.log(event);
     this.stage.width(this.mainConfig.width);
     this.stage.height(this.mainConfig.height);
     this.layers.backgroundLayer.updateBackground(this.mainConfig);
@@ -162,5 +172,14 @@ export class AppConfig {
       children: this.layers.exportJSON(),
       className: 'AppConfig'
     }
+  }
+
+  fromJSON(json) {
+    this.mainConfig = json.attrs;
+    const containerId = this.stage.container().id;
+
+    this.layers.fromJSON(json.children);
+    this.stage.destroy();
+    this.initStage(containerId);
   }
 }

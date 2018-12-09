@@ -1,5 +1,6 @@
 import { SimLayer } from "./sim-layer.model";
-import { Rect, Shape } from "konva";
+import { Shape } from "konva";
+import { Rect } from "./sim-supported-shape.config";
 
 export class SimBgLayer extends SimLayer {
   bgRect: Rect;
@@ -8,7 +9,8 @@ export class SimBgLayer extends SimLayer {
     this.bgRect = new Rect({
       width: config.width || this.width(),
       height: config.height || this.height(),
-      fill: config.backgroundColor
+      fill: config.backgroundColor,
+      dragable: false
     });
 
     this.add(this.bgRect);

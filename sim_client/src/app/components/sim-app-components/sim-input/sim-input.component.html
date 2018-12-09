@@ -36,7 +36,7 @@
         [ngModel]="value" (ngModelChange)="valueChange.emit(getExactValue($event, options.inputType))">
     </div>
 
-    <div *ngIf="isDropdown()" style="display: flex;">
+    <div *ngIf="isDropdown()" style="display: flex; width: calc(100% - .5em); padding: .5em .25em; border: 1px solid grey;">
       <mat-select style="flex: 1;"
         [(value)]="value" (selectionChange)="valueChange.emit(value)" [placeholder]="placeholder ? placeholder : ''">
         <mat-option *ngFor="let option of options" [value]="option">{{ option }}</mat-option>

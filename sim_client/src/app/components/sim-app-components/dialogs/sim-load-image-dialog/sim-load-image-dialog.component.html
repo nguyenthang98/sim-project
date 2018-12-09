@@ -1,5 +1,6 @@
-<h1 mat-dialog-title class="dialog-title">My Collections</h1>
+<h1 mat-dialog-title class="dialog-title">My Collection</h1>
 <div mat-dialog-content class="dialog-content">
+  <div *ngIf="listImages.length == 0">Your collection is empty!</div>
   <figure *ngFor="let image of listImages" (click)="image.selected = !image.selected">
       <img [src]="image.path">
       <figcaption>
@@ -15,7 +16,7 @@
     <mat-icon>cancel</mat-icon>
     Cancel
   </button>
-  <button mat-button (click)="loadButtonClicked()">
+  <button mat-button (click)="loadButtonClicked()" [disabled]="!hasImageSelected()">
     <mat-icon>cloud_download</mat-icon>
     Load
   </button>
