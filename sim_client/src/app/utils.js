@@ -107,7 +107,7 @@ function registerStageOnDrawLine(appConfig) {
 }
 
 function setCurrentFocusedObject(appConfig, object) {
-  if(object instanceof Shape && appConfig.stage.find('.' + object.name()).length) {
+  if(object instanceof Shape/* && appConfig.stage.find('.' + object.name()).length*/) {
     const _newLayer = object.getLayer();
 
     removeAllTransformer(appConfig.stage);

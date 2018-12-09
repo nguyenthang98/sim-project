@@ -1,0 +1,30 @@
+.dialog-content {
+  max-width: 75vw;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.dialog-content figure {
+  display: inline-block;
+  width: 10em;
+  cursor: pointer;
+  transition: ease .25s;
+}
+
+.dialog-content figure:hover {
+  box-shadow: 0px 0px 5px grey;
+}
+
+.dialog-content figure img{
+  width: 100%;
+  height: auto;
+  max-height: 10em;
+  object-fit: contain;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+}
