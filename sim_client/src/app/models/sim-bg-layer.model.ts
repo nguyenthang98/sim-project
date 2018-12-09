@@ -10,7 +10,7 @@ export class SimBgLayer extends SimLayer {
       width: config.width || this.width(),
       height: config.height || this.height(),
       fill: config.backgroundColor,
-      dragable: false
+      draggable: false
     });
 
     this.add(this.bgRect);
