@@ -16,7 +16,7 @@ export class SimUserCollectionComponent implements OnInit {
 
   ngOnInit() {
     this.localUrl = 'http://localhost:3000';
-    // this.localUrl = '';
+    this.localUrl = '';
     this.avatarUrl = `${this.localUrl}/${localStorage.avatar || sessionStorage.avatar}`;
 
     this.spinner.show();
@@ -31,19 +31,21 @@ export class SimUserCollectionComponent implements OnInit {
     inputFile.type = "file";
 
     inputFile.addEventListener("change", () => {
-      const file = <File>inputFile.files[0];
-      const payload = new FormData();
-      payload.append("file", file, file.name);
-      this.spinner.show();
-      this.simApiService.changeAvatar(payload).subscribe(res => {
-        if (localStorage.getItem('avatar')) {
-          localStorage.setItem('avatar', res.content);
-        } else {
-          sessionStorage.setItem('avatar', res.content);
-        }
-        this.spinner.hide();
-        location.reload();
-      });
+      if (inputFile.files[0]) {
+        const file = <File>inputFile.files[0];
+        const payload = new FormData();
+        payload.append("file", file, file.name);
+        this.spinner.show();
+        this.simApiService.changeAvatar(payload).subscribe(res => {
+          if (localStorage.getItem('avatar')) {
+            localStorage.setItem('avatar', res.content);
+          } else {
+            sessionStorage.setItem('avatar', res.content);
+          }
+          this.spinner.hide();
+          location.reload();
+        });
+      }
     });
 
     inputFile.click();
