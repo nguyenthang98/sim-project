@@ -1,4 +1,5 @@
 const md5 = require('md5');
+const path = require('path');
 const fs = require('fs');
 const jsonResponse = require('../response');
 const errorCodes = require('../errorCodes').CODES;
@@ -86,9 +87,10 @@ module.exports.downloadImage = (req, res) => {
             idImage: req.body.idImage
         }
     }).then(image => {
-        let path = dataPath + '/' + image.path + '/' + image.name;
-        if (fs.existsSync(path)) {
-            res.download(path);
+        let filePath = path.join(__dirname, '../../sim-data', image.path);
+        if (fs.existsSync(filePath)) {
+            // res.download(path);
+            res.sendFile(filePath);
         } else {
             res.send(
                 jsonResponse(500, `IMAGE NOT EXIST`, `CAN'T DOWNLOAD IMAGE`)

@@ -21,7 +21,14 @@ module.exports.changeAvatar = function (req, res) {
     })
 };
 
-module.exports.newProject = function(req, res) {
+module.exports.getInfo = function (req, res) {
+    res.send(jsonResponse(200, 'GET_INFO_SUCCESS', {
+        name: req.decoded.username,
+        email: req.decoded.email
+    }));
+}
+
+module.exports.newProject = function (req, res) {
     const data = {
         idUser: req.decoded.idUser,
         projectInfo: req.body.projectInfo,
@@ -34,7 +41,7 @@ module.exports.newProject = function(req, res) {
             projectName: data.projectName
         }
     }).then(project => {
-        if(!project) {
+        if (!project) {
             Project.create(data)
                 .then(result => {
                     res.send(jsonResponse(errorCodes.SUCCESS, 'CREATE PROJECT SUCCESS', result));
@@ -48,16 +55,16 @@ module.exports.newProject = function(req, res) {
     })
 }
 
-module.exports.listProject = function(req, res) {
+module.exports.listProject = function (req, res) {
     const data = {
         idUser: req.decoded.idUser
     };
 
     Project.findAll({
         attributes: ['projectName', 'idProject'],
-        where: data 
+        where: data
     }).then(projects => {
-        if(projects) {
+        if (projects) {
             res.send(jsonResponse(errorCodes.SUCCESS, "LIST PROJECTS SUCCESS", projects));
         } else {
             res.send(jsonResponse(500, "USER PROJECTS NOT FOUND"));
@@ -67,7 +74,7 @@ module.exports.listProject = function(req, res) {
     })
 }
 
-module.exports.deleteProject = function(req, res) {
+module.exports.deleteProject = function (req, res) {
     const data = {
         idUser: req.decoded.idUser,
         idProject: req.body.idProject
@@ -76,32 +83,32 @@ module.exports.deleteProject = function(req, res) {
     Project.findOne({
         where: data
     }).then(project => {
-        if(project) {
+        if (project) {
             project.destroy()
                 .then(result => {
                     res.send(jsonResponse(
-                            errorCodes.SUCCESS,
-                            'DELETE PROJECT SUCCESS',
-                            result));
-                }) 
+                        errorCodes.SUCCESS,
+                        'DELETE PROJECT SUCCESS',
+                        result));
+                })
                 .catch(err => {
                     res.send(jsonResponse(
-                            errorCodes.ERROR_DELETE_DENIED,
-                            `ERROR WHEN DELETE PROJECT`,
-                            err.errors[0].message));
+                        errorCodes.ERROR_DELETE_DENIED,
+                        `ERROR WHEN DELETE PROJECT`,
+                        err.errors[0].message));
                 })
         } else {
             res.send(jsonResponse(
-                    errorCodes.ERROR_DELETE_DENIED,
-                    `PROJECT NOT EXISTS`,
-                    `CAN NOT DELETE PROJECT`));
+                errorCodes.ERROR_DELETE_DENIED,
+                `PROJECT NOT EXISTS`,
+                `CAN NOT DELETE PROJECT`));
         }
     }).catch(err => {
         res.send(jsonResponse(500, err.errors[0].message));
     })
 }
 
-module.exports.infoProject = function(req, res) {
+module.exports.infoProject = function (req, res) {
     const data = {
         idUser: req.decoded.idUser,
         idProject: req.body.idProject
@@ -110,7 +117,7 @@ module.exports.infoProject = function(req, res) {
     Project.findOne({
         where: data
     }).then(project => {
-        if(project) {
+        if (project) {
             res.send(jsonResponse(errorCodes.SUCCESS, "GET INFO PROJECT SUCCESS", project))
         } else {
             res.send(jsonResponse(500, "PROJECT NOT FOUND"));
@@ -120,7 +127,7 @@ module.exports.infoProject = function(req, res) {
     })
 }
 
-module.exports.updateProject = function(req, res) {
+module.exports.updateProject = function (req, res) {
     const data = {
         idUser: req.decoded.idUser,
         idProject: req.body.idProject,
@@ -134,7 +141,7 @@ module.exports.updateProject = function(req, res) {
             idProject: data.idProject
         }
     }).then(project => {
-        if(project) {
+        if (project) {
             project.update({
                 projectInfo: data.projectInfo,
                 projectName: data.projectName

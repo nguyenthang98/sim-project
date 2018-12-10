@@ -20,6 +20,10 @@ router.post('/change-avatar', upload.array('file'), (req, res) => {
     ctrlUser.changeAvatar(req, res);
 });
 
+router.post('/info', (req, res) => {
+    ctrlUser.getInfo(req, res);
+})
+
 router.post('/new-project', (req, res) => {
     ctrlUser.newProject(req, res);
 });

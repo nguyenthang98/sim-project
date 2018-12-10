@@ -13,13 +13,16 @@ export class SimUserCollectionComponent implements OnInit {
   avatarUrl: string;
   userDesigns: Array<any>;
   localUrl: string;
+  userInfo: any;
 
   ngOnInit() {
+    this.userInfo = {};
     this.localUrl = 'http://localhost:3000';
     // this.localUrl = '';
     this.avatarUrl = `${this.localUrl}/${localStorage.avatar || sessionStorage.avatar}`;
 
     this.spinner.show();
+    this.getUserInfo();
     this.simApiService.listImages().subscribe(res => {
       this.spinner.hide();
       this.userDesigns = res.content || [];
@@ -49,5 +52,27 @@ export class SimUserCollectionComponent implements OnInit {
     });
 
     inputFile.click();
+  }
+
+  getUserInfo() {
+    this.simApiService.getUserInfo().subscribe(res => {
+      console.log(res.content);
+      this.userInfo = res.content;
+    })
+  }
+
+  downloadImage(image) {
+    let payload = image;
+    this.simApiService.downloadImage(payload).subscribe(res => {
+      const a = document.createElement('a');
+      a.download = image.name || 'untitled';
+      a.href = URL.createObjectURL(res);
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      a.parentNode.removeChild(a);
+    }, err => {
+      console.error(err);
+    })
   }
 }

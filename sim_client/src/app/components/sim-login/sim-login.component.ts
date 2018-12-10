@@ -6,6 +6,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { passValidator } from "../../directives/pass-validator/pass-validator.directive";
 import { MatSnackBar } from "@angular/material";
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 
 const jwtHelper = new JwtHelperService();
 
@@ -74,6 +75,7 @@ export class SimLoginComponent implements OnInit {
                     localStorage.clear();
                     this.setUserInfo(sessionStorage, res.content);
                 }
+                this.initHeaderOptions();
                 this.simApiService.isLogin = true;
                 this.router.navigate(["/editor"]);
             }
@@ -92,6 +94,7 @@ export class SimLoginComponent implements OnInit {
                         this.openSnackBar("Email existed", "Close");
                     }
                 } else {
+                    this.initHeaderOptions();
                     this.simApiService.isLogin = true;
                     this.setUserInfo(sessionStorage, res.content);
                     this.router.navigate(["/editor"]);
@@ -116,6 +119,15 @@ export class SimLoginComponent implements OnInit {
                 : this[form].get(field).hasError("passValidator")
                     ? "Password does not match"
                     : "";
+    }
+
+    initHeaderOptions() {
+        this.simApiService.httpOptions = {
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem('token') || sessionStorage.getItem('token')
+            })
+        };
     }
 
     openSnackBar(message: string, action: string) {

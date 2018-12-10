@@ -13,8 +13,8 @@
         </div>
         <div>
             <mat-list role="list">
-                <mat-list-item role="listitem" style="padding: 0!important;">Name:&nbsp;</mat-list-item>
-                <mat-list-item role="listitem">Email:&nbsp;</mat-list-item>
+                <mat-list-item role="listitem" style="padding: 0!important;">Name:&nbsp;{{ userInfo.name }}</mat-list-item>
+                <mat-list-item role="listitem">Email:&nbsp;{{ userInfo.email }}</mat-list-item>
             </mat-list>
         </div>
     </div>
@@ -23,8 +23,8 @@
             <figure *ngFor="let design of userDesigns; let i = index">
                 <img style="margin: 0;" [src]="localUrl + design.path">
                 <figcaption style="height: 40px;">
-                    <button style="min-width: 62px;" mat-button>Edit</button>
-                    <button mat-button>Download</button>
+                    <!-- <button style="min-width: 59px;" mat-button>Edit</button> -->
+                    <button style="width: 100%;" mat-button (click)="downloadImage(design)">Download</button>
                 </figcaption>
             </figure>
         </div>
