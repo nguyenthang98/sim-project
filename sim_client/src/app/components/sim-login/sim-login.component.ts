@@ -75,7 +75,7 @@ export class SimLoginComponent implements OnInit {
                     localStorage.clear();
                     this.setUserInfo(sessionStorage, res.content);
                 }
-                this.initHeaderOptions();
+                // this.initHeaderOptions();
                 this.simApiService.isLogin = true;
                 this.router.navigate(["/editor"]);
             }
@@ -94,7 +94,7 @@ export class SimLoginComponent implements OnInit {
                         this.openSnackBar("Email existed", "Close");
                     }
                 } else {
-                    this.initHeaderOptions();
+                    // this.initHeaderOptions();
                     this.simApiService.isLogin = true;
                     this.setUserInfo(sessionStorage, res.content);
                     this.router.navigate(["/editor"]);
@@ -121,14 +121,14 @@ export class SimLoginComponent implements OnInit {
                     : "";
     }
 
-    initHeaderOptions() {
-        this.simApiService.httpOptions = {
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem('token') || sessionStorage.getItem('token')
-            })
-        };
-    }
+    // initHeaderOptions() {
+    //     this.simApiService.httpOptions = {
+    //         headers: new HttpHeaders({
+    //             "Content-Type": "application/json",
+    //             "Authorization": localStorage.getItem('token') || sessionStorage.getItem('token')
+    //         })
+    //     };
+    // }
 
     openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {

@@ -15,7 +15,6 @@ const ggFontApiKey = "AIzaSyCmMgSQuny5V9A9ei-a_T5SZw4AMnLP7II"
 export class SimApiService {
   isLogin: boolean;
   baseURL: string;
-  httpOptions: any;
 
   private fontList: any[];
   private loadedFont: any[];
@@ -24,12 +23,6 @@ export class SimApiService {
     let token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
       this.isLogin = true;
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          "Authorization": token
-        })
-      };
     } else {
       this.isLogin = false;
     }
@@ -38,6 +31,15 @@ export class SimApiService {
     // this.baseURL = baseURL;
     this.loadedFont = [];
     this.getListFontsAsync().subscribe();
+  }
+
+  getHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': "application/json",
+        "Authorization": localStorage.getItem('token') || sessionStorage.getItem('token')
+      })
+    }
   }
 
   getListFontsAsync(filterText?): Observable<any> {
@@ -87,7 +89,7 @@ export class SimApiService {
 
   // User
   getUserInfo(): Observable<any> {
-    return this.httpClient.post(this.baseURL + '/user/info', {}, this.httpOptions);
+    return this.httpClient.post(this.baseURL + '/user/info', {}, this.getHttpOptions());
   }
 
   changeAvatar(payload: any): Observable<any> {
@@ -110,38 +112,34 @@ export class SimApiService {
   }
 
   listImages(): Observable<any> {
-    return this.httpClient.post(this.baseURL + "/image/list", {}, this.httpOptions
-    );
+    return this.httpClient.post(this.baseURL + "/image/list", {}, this.getHttpOptions());
   }
 
   downloadImage(payload: any): Observable<any> {
     return this.httpClient.post(this.baseURL + '/image/download', payload, {
       responseType: 'blob',
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem('token') || sessionStorage.getItem('token')
-      })
+      headers: this.getHttpOptions().headers
     });
   }
 
   // Project manager
   newProject(payload) {
-    return this.httpClient.post(this.baseURL + '/new-project', payload, this.httpOptions);
+    return this.httpClient.post(this.baseURL + '/new-project', payload, this.getHttpOptions());
   }
 
   updateProject(payload) {
-    return this.httpClient.post(this.baseURL + '/update-project', payload, this.httpOptions);
+    return this.httpClient.post(this.baseURL + '/update-project', payload, this.getHttpOptions());
   }
 
   listProjects() {
-    return this.httpClient.post(this.baseURL + '/user/list-projects', {}, this.httpOptions);
+    return this.httpClient.post(this.baseURL + '/user/list-projects', {}, this.getHttpOptions());
   }
 
   infoProject(idProject) {
-    return this.httpClient.post(this.baseURL + '/user/info-project', { idProject }, this.httpOptions);
+    return this.httpClient.post(this.baseURL + '/user/info-project', { idProject }, this.getHttpOptions());
   }
 
   deleteProject(idProject) {
-    return this.httpClient.post(this.baseURL + '/user/delete-project', { idProject }, this.httpOptions);
+    return this.httpClient.post(this.baseURL + '/user/delete-project', { idProject }, this.getHttpOptions());
   }
 }
