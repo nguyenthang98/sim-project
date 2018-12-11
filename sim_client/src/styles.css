@@ -1,7 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* You can add global styles to this file, and also import other style files Roboto, "Helvetica Neue", sans-serif;*/
+@font-face {
+    font-family: 'TQT';
+    src: url('/sim_client/src/assets/font/SUNNProRegular.ttf');
+}
 html, body { height: 100%; }
-body { max-height: 100vh; overflow-y: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { max-height: 100vh; overflow-y: hidden; margin: 0; font-family:"TQT" }
 
 *::-webkit-scrollbar-track
 {

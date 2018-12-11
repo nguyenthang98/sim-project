@@ -19,7 +19,8 @@ export class AppNavBarComponent implements OnInit {
   }
 
   goToUserCollection() {
-    this.router.navigate(["/user-collection"]);
+    window.open('/user-collection'); 
+    //this.router.navigate(["/user-collection"]);
   }
 
   logout() {

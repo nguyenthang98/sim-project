@@ -11,21 +11,39 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class="info-list">
             <mat-list role="list">
                 <mat-list-item role="listitem" style="padding: 0!important;">Name:&nbsp;{{ userInfo.name }}</mat-list-item>
                 <mat-list-item role="listitem">Email:&nbsp;{{ userInfo.email }}</mat-list-item>
             </mat-list>
         </div>
+        <!-- <ul class="social">
+            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+            <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+            <li><a href="#"><i class="fa fa-github-square"></i></a></li>
+        </ul> -->
     </div>
     <div class="images-container">
         <div id="columns">
             <figure *ngFor="let design of userDesigns; let i = index">
-                <img style="margin: 0;" [src]="localUrl + design.path">
-                <figcaption style="height: 40px;">
-                    <!-- <button style="min-width: 59px;" mat-button>Edit</button> -->
-                    <button style="width: 100%;" mat-button (click)="downloadImage(design)">Download</button>
+                <figcaption>
+                    <img style="margin: 0;" [src]="localUrl + design.path">
+                    <div class="download">
+                            <button mat-icon-button (click)="downloadImage(design)">
+                            <mat-icon>get_app</mat-icon>
+                            </button>
+                    </div>
+                    <div class="overlay"></div>
                 </figcaption>
+                <figcaption>
+                    <p class="img_name">{{design.name}}</p>   
+                </figcaption>
+                <!-- <figcaption style="height: 40px;">     -->
+                    <!-- <button style="width: 100%;" mat-button (click)="downloadImage(design)">Download</button> -->
+                    
+                <!-- </figcaption> -->
             </figure>
         </div>
     </div>

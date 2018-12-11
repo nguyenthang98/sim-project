@@ -13,7 +13,8 @@
 }
 
 .nav-bar .mr20 {
-    margin-right: 20px;
+    margin-right: 40px;
+    font-size: 16px;
 }
 
 .nav-bar a {
@@ -22,4 +23,7 @@
 }
 .mat-toolbar {
     background: #000;
+  }
+  .logo-nav-bar img{
+      max-width: 100px;
   }

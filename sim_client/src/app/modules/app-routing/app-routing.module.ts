@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-
+import {SimHome} from "../../components/sim-homepage/sim-homepage.component";
 import { SimLoginComponent } from "../../components/sim-login/sim-login.component";
 import { SimPageNotFoundComponent } from "../../components/sim-page-not-found/sim-page-not-found.component";
 import { SimAuthGuard } from "../../sim-auth.guard";
@@ -15,6 +15,7 @@ const routes: Routes = [
 		component: SimUserCollectionComponent,
 		canActivate: [SimAuthGuard]
 	},
+	{path:"",component:SimHome},
 	{ path: "**", component: SimPageNotFoundComponent }
 ];
 
@@ -26,5 +27,6 @@ export class AppRoutingModule { }
 export const RoutingComponents = [
 	SimLoginComponent,
 	SimPageNotFoundComponent,
-	SimMainLayoutComponent
+	SimMainLayoutComponent,
+	SimHome
 ];

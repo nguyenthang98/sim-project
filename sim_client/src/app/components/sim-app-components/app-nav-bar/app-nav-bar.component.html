@@ -1,9 +1,12 @@
 <mat-toolbar class="nav-bar">
+    <span class="logo-nav-bar mr20">
+        <img src="../../../../assets/images/logo_white.png">
+    </span>
+    <span class="mr20">
+        <a routerLink="/">Home</a>
+    </span>
     <span class="mr20">
         <a routerLink="/editor">Editor</a>
-    </span>
-    <span>
-        <a routerLink="/about">About</a>
     </span>
     <span class="fill-remaining-space"></span>
     <span>
@@ -14,7 +17,8 @@
             </div>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="goToUserCollection()">
+            
+            <button mat-menu-item (click)="goToUserCollection()" >
                 <mat-icon>photo_library</mat-icon>
                 <span>My designs</span>
             </button>
