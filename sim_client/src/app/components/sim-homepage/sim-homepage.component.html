@@ -1,4 +1,33 @@
 <div class="homepage">
+    <!-- ***** Header Area Start ***** -->
+	<header class="header-area" *ngIf="!isLogin"> 
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="#" class="logo">
+                            <img src="../../../assets/images/black_logo.png">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+
+
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="/editor">Editor</a></li>
+                            <li><a href="/login" class="btn-nav-line"><span>Login</span></a></li>
+                        </ul>
+                        <!-- <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a> -->
+                        <!-- ***** Menu End ***** -->						
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
 
     <!-- ***** Welcome Area Start ***** -->
     <div class="welcome-area" id="welcome">
