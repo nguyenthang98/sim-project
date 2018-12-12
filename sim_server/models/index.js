@@ -15,7 +15,7 @@ const Op = Sequelize.Op;
 const db = {};
 
 sequelize
-    .sync({ force: true })
+    .sync(/*{ force: true }*/)
     .then(() => {
         console.log('SYNC DATABASE SUCCESSFULLY');
     })
