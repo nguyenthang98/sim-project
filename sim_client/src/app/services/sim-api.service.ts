@@ -29,7 +29,7 @@ export class SimApiService {
     }
 
     this.baseURL = location.origin + basePath;
-    // this.baseURL = baseURL;
+     this.baseURL = baseURL;
     this.loadedFont = [];
     this.getListFontsAsync().subscribe();
   }

@@ -22,7 +22,7 @@
 
 .sim-work-area-container {
   height: 100%;
-  width: calc(100% - 350px);
+  width: calc(100% - 340px);
   float: right;
 }
 
@@ -37,7 +37,9 @@
   /* border-top: .5px dashed gray; */
   /* background-color: rgba(215,215,215,0.3); */
   /* background-color: #ddd; */
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKElEQVQoU2NcvHjxfwY0YG1tjS7EwDgUFN67dw/DM0ePHsX0zBBQCACqAC+QaDthkQAAAABJRU5ErkJggg==) repeat;
+  /* background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKElEQVQoU2NcvHjxfwY0YG1tjS7EwDgUFN67dw/DM0ePHsX0zBBQCACqAC+QaDthkQAAAABJRU5ErkJggg==) repeat;
+   */
+   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJElEQVQYV2NkYGDwZWBgOMvAwGAMoxkZGBikkAVAEiBBClQCAC9jCyH2BRU4AAAAAElFTkSuQmCC) repeat;
 }
 
 .sim-floating-panel {

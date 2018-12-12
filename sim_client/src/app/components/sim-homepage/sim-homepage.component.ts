@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
   styleUrls: ['./sim-homepage.component.css']
 })
 export class SimHome implements OnInit {
+    
     isLogin: boolean;
     constructor(private httpClient: HttpClient) {
         let token = localStorage.getItem('token') || sessionStorage.getItem('token');
