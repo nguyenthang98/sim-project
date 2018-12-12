@@ -123,6 +123,14 @@ div#columns figure figcaption {
   color:#fff;
   z-index: 2;
 }
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display:none;
+  color:#fff;
+  z-index: 2;
+}
 .overlay {
   position: absolute;
   top: 0;
@@ -133,6 +141,9 @@ div#columns figure figcaption {
   display: none;
 }
 div#columns figure figcaption:hover .download{
+  display: block;
+}
+div#columns figure figcaption:hover .delete{
   display: block;
 }
 div#columns figure figcaption:hover .overlay{

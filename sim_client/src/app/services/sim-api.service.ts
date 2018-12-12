@@ -125,6 +125,13 @@ export class SimApiService {
     });
   }
 
+  deleteImage(payload: any): Observable<any> {
+    return this.httpClient.post(this.baseURL + '/image/delete', payload, {
+      responseType: 'blob',
+      headers: this.getHttpOptions().headers
+    });
+  }
+
   // Project manager
   newProject(payload) {
     return this.httpClient.post(this.baseURL + '/user/new-project', payload, this.getHttpOptions());

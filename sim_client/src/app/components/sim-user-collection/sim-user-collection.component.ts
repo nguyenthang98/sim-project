@@ -75,4 +75,14 @@ export class SimUserCollectionComponent implements OnInit {
       console.error(err);
     })
   }
+
+  // deleteImage(image) {
+  //   let payload = image;
+  //   this.simApiService.deleteImage(payload).subscribe(res => { 
+  //     this.userDesigns=  res.content || [];
+  //   }, err => {
+  //     console.error(err);
+  //   })
+  //   location.reload();
+  // }
 }
