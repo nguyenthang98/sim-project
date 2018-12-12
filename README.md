@@ -5,7 +5,7 @@
 * Konvajs
 
 ## Focus on 2 task
-* npm run build-client : run build script for frontend code
+* npm run b : run build script for frontend code
 * npm start : serve the project
 
 ## For front-end development:
