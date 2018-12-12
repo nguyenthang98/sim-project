@@ -107,7 +107,8 @@ module.exports.deleteImage = (req, res) => {
     }).then(image => {
         if (image) {
             image.destroy();
-            deleteFolderRecursive(dataPath + '/' + image.path);
+            let filePath = path.join(__dirname, '../../', dataPath + image.path);
+            fs.unlinkSync(filePath);
             res.send(
                 jsonResponse(
                     errorCodes.SUCCESS,

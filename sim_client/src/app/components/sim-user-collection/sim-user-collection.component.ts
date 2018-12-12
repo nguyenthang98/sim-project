@@ -76,13 +76,13 @@ export class SimUserCollectionComponent implements OnInit {
     })
   }
 
-  // deleteImage(image) {
-  //   let payload = image;
-  //   this.simApiService.deleteImage(payload).subscribe(res => { 
-  //     this.userDesigns=  res.content || [];
-  //   }, err => {
-  //     console.error(err);
-  //   })
-  //   location.reload();
-  // }
+  deleteImage(image, index) {
+    let payload = image;
+    this.simApiService.deleteImage(payload).subscribe(res => {
+      this.userDesigns.splice(index, 1);
+    }, err => {
+      console.error(err);
+    })
+    // location.reload();
+  }
 }

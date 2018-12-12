@@ -31,23 +31,23 @@
                 <figcaption>
                     <img style="margin: 0;" [src]="localUrl + design.path">
                     <div class="download">
-                            <button mat-icon-button (click)="downloadImage(design)">
+                        <button mat-icon-button (click)="downloadImage(design)">
                             <mat-icon>get_app</mat-icon>
-                            </button>
+                        </button>
                     </div>
                     <div class="delete">
-                            <button mat-icon-button (click)="deleteImage(design)">
+                        <button mat-icon-button (click)="deleteImage(design, i)">
                             <mat-icon>delete_forever</mat-icon>
-                            </button>
+                        </button>
                     </div>
                     <div class="overlay"></div>
                 </figcaption>
                 <figcaption>
-                    <p class="img_name">{{design.name}}</p>   
+                    <p class="img_name">{{design.name}}</p>
                 </figcaption>
                 <!-- <figcaption style="height: 40px;">     -->
-                    <!-- <button style="width: 100%;" mat-button (click)="downloadImage(design)">Download</button> -->
-                    
+                <!-- <button style="width: 100%;" mat-button (click)="downloadImage(design)">Download</button> -->
+
                 <!-- </figcaption> -->
             </figure>
         </div>

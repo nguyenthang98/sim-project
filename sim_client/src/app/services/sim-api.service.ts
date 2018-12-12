@@ -126,10 +126,7 @@ export class SimApiService {
   }
 
   deleteImage(payload: any): Observable<any> {
-    return this.httpClient.post(this.baseURL + '/image/delete', payload, {
-      responseType: 'blob',
-      headers: this.getHttpOptions().headers
-    });
+    return this.httpClient.post(this.baseURL + '/image/delete', payload, this.getHttpOptions());
   }
 
   // Project manager
