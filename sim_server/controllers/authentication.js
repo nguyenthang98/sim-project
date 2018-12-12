@@ -121,7 +121,7 @@ module.exports.authenticate = () => {
         if (token) {
             jwt.verify(token, configApp.jwtSecretKey, (err, decoded) => {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     return res.send(
                         jsonResponse(
                             errorCodes.ERROR_WRONG_PASSWORD,

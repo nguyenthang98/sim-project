@@ -55,7 +55,7 @@ export class SimExportDialogComponent {
         this.spinner.show();
         this.simApiService.createImage(payload)
           .subscribe(res => {
-            console.log(res);
+            // console.log(res);
             this.spinner.hide();
             if(res.code !== 200) {
               const reson = res.reason;              

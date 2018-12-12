@@ -1,14 +1,11 @@
 <div class="main-layout" style="height: calc(100% - 50px); overflow: hidden;">
-  <!-- <div class="nav mat-elevation-z3">
-    <app-nav-bar></app-nav-bar>
-  </div> -->
-  <div class="working-area">
+  <div class="working-area" *ngIf="appConfig">
     <div class="sim-left-container">
-      <app-control-panel [app-config]="appConfig"></app-control-panel>
+      <app-control-panel *ngIf="appConfig" [app-config]="appConfig"></app-control-panel>
     </div>
     <div class="sim-work-area-container">
       <div class="sim-top-panel">
-        <app-top-panel [app-config]="appConfig"></app-top-panel>
+        <app-top-panel *ngIf="appConfig" [app-config]="appConfig"></app-top-panel>
       </div>
 
       <!--Important: Working area for konva-->

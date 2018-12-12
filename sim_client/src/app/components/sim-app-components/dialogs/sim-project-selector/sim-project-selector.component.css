@@ -1,0 +1,23 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column; 
+}
+
+.dialog-content .project-selection-area {
+  max-height: 30vh;
+  overflow: auto
+}
+
+.dialog-content .project-selection-area > mat-radio-group{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.dialog-content .project-selection-area .project-selection-item {
+  margin: .5em .75em 0em;
+}
+
+.dialog-actions {
+  float: right;
+}

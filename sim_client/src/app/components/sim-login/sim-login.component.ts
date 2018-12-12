@@ -94,9 +94,9 @@ export class SimLoginComponent implements OnInit {
                         this.openSnackBar("Email existed", "Close");
                     }
                 } else {
-                    // this.initHeaderOptions();
                     this.simApiService.isLogin = true;
                     this.setUserInfo(sessionStorage, res.content);
+                    // this.initHeaderOptions();
                     this.router.navigate(["/editor"]);
                 }
                 this.spinner.hide();

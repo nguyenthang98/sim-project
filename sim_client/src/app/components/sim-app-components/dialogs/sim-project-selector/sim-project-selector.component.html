@@ -1,0 +1,59 @@
+<h1 mat-dialog-title class="dialog-title">Select a project</h1>
+<div mat-dialog-content class="dialog-content">
+  <!-- <div style="font-weight: 500; margin: .5em 0em">Create New Project</div> -->
+  <button mat-button style="width: 100%;" *ngIf="showCreateProjectButton"
+    (click)="showCreateProjectButton = !showCreateProjectButton">
+    <mat-icon style="color: green;">add</mat-icon>
+    Create New Project
+  </button>
+  <div class="project-creation-area" *ngIf="!showCreateProjectButton">
+    <mat-form-field style="width: 70%;">
+      <input 
+        matInput type="text" placeholder="Project Name" 
+        (keyup.enter)="createNewProject(newProjectName.value)" #newProjectName>
+      <button 
+        *ngIf="newProjectName.value" matSuffix 
+        mat-icon-button aria-label="Clear" (click)="newProjectName.value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button style="width: 30%; max-width: 30%;" mat-button (click)="createNewProject(newProjectName.value)">
+      Create
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- <div style="font-weight: 500; margin: .5em 0em;">Your Existing Project</div> -->
+  <div *ngIf="!projects || !projects.length">Empty set</div>
+  <div class="project-selection-area">
+    <mat-radio-group 
+      [(ngModel)]="selectedProject">
+      <mat-radio-button *ngFor="let project of projects" [value]="project" class="project-selection-item">
+        <button 
+          style="min-width: 17em; max-width: 17em; overflow-x: hidden; text-overflow: ellipsis;"
+          mat-button (click)="selectedProject = project">
+          {{ project.projectName }}
+        </button>
+        <button mat-icon-button (click)="removeProject(project)">
+          <mat-icon style="color: red;">close</mat-icon>
+        </button>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="returnHomePageButtonClicked()" *ngIf="config.showReturnHomeButton">
+    <mat-icon>home</mat-icon>
+    Return Home
+  </button>
+  <button mat-button (click)="cancelButtonClicked()" *ngIf="config.showCancelButton">
+    <mat-icon style="color: red;">close</mat-icon>
+    Cancel
+  </button>
+  <button mat-button (click)="loadProjectButtonClicked()" [disabled]="!selectedProject">
+    <mat-icon style="color: green">check_circle_outline</mat-icon>
+    Load
+  </button>
+</div>

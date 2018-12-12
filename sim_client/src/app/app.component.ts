@@ -8,6 +8,8 @@ import { SimInputComponent } from './components/sim-app-components/sim-input/sim
 import { SimFilterComponent } from './components/sim-app-components/sim-filter/sim-filter.component';
 import { SimExportDialogComponent } from './components/sim-app-components/dialogs/sim-export-dialog/sim-export-dialog.component';
 import { SimLoadImageDialogComponent } from './components/sim-app-components/dialogs/sim-load-image-dialog/sim-load-image-dialog.component';
+import { SimProjectSelectorComponent } from './components/sim-app-components/dialogs/sim-project-selector/sim-project-selector.component';
+import { ConfirmDialogComponent } from './components/sim-app-components/dialogs/confirm-dialog/confirm-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { SimApiService } from 'src/app/services/sim-api.service';
@@ -47,10 +49,14 @@ export const SimComponents = [
   SimInputComponent,
   SimColorPickerComponent,
   SimExportDialogComponent,
-  SimLoadImageDialogComponent
+  SimLoadImageDialogComponent,
+  SimProjectSelectorComponent,
+  ConfirmDialogComponent
 ]
 
 export const SimEntryComponents = [
   SimExportDialogComponent,
-  SimLoadImageDialogComponent
+  SimLoadImageDialogComponent,
+  SimProjectSelectorComponent,
+  ConfirmDialogComponent
 ]

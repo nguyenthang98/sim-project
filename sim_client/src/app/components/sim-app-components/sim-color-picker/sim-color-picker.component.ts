@@ -21,7 +21,7 @@ export class SimColorPickerComponent {
   }
 
   setColorPresets(cps) {
-    console.log("set preset colors")
+    // console.log("set preset colors")
     colorPresets = cps;
   }
 }

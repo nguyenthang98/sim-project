@@ -135,3 +135,71 @@
 
 <!--Export button to trigger dialog -->
 <button mat-button (click)="openExportDialog()" style="float:right; height: 100%">Export</button>
+<!-- <div style="float: right; height: 100%;">{{ appConfig.project.projectName }}</div>
+<button mat-button (click)="openProjectSelectorDialog()" style="float:right; height: 100%">Change Project</button> -->
+
+<button mat-button [matMenuTriggerFor]="projectMenu" style="float: right; height: 100%; max-width: 5em">
+  Project
+</button>
+<mat-menu #projectMenu="matMenu">
+  <div
+    style="
+      padding: .75em .5em;
+      display: flex;
+      flex-direction: column;
+      ">
+      <!--
+        <button mat-button matTooltip="Current Project: {{ appConfig.project.projectName }}"
+          *ngIf="!showEditProjectName"
+          (click)="$event.stopPropagation(); showEditProjectName = !showEditProjectName;" style="
+            width: 100%;
+            max-width: 15em;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+          ">
+          {{ appConfig.project.projectName }}
+          </button>
+      -->
+      <mat-form-field style="
+          width: 100%;
+          max-width: 15em;" 
+          (click)="$event.stopPropagation()">
+        <input 
+          (keyup.enter)="saveProjectButtonClicked(true)"
+          (blur)="saveProjectButtonClicked(false)"
+          matInput type="text"
+          placeholder="Project Name"
+          [(ngModel)]="appConfig.project.projectName">
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+
+      <button mat-button style="
+        width: 100%;
+        max-width: 15em;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      " (click)="saveProjectButtonClicked(true)">
+        <mat-icon>save</mat-icon>
+        Save Project
+      </button>
+      <button mat-button style="
+        width: 100%;
+        max-width: 15em;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      " (click)="openProjectSelectorDialog()">
+        <mat-icon>cached</mat-icon>
+        Change Project
+      </button>
+      <button mat-button style="
+        width: 100%;
+        max-width: 15em;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      " (click)="closeCurrentProject()">
+        <mat-icon>close</mat-icon>
+        Close Project
+      </button>
+  </div>
+</mat-menu>

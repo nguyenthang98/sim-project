@@ -33,11 +33,11 @@
 
 .sim-work-area {
   height: calc(100% - 40px);
-  border-left: .5px dashed gray;
-  border-top: .5px dashed gray;
-  background-color: rgba(215,215,215,0.3);
+  /* border-left: .5px dashed gray; */
+  /* border-top: .5px dashed gray; */
+  /* background-color: rgba(215,215,215,0.3); */
   /* background-color: #ddd; */
-  /* background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKElEQVQoU2NcvHjxfwY0YG1tjS7EwDgUFN67dw/DM0ePHsX0zBBQCACqAC+QaDthkQAAAABJRU5ErkJggg==) repeat; */
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKElEQVQoU2NcvHjxfwY0YG1tjS7EwDgUFN67dw/DM0ePHsX0zBBQCACqAC+QaDthkQAAAABJRU5ErkJggg==) repeat;
 }
 
 .sim-floating-panel {
@@ -54,6 +54,6 @@
 }
 .sim-top-panel{
   /* background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)),url("../../../assets/bg1.png"); */
-  border-left: .5px dashed gray;
+  /* border-left: .5px dashed gray; */
   background-size: cover;
 }

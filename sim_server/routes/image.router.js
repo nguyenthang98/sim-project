@@ -31,7 +31,7 @@ router.post('/new', (req, res) => {
       console.log('not ok');
       res.send(jsonResponse(500, 'IMAGE EXISTED'));
     } else {
-      console.log(req);
+      // console.log(req);
       ctrlImage.newImage(req, res);
     }
   })

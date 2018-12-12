@@ -1,13 +1,10 @@
 import { LayerList } from './layer-list.model';
-import { Stage } from 'konva';
+import { Stage, Layer } from 'konva';
 import { registerStageOnClick, removeAllTransformer, registerStageOnDrawLine } from "../utils.js"; 
-import { isFinte } from "lodash";
+import { isFinite, get } from "lodash";
 
 export class AppConfig {
-  project: {
-    idProject: number,
-    projectName: string,
-  }
+  project: any;
   mainConfig: {
     width: number,
     height: number,
@@ -18,7 +15,20 @@ export class AppConfig {
   stage: Stage;
   mode: any;
 
-  constructor() {
+  constructor(project?) {
+    this.project = project;
+    const config = JSON.parse(project.projectInfo);
+    this.mainConfig = get(config, 'attrs', {
+      width: 1080,
+      height: 1080,
+      backgroundColor: "rgba(255, 255, 255, 1)"
+    })
+
+    this.layers = new LayerList(get(config, 'children'));
+    this.currentFocusedObject = null;
+    this.stage = null;
+    this.mode = null;
+    /*
     this.mainConfig = {
       width: 1080,
       height: 1080,
@@ -28,13 +38,7 @@ export class AppConfig {
     this.currentFocusedObject = null;
     this.stage = null;
     this.mode = null;
-  }
-
-  loadProject(project) {
-    this.project.idProject = project.idProject;
-    this.project.projectName = project.projectName;
-    const jsonInfo = JSON.parse(project.projectInfo);
-    this.fromJSON(jsonInfo);
+    */
   }
 
   initStage(containerId) {
@@ -46,7 +50,7 @@ export class AppConfig {
     });
 
     // for dev
-    console.log(this, this.stage);
+    // console.log(this, this.stage);
 
     // set stage scale to fit window
     const _stageContainer = this.stage.container();
@@ -83,6 +87,24 @@ export class AppConfig {
     // register event
     registerStageOnClick(this);
     registerStageOnDrawLine(this);
+  }
+
+  updateAllFonts(apiService) {
+    this.stage.find('Text').each((text: any) => {
+      const fontFamily = text.fontFamily();
+      if(fontFamily) {
+        apiService.loadFont(fontFamily, 'regular', () => {
+          setTimeout(() => {
+            text.clearCache();
+            text.draw();
+
+            // apply filters
+            text.cache();
+            text.getLayer().batchDraw();
+          })
+        })
+      }
+    })
   }
 
   changeStageScale(event) {
@@ -133,7 +155,7 @@ export class AppConfig {
 
     const _canvas = this.stage.toCanvas({
       callback: function(cv) {
-        console.log(cv);
+        // console.log(cv);
       },
       x: this.stage.x() + (isFinite(x) ? x : 0),
       y: this.stage.y() + (isFinite(y) ? y : 0),
@@ -172,14 +194,5 @@ export class AppConfig {
       children: this.layers.exportJSON(),
       className: 'AppConfig'
     }
-  }
-
-  fromJSON(json) {
-    this.mainConfig = json.attrs;
-    const containerId = this.stage.container().id;
-
-    this.layers.fromJSON(json.children);
-    this.stage.destroy();
-    this.initStage(containerId);
   }
 }

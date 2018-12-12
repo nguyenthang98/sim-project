@@ -143,13 +143,14 @@ module.exports.updateProject = function (req, res) {
     }).then(project => {
         if (project) {
             project.update({
-                projectInfo: data.projectInfo,
-                projectName: data.projectName
-            }).then(result => {
+                    projectInfo: data.projectInfo,
+                    projectName: data.projectName
+                }).then(result => {
                 res.send(jsonResponse(errorCodes.SUCCESS, "UPDATE PROJECT SUCCESS", result));
-            }).catch(err => {
-                res.send(jsonResponse(500, err.errors[0].message));
-            })
+                }).catch(err => {
+                    // console.log(err);
+                    res.send(jsonResponse(500, err));
+                })
         } else {
             res.send(jsonResponse(500, "PROJECT NOT EXISTED"));
         }

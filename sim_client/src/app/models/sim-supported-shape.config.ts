@@ -3,7 +3,7 @@ import {
   Circle as _circle, Rect as _rect, Ellipse as _ellipse, Wedge as _wedge, RegularPolygon as _regPolygon, 
   Star as _star, Image as _image, Line as _line, Text as _text, Filters
 } from "konva";
-//import { getFiltersClassName } from "../utils";
+import { get } from "lodash";
 
 // Konva-Based Shapes
 export {
@@ -20,7 +20,6 @@ function getFiltersClassName(shape) {
 interface SimShape {
   getGeometricKeys: () => string[];
   exportJSON: () => any;
-  fromJSON: (any) => any;
 }
 
 // general props and functions
@@ -32,15 +31,32 @@ function getRandomColor() {
   return "#" + Math.random().toString(16).substr(2, 6);
 }
 
+function _exportJSON() {
+    const JSONObj = JSON.parse(this.toJSON());
+    if(JSONObj.attrs.filters && JSONObj.attrs.filters.length) {
+      JSONObj.attrs.filters = getFiltersClassName(this);
+    }
+    JSONObj.attrs.strokeEnabled = this.strokeEnabled();
+    JSONObj.attrs.fillEnabled = this.fillEnabled();
+    JSONObj.attrs.shadowEnabled = this.shadowEnabled();
+    return JSONObj;
+}
+
 class Circle extends _circle implements SimShape {
-  constructor(props?:any) {
+  constructor(shapeJson?) {
     super({
       ...defaultConfigs,
       radius: 100,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
   }
 
   getGeometricKeys(): string[]{
@@ -48,60 +64,39 @@ class Circle extends _circle implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    if(JSONObj.attrs.filters && JSONObj.attrs.filters.length) {
-      JSONObj.attrs.filters = getFiltersClassName(this);
-    }
-    return JSONObj;
+    return _exportJSON.apply(this);
   }
 
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
-  }
 }
 
 class Rect extends _rect implements SimShape {
-  constructor(props?:any) {
+  constructor(shapeJson?) {
     super({
       ...defaultConfigs,
       width: 200,
       height: 200,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
-  }
 
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
+  }
   getGeometricKeys(): string[]{
     return [];
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
-  }
-
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
+    return _exportJSON.apply(this);
   }
 }
 
 class Ellipse extends _ellipse implements SimShape{
-  constructor(props?:any) {
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       radius: {
@@ -110,8 +105,14 @@ class Ellipse extends _ellipse implements SimShape{
       },
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
   }
 
   getGeometricKeys(): string[]{
@@ -119,32 +120,26 @@ class Ellipse extends _ellipse implements SimShape{
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
-  }
-
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
+    return _exportJSON.apply(this);
   }
 }
 
 class Wedge extends _wedge implements SimShape {
-  constructor(props?:any) {
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       angle: 60,
       radius: 100,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
   }
 
   getGeometricKeys(): string[]{
@@ -152,32 +147,27 @@ class Wedge extends _wedge implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
+    return _exportJSON.apply(this);
   }
 
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
-  }
 }
 
 class RegularPolygon extends _regPolygon implements SimShape {
-  constructor(props?:any) {
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       radius: 100,
       sides: 6,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
   }
 
   getGeometricKeys(): string[]{
@@ -185,24 +175,15 @@ class RegularPolygon extends _regPolygon implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
+    return _exportJSON.apply(this);
+    // const JSONObj = JSON.parse(this.toJSON());
+    // return JSONObj;
   }
 
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
-  }
 }
 
 class Star extends _star implements SimShape {
-  constructor(props?:any) {
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       innerRadius: 60,
@@ -210,8 +191,14 @@ class Star extends _star implements SimShape {
       numPoints: 6,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
   }
 
   getGeometricKeys(): string[]{
@@ -219,31 +206,37 @@ class Star extends _star implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
-  }
-
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
+    return _exportJSON.apply(this);
   }
 }
 
 class Image extends _image implements SimShape {
-  constructor(props?:any) {
-    console.log("create Image", props);
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    const imgSrc = get(shapeJson, 'attrs.imageSource');
+    // console.log(imgSrc);
+    if(imgSrc) {
+      const imageEle = document.createElement('img');
+      imageEle.crossOrigin = "Anonymous";
+      imageEle.onload = () => {
+        this.image(imageEle);
+        this.cache();
+      }
+      imageEle.src = imgSrc;
+    }
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
+
   }
 
   getGeometricKeys(): string[]{
@@ -251,35 +244,28 @@ class Image extends _image implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
+    const JSONObj = _exportJSON.apply(this);
     JSONObj.attrs.imageSource = this.image().src;
     return JSONObj;
-  }
-
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters' && key !== 'imageSource') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      } else if(key == 'imageSource') {
-        console.log(json.attrs.imageSource);
-      }
-    })
   }
 }
 
 class Line extends _line implements SimShape {
   tempPoints: any[];
-  constructor(props?:any) {
-    console.log("create Line", props);
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       name: getRandomHash(),
       fill: getRandomColor(),
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
+
     this.tempPoints = [];
   }
 
@@ -288,27 +274,14 @@ class Line extends _line implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
-  }
-
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
+    return _exportJSON.apply(this);
   }
 }
 
 class Text extends _text implements SimShape {
   hasExtraProps: boolean;
 
-  constructor(props?:any) {
-    console.log("create Text", props);
+  constructor(shapeJson?:any) {
     super({
       ...defaultConfigs,
       text: "Default text",
@@ -317,8 +290,14 @@ class Text extends _text implements SimShape {
       stroke: getRandomColor(),
       strokeEnabled: true,
       fontSize: 100,
-      ...(props || {})
+      ...get(shapeJson, 'attrs', {})
     });
+
+    let filters = [];
+    get(shapeJson, 'attrs.filters', []).forEach(filterClassName => {
+      filters.push(Filters[filterClassName]);
+    })
+    this.filters(filters);
 
     this.hasExtraProps = true;
   }
@@ -328,18 +307,7 @@ class Text extends _text implements SimShape {
   }
 
   exportJSON() {
-    const JSONObj = JSON.parse(this.toJSON());
-    return JSONObj;
+    return _exportJSON.apply(this);
   }
 
-  fromJSON(json) {
-    Object.keys(json.attrs).forEach(key => {
-      if(typeof(this[key]) == 'function' && key !== 'filters') {
-        this[key](json.attrs[key]);
-      } else if(key == 'filters') {
-        const filters = json.attrs[key];
-        this.filters(filters.map(f => Filters[f]));
-      }
-    })
-  }
 }

@@ -1,12 +1,21 @@
 import { SimLayer } from "./sim-layer.model";
 import { SimBgLayer } from "./sim-bg-layer.model";
 import { removeAllTransformer } from "../utils";
+import { get } from "lodash";
+
 export class LayerList {
   layerList: SimLayer[];
   backgroundLayer: SimBgLayer;
   currentLayer: SimLayer;
   
-  constructor() {
+  constructor(config?) {
+    this.backgroundLayer = new SimBgLayer(get(config, 'attrs.backgroundLayer'));
+    this.layerList = [];
+    get(config, 'children', []).forEach(layerJson => {
+      this.layerList.push(new SimLayer(layerJson));
+    });
+    this.currentLayer = this.backgroundLayer;
+    /*
     // background layer
     const backgroundProps = {
       name: "Background"
@@ -17,11 +26,14 @@ export class LayerList {
     this.layerList = [workingLayer];
     this.currentLayer = workingLayer;
     this.backgroundLayer = bgLayer;
+    */
   }
 
   addLayer(layerName) {
     const newLayer = new SimLayer({
-      name: layerName
+      attrs: {
+        name: layerName
+      }
     });
     this.layerList.unshift(newLayer);
     this.backgroundLayer.getStage().add(newLayer);
@@ -42,27 +54,6 @@ export class LayerList {
     layer.remove();
   }
 
-  /* Layer positions management */
-  isTopLayer(layer) {
-    return this.layerList.findIndex(l => l == layer) == 0;
-  }
-
-  moveupLayer(layer) {
-    const layerIdx = this.layerList.findIndex(l => l == layer);
-    this.layerList.splice(layerIdx, 1);
-    this.layerList.splice(layerIdx - 1, 0, layer);
-  }
-
-  isBottomLayer(layer) {
-    return this.layerList.findIndex(l => l == layer) == (this.layerList.length - 1);
-  }
-
-  movedownLayer(layer) {
-    const layerIdx = this.layerList.findIndex(l => l == layer);
-    this.layerList.splice(layerIdx, 1);
-    this.layerList.splice(layerIdx + 1, 0, layer);
-  }
-
   exportJSON() {
     return {
       attrs: {
@@ -73,22 +64,4 @@ export class LayerList {
     }
   }
 
-  fromJSON(json) {
-    // remove previous layers
-    this.layerList.forEach(layer => {
-      layer.destroy();
-    });
-    this.backgroundLayer.destroy();
-
-    this.layerList = [];
-    this.backgroundLayer = new SimBgLayer();
-    this.backgroundLayer.fromJSON(json.attrs.backgroundLayer);
-
-    json.children.forEach(layer => {
-      console.log("load layer", layer);
-      const newLayer = new SimLayer();
-      newLayer.fromJSON(layer);
-      this.layerList.unshift(newLayer);
-    })
-  }
 } 

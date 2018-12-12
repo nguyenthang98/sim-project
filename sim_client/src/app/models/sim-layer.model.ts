@@ -1,26 +1,41 @@
 import { Layer, Shape } from "konva";
+import { get } from "lodash";
 import * as supportedShapes from "./sim-supported-shape.config";
 
 export class SimLayer extends Layer {
+  constructor(layerJson?) {
+    super(get(layerJson, 'attrs', {}));
+
+    get(layerJson, 'children', []).forEach(shapeJson => {
+      const _constructor = supportedShapes[shapeJson.className];
+      if(_constructor) {
+        const shape = this.addShape(new _constructor(shapeJson));
+        if(shape.width() && shape.height()) {
+          shape.cache();
+        }
+      }
+    })
+  }
+
   addObject(className, props?:any) {
     const newShape = this.createShape(className, props);
     if(newShape) {
-      console.log(`Created shape ${className}`, newShape);
-      // this.add(newShape);
-      // this.batchDraw();
+      // console.log(`Created shape ${className}`, newShape);
       return newShape;
     } else {
-      console.log(`Cannot create shape ${className}`);
+      // console.log(`Cannot create shape ${className}`);
       return null;
     }
   }
 
   private createShape(className, props?:any) {
-    const constructor = supportedShapes[className];
+    const _constructor = supportedShapes[className];
     // generate randomly fill color and name
-    if(constructor) {
-      const newShape = new constructor(props);
-      return this.addShape(newShape);
+    if(_constructor) {
+      const newShape = new _constructor({attrs: props});
+      this.addShape(newShape);
+      this.batchDraw();
+      return newShape;
     } else
       return null;
   }
@@ -56,8 +71,6 @@ export class SimLayer extends Layer {
     })
 
     this.add(newShape);
-    this.batchDraw();
-
     return newShape;
   }
 
@@ -71,24 +84,10 @@ export class SimLayer extends Layer {
 
   exportJSON() {
     return {
-      attrs: {
-        name: this.name()        
-      },
-      chidren: this.getShapes().map(shape => shape.exportJSON()),
+      attrs: JSON.parse(this.toJSON()).attrs,
+      children: this.getShapes().reverse().map(shape => shape.exportJSON()),
       className: 'SimLayer'
     }
   }
 
-  fromJSON(json) {
-    // remove previous shapes
-    this.getShapes().forEach(shape => shape.destroy());
-    this.name(json.attrs.name);
-
-    json.chidren.forEach(shape => {
-      console.log("load Shape", shape);
-      const newShape = new supportedShapes[shape.className];
-      newShape.fromJSON(shape);
-      this.addShape(newShape);
-    })
-  }
 }

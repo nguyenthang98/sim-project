@@ -22,7 +22,7 @@ export class SimAuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     // return true;
-    console.log({ next, state });
+    // console.log({ next, state });
 
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
     if (token && !jwtHelper.isTokenExpired(token)) {

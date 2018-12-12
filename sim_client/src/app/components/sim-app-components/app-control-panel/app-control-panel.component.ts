@@ -20,6 +20,8 @@ export class AppControlPanelComponent{
   private SCREEN_HEIGHT: number;
   private fileToURL: any;
 
+  showCreateLayerButton: boolean;
+
   constructor(
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
@@ -29,6 +31,8 @@ export class AppControlPanelComponent{
     this.SCREEN_HEIGHT = window.screen.height;
     this.SCREEN_WIDTH = window.screen.width;
     this.fileToURL = window.URL.createObjectURL;
+
+    this.showCreateLayerButton = true;
   }
 
   getLayerDataSource() {
@@ -36,30 +40,13 @@ export class AppControlPanelComponent{
   }
 
   removeLayer(layer) {
-    console.log("removing layer!", layer);
+    // console.log("removing layer!", layer);
     this.appConfig.layers.removeLayer(layer);
     this.appConfig.currentFocusedObject = null;
   }
 
   isShape(object) {
     return object instanceof Shape;
-  }
-
-  getCpPosition(ele: any) {
-    if(ele.nextSibling) {
-      const inputClientRect = ele.getBoundingClientRect();
-      // 369px is color picker popup height
-      if (inputClientRect.y + inputClientRect.height + 369 >= this.SCREEN_HEIGHT) {
-        console.log("top");
-        return "top";
-      } else {
-        console.log("right");
-        return "right";
-      }
-    } else {
-      console.log("right");
-      return "right";
-    }
   }
 
   onChangeCurrentLayer(newLayer) {
@@ -127,20 +114,20 @@ export class AppControlPanelComponent{
         const file = inputEle.files[0];
         if (!file) return;
         if (!this.appConfig.layers.currentLayer) return;
-        this.appConfig.layers.currentLayer.addImage(this.fileToURL(file), { name: file.name });
+        // this.appConfig.layers.currentLayer.addImage(this.fileToURL(file), { name: file.name });
 
         /*
          * For save image into server
+         */
         const payload = new FormData();
         payload.append("file", file, file.name);
         this.spinner.show();
         this.simApiService.createImage(payload)
           .subscribe(res => {
-            console.log(res);
+            // console.log(res);
             this.appConfig.layers.currentLayer.addImage(res.content.path, { name: res.content.name});
             this.spinner.hide();
           })
-         */
       })
 
       inputEle.click();
@@ -161,7 +148,7 @@ export class AppControlPanelComponent{
   }
 
   layerDropped(event) {
-    console.log(event);
+    // console.log(event);
     const layer = event.item.data;
     if(layer) {
       const _length = this.appConfig.layers.layerList.length;

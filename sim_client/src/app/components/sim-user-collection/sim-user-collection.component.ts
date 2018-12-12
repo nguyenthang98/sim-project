@@ -56,7 +56,7 @@ export class SimUserCollectionComponent implements OnInit {
 
   getUserInfo() {
     this.simApiService.getUserInfo().subscribe(res => {
-      console.log(res.content);
+      // console.log(res.content);
       this.userInfo = res.content;
     })
   }

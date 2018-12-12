@@ -7,7 +7,7 @@ function loadFontToDocument(fontData, fontName, callback) {
   const newFontFace = new FontFace(fontName, fontData);
   newFontFace.load()
     .then(function (loadedFontFace) {
-      console.log(loadedFontFace);
+      // console.log(loadedFontFace);
       document.fonts.add(loadedFontFace);
       callback && callback();
     })

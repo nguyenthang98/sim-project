@@ -82,13 +82,23 @@
           <mat-panel-title>Layers</mat-panel-title>
         </mat-expansion-panel-header>
         <div>
-          <mat-form-field style="width: 70%;">
-            <input matInput type="text" placeholder="Layer Name" (keyup.enter)="appConfig.layers.addLayer(newLayerName.value);newLayerName.value='';" #newLayerName>
-            <button mat-button *ngIf="newLayerName.value" matSuffix mat-icon-button aria-label="Clear" (click)="newLayerName.value=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-          <button style="width: 30%; max-width: 30%;" mat-button (click)="appConfig.layers.addLayer(newLayerName.value)">Add</button>
+          <button mat-button style="width: 100%;" *ngIf="showCreateLayerButton"
+            (click)="showCreateLayerButton = !showCreateLayerButton">
+            <mat-icon style="color: green;">add</mat-icon>
+            Create New Layer
+          </button>
+          <div style="width: 100%" *ngIf="!showCreateLayerButton">
+              <mat-form-field style="width: 70%;">
+                <input matInput type="text" placeholder="Layer Name" (keyup.enter)="appConfig.layers.addLayer(newLayerName.value);newLayerName.value='';" #newLayerName>
+                <button mat-button *ngIf="newLayerName.value" matSuffix mat-icon-button aria-label="Clear" (click)="newLayerName.value=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+              <button style="width: 30%; max-width: 30%;" mat-button (click)="appConfig.layers.addLayer(newLayerName.value)">
+                <mat-icon style="color: green;">add</mat-icon>
+                Add
+              </button>
+          </div>
 
           <!--Layer Management-->          
           <mat-radio-group 
