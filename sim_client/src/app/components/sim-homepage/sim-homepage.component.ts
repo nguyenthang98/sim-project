@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 
+
 @Component({
   selector: 'app-sim-home',
   templateUrl: './sim-homepage.component.html',
@@ -19,6 +20,7 @@ export class SimHome implements OnInit {
     }
 
     ngOnInit() {
+      
     }
 
 }

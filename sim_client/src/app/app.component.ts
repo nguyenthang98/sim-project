@@ -13,6 +13,8 @@ import { ConfirmDialogComponent } from './components/sim-app-components/dialogs/
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { SimApiService } from 'src/app/services/sim-api.service';
+import { AotSummaryResolver } from "@angular/compiler";
+import * as AOS from 'aos';
 
 @Component({
   selector: "app-root",
@@ -34,10 +36,11 @@ export class AppComponent {
 
   getLoginState() {
     return this.simApiService.isLogin;
-  }
+  }  
 
   ngOnInit() {
-    this.currentRoute = location.pathname;
+    AOS.init();
+    this.currentRoute = location.pathname;   
   }
 }
 

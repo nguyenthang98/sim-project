@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
 
 import { AppComponent, SimComponents, SimEntryComponents } from "./app.component";
 import {
@@ -35,7 +36,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 		AppMaterialModule,
 		ColorPickerModule,
 		BrowserAnimationsModule,
-		NgxSpinnerModule
+		NgxSpinnerModule,
+		AnimateOnScrollModule.forRoot()
 	],
 	providers: [SimApiService],
 	entryComponents: [SimEntryComponents],
