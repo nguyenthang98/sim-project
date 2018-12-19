@@ -12,6 +12,9 @@
 * cd into sim_client folder
 * use ng serve command
 
+## Documentation
+Read [SIM DOCS](https://github.com/nguyenthang98/sim-project/tree/master/docs)
+
 ## Contribution
 * Fork this repo
 * commit changes
